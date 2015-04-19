@@ -30,12 +30,12 @@ void prompt ()
 
 	if (NULL == (username = getlogin()))
 	{
-		perror("Error: get username failure!");
+		perror("ERROR: get username failure!");
 		exit(-1);
 	}
 	if (-1 == gethostname(hostname, MAXSIZE))
 	{
-		perror("gethostname");
+		perror("ERROR: get hostname failure!");
 		exit(-1);
 	}
 
@@ -52,6 +52,7 @@ void getInput (char str[])
 	}
 
 	int len1 = strlen(str);
+	// when there is no input
 	if (str[len1 - 1] == '\n')
 	{
 		str[len1 - 1] = '\0';
@@ -73,7 +74,6 @@ void format ()
 			break;
 		}
 	}
-
 
 	// replace tabs by spaces
 	for (int i = 0; i < len; ++i)
@@ -214,7 +214,6 @@ void parse(char * cmd[])
 	char * saveptr; // value return parameter used by strtok_r() to record progress
 	string temp;
 	char * get[MAXSIZE];
-	char * current;
 	// initialize the flag as false,
 	// "false" means we should not jump the next command
 	// "true" means we should ignore the next command
@@ -235,7 +234,7 @@ void parse(char * cmd[])
 	}
 		
 	// distinguish the connectors and commands
-	for (int i = 0; i < str.size(); ++i)
+	for (unsigned i = 0; i < str.size(); ++i)
 	{
 		// connectors
 		if (str.at(i) == ";")
@@ -298,7 +297,6 @@ void parse(char * cmd[])
 int main(int argc, const char ** argv)
 {
 	char *cmd[MAXSIZE];
-	char str[MAXSIZE];
 	while (1)
 	{
 		prompt();

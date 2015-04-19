@@ -1,5 +1,5 @@
-ll: rshell
+all: rshell
 			mkdir bin
-			cp ./rshell ./bin/rshell
-rshell: ./src/rshell.cpp
+			mv ./rshell ./bin/rshell
+rshell: ./src/main.cpp
 	g++ -Wall -Werror -ansi -pedantic -o rshell ./src/main.cpp
