@@ -9,12 +9,13 @@ This program is a simple command shell called rshell.
 
 ## How to use
 run the following commands
-`$ git clone https://github.com/Renee7547/rshell.git \n
-$ cd rshell \n
-$ git checkout hw0 \n
-$ make \n
+```
+$ git clone https://github.com/Renee7547/rshell.git
+$ cd rshell
+$ git checkout hw0
+$ make
 $ bin/rshell`
-
+```
 ## Issues
 Unlike the real bash shell that continue to ask for input after connectors, 
 the rshell will treat this case as the command following connectors is null and skip to the next loop.
