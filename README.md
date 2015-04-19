@@ -9,10 +9,10 @@ This program is a simple command shell called rshell.
 
 ## How to use
 run the following commands
-`$ git clone https://github.com/Renee7547/rshell.git
-$ cd rshell
-$ git checkout hw0
-$ make
+`$ git clone https://github.com/Renee7547/rshell.git \n
+$ cd rshell \n
+$ git checkout hw0 \n
+$ make \n
 $ bin/rshell`
 
 ## Issues
