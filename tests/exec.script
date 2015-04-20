@@ -1,0 +1,790 @@
+Script started on Sun 19 Apr 2015 11:43:14 PM PDT
+~
+hzhu007@hammer $ pwd
+/home/csmajs/hzhu007
+~
+hzhu007@hammer $ cd dl/rshell
+~/dl/rshell
+hzhu007@hammer $ bin/rshell
+hzhu007%hammer.cs.ucr.edu>>ls;pwd
+bin  Makefile  README.md  src  tests
+/home/csmajs/hzhu007/dl/rshell
+hzhu007%hammer.cs.ucr.edu>>pwd;ls
+/home/csmajs/hzhu007/dl/rshell
+bin  Makefile  README.md  src  tests
+hzhu007%hammer.cs.ucr.edu>>#commands with no params
+hzhu007%hammer.cs.ucr.edu>>ls
+bin  Makefile  README.md  src  tests
+hzhu007%hammer.cs.ucr.edu>>pwd
+/home/csmajs/hzhu007/dl/rshell
+hzhu007%hammer.cs.ucr.edu>>#commands with few   a few commands
+hzhu007%hammer.cs.ucr.edu>>#commands with a few params
+hzhu007%hammer.cs.ucr.edu>>ls -l -a
+total 32
+drwx------ 6 hzhu007 csmajs 4096 Apr 19 23:35 .
+drwx------ 3 hzhu007 csmajs 4096 Apr 19 21:57 ..
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 23:35 bin
+drwx------ 8 hzhu007 csmajs 4096 Apr 19 22:00 .git
+-rw------- 1 hzhu007 csmajs  136 Apr 19 22:00 Makefile
+-rw------- 1 hzhu007 csmajs 2011 Apr 19 22:00 README.md
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 23:28 src
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 23:37 tests
+hzhu007%hammer.cs.ucr.edu>>#commands a with lots of params
+hzhu007%hammer.cs.ucr.edu>>ls -a   -a -a -a -l -l -s -b -c -d -f -g -s
+4 drwx------ 6 csmajs 4096 Apr 19 23:35 .
+hzhu007%hammer.cs.ucr.edu>>#commands with lots f of spaces
+hzhu007%hammer.cs.ucr.edu>>    ls     -a -l -----R
+ls: unrecognized option '-----R'
+Try `ls --help' for more information.
+hzhu007%hammer.cs.ucr.edu>>ls     -a -l -R^[[D           -R
+.:
+total 32
+drwx------ 6 hzhu007 csmajs 4096 Apr 19 23:35 .
+drwx------ 3 hzhu007 csmajs 4096 Apr 19 21:57 ..
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 23:35 bin
+drwx------ 8 hzhu007 csmajs 4096 Apr 19 22:00 .git
+-rw------- 1 hzhu007 csmajs  136 Apr 19 22:00 Makefile
+-rw------- 1 hzhu007 csmajs 2011 Apr 19 22:00 README.md
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 23:28 src
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 23:37 tests
+
+./bin:
+total 36
+drwx------ 2 hzhu007 csmajs  4096 Apr 19 23:35 .
+drwx------ 6 hzhu007 csmajs  4096 Apr 19 23:35 ..
+-rwx------ 1 hzhu007 csmajs 25334 Apr 19 23:35 rshell
+
+./.git:
+total 48
+drwx------  8 hzhu007 csmajs 4096 Apr 19 22:00 .
+drwx------  6 hzhu007 csmajs 4096 Apr 19 23:35 ..
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 branches
+-rw-------  1 hzhu007 csmajs  322 Apr 19 22:00 config
+-rw-------  1 hzhu007 csmajs   73 Apr 19 21:57 description
+-rw-------  1 hzhu007 csmajs   21 Apr 19 22:00 HEAD
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 hooks
+-rw-------  1 hzhu007 csmajs  256 Apr 19 22:00 index
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 info
+drwx------  3 hzhu007 csmajs 4096 Apr 19 21:57 logs
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 objects
+-rw-------  1 hzhu007 csmajs  160 Apr 19 21:57 packed-refs
+drwx------  5 hzhu007 csmajs 4096 Apr 19 21:57 refs
+
+./.git/branches:
+total 8
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 8 hzhu007 csmajs 4096 Apr 19 22:00 ..
+
+./.git/hooks:
+total 52
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 8 hzhu007 csmajs 4096 Apr 19 22:00 ..
+-rwx------ 1 hzhu007 csmajs  452 Apr 19 21:57 applypatch-msg.sample
+-rwx------ 1 hzhu007 csmajs  896 Apr 19 21:57 commit-msg.sample
+-rwx------ 1 hzhu007 csmajs  160 Apr 19 21:57 post-commit.sample
+-rwx------ 1 hzhu007 csmajs  548 Apr 19 21:57 post-receive.sample
+-rwx------ 1 hzhu007 csmajs  189 Apr 19 21:57 post-update.sample
+-rwx------ 1 hzhu007 csmajs  398 Apr 19 21:57 pre-applypatch.sample
+-rwx------ 1 hzhu007 csmajs 1578 Apr 19 21:57 pre-commit.sample
+-rwx------ 1 hzhu007 csmajs 1239 Apr 19 21:57 prepare-commit-msg.sample
+-rwx------ 1 hzhu007 csmajs 4951 Apr 19 21:57 pre-rebase.sample
+-rwx------ 1 hzhu007 csmajs 3611 Apr 19 21:57 update.sample
+
+./.git/info:
+total 12
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 8 hzhu007 csmajs 4096 Apr 19 22:00 ..
+-rw------- 1 hzhu007 csmajs  240 Apr 19 21:57 exclude
+
+./.git/logs:
+total 16
+drwx------ 3 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 8 hzhu007 csmajs 4096 Apr 19 22:00 ..
+-rw------- 1 hzhu007 csmajs  367 Apr 19 22:00 HEAD
+drwx------ 3 hzhu007 csmajs 4096 Apr 19 21:57 refs
+
+./.git/logs/refs:
+total 12
+drwx------ 3 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 3 hzhu007 csmajs 4096 Apr 19 21:57 ..
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 22:00 heads
+
+./.git/logs/refs/heads:
+total 16
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 22:00 .
+drwx------ 3 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-rw------- 1 hzhu007 csmajs  185 Apr 19 22:00 exec
+-rw------- 1 hzhu007 csmajs  191 Apr 19 21:57 master
+
+./.git/objects:
+total 236
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------  8 hzhu007 csmajs 4096 Apr 19 22:00 ..
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 04
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 09
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 0f
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 10
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 18
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 1a
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 1d
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 1e
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 25
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 29
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 30
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 3c
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 41
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 43
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 46
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 48
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 4e
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 53
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 5a
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 5b
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 5f
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 60
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 6a
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 6f
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 71
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 73
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 77
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 84
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 86
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 92
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 98
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 a0
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 aa
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 b0
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 b1
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 b9
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 bc
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 bd
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 cb
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 cd
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 ce
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 d5
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 da
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 dd
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 de
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 e2
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 e3
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 e4
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 e7
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 ec
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 f0
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 fb
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 fd
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 fe
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 ff
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 info
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 pack
+
+./.git/objects/04:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  159 Apr 19 21:57 0a36889294fe23188e90f90d76be8e117c0b50
+
+./.git/objects/09:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  807 Apr 19 21:57 208b56b2a428fce5d60b9e9fd274495bb500de
+
+./.git/objects/0f:
+total 8
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs   52 Apr 19 21:57 fb06601502ff9d0810dbe47c55f08742da3095
+
+./.git/objects/10:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  159 Apr 19 21:57 1ce948d124c40c14b94ea6c49f6278080b765a
+
+./.git/objects/18:
+total 8
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs   53 Apr 19 21:57 9ce51c8d7f229e0482663332214dd1db3bc7e8
+
+./.git/objects/1a:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs 2134 Apr 19 21:57 bade084c9b09bbe79968879dfc5d64acc01f4b
+
+./.git/objects/1d:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  171 Apr 19 21:57 f6d260c444028a3d70abb28223d046b88a1d05
+
+./.git/objects/1e:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  289 Apr 19 21:57 d3b876d10fbed2936b8c6e9aaa399c4a308a2e
+
+./.git/objects/25:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs 2138 Apr 19 21:57 f36e14badbe587052ce889318396ddb212d4a1
+
+./.git/objects/29:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  156 Apr 19 21:57 66b410312d55f1d7f64e2c4ba9f54ba7596500
+
+./.git/objects/30:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  109 Apr 19 21:57 820559945eb5bab3c038105ff6d9411e225da9
+
+./.git/objects/3c:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  117 Apr 19 21:57 73dae4934b63d1e882649880244cc4251696ed
+
+./.git/objects/41:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  159 Apr 19 21:57 0519ece911cc788054f25961ff76df07c69d4a
+
+./.git/objects/43:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  159 Apr 19 21:57 d9d7e0e8cbf8a04bd74aba07832e6494be5432
+
+./.git/objects/46:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  144 Apr 19 21:57 6373b28a344c89f87e4e8aca188d3937789845
+
+./.git/objects/48:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  597 Apr 19 21:57 087046116fc6dc3b07d1f8940f2e033994ea03
+
+./.git/objects/4e:
+total 20
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  160 Apr 19 21:57 77d7f6d7fc15e33cfd328a674954d615660aee
+-r--------  1 hzhu007 csmajs 1018 Apr 19 21:57 9115196327786b9e9720e559a84ba6dd4f052f
+-r--------  1 hzhu007 csmajs  174 Apr 19 21:57 c4a361b04202a7c813623cb6937c5396f1cb68
+
+./.git/objects/53:
+total 8
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs   53 Apr 19 21:57 1d994de466426b85757a234711440b39f73c67
+
+./.git/objects/5a:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  161 Apr 19 21:57 632392262998c8b6e284100123b91c5a3af09e
+
+./.git/objects/5b:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  159 Apr 19 21:57 1985a34ae3ec47e1e4bf3295dec810d54a4899
+
+./.git/objects/5f:
+total 8
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs   53 Apr 19 21:57 63996ac4d071ca425bd0bed2920af26e4b7876
+
+./.git/objects/60:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  117 Apr 19 21:57 1d9e2466a86f3dbc919df07adf25b69eb2b38e
+
+./.git/objects/6a:
+total 8
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs   53 Apr 19 21:57 e61598c408162fc13556d60498cbe936c4345a
+
+./.git/objects/6f:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs 1022 Apr 19 21:57 7a264fb8dd4ff9d750f11dec52dbb1ea1aab86
+
+./.git/objects/71:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  117 Apr 19 21:57 be73990156a7c7fd4bdfdf71e8a82090fff81e
+
+./.git/objects/73:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  116 Apr 19 21:57 6ea76f8802246595c88aa7ee2f2607cd52e0ca
+
+./.git/objects/77:
+total 16
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  128 Apr 19 21:57 2a59168f9cad0202d06bb8d981ac66e01cc659
+-r--------  1 hzhu007 csmajs  158 Apr 19 21:57 f1f79235b78244e49ba2a3983da22b3eef1d38
+
+./.git/objects/84:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  116 Apr 19 21:57 a53ca13e8971d77e2658ea6505c41fafd87bc9
+
+./.git/objects/86:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  159 Apr 19 21:57 bb9948219480f347dffd6cb2af697d646f66f2
+
+./.git/objects/92:
+total 20
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  160 Apr 19 21:57 15f09e9c29dfd10d32d9676ac8ddb978b44da0
+-r--------  1 hzhu007 csmajs  117 Apr 19 21:57 7446e4ad641bc26c619f3e2bbf3fccfe192a33
+-r--------  1 hzhu007 csmajs 1019 Apr 19 21:57 7a02883604dd0320b59ad5fa2d0127c6face70
+
+./.git/objects/98:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  109 Apr 19 21:57 dcf8ccead8d1787751509234041602f9a72b93
+
+./.git/objects/a0:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  116 Apr 19 21:57 0da3b6f801c4330f9eac0b9c501b65c3684dae
+
+./.git/objects/aa:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  596 Apr 19 21:57 a9296a15f42dee85f5bf45c8da45efebc4d857
+
+./.git/objects/b0:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs 2133 Apr 19 21:57 e25cad1f340063fe25bbbc0403b52ba26a54ac
+
+./.git/objects/b1:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  257 Apr 19 21:57 47ed4a9239059e2f57ed3e4cf4ecba114ef6c7
+
+./.git/objects/b9:
+total 8
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs   53 Apr 19 21:57 767dd767232d802df9d1b7a01672935ade6283
+
+./.git/objects/bc:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs 1019 Apr 19 21:57 ca1ce2e3f0984285b79fef5f5407eb3fe2a857
+
+./.git/objects/bd:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  111 Apr 19 21:57 b69047c21fe7111401d71856ceb2c1134f4806
+
+./.git/objects/cb:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  117 Apr 19 21:57 6cb222d3329617f2e87c2d28ac2183596ccd94
+
+./.git/objects/cd:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  164 Apr 19 21:57 2eaf27017bb684469a3835d77947f55cfbadca
+
+./.git/objects/ce:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  115 Apr 19 21:57 ca8f8fb50f747c639fad80c3cc5be94f3bc8d0
+
+./.git/objects/d5:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  116 Apr 19 21:57 eb0390bc2e7ac48f10e0a8975d39cd2fc50ca7
+
+./.git/objects/da:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs   82 Apr 19 21:57 c00e284b9cdd98600faa0dee80e89c75f4e3c2
+
+./.git/objects/dd:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  165 Apr 19 21:57 fa8018cf9418d1bdc07d3ec1dc8ae064052ee5
+
+./.git/objects/de:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  972 Apr 19 21:57 37cda95ef0e3e6d22a997b5c10b56111ea2d5a
+
+./.git/objects/e2:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  162 Apr 19 21:57 ff821b8d5d7e87fffb018236f1803a844a0092
+
+./.git/objects/e3:
+total 16
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  116 Apr 19 21:57 77313d46520a4ca5b6f1a5e12f71cc10bca322
+-r--------  1 hzhu007 csmajs  117 Apr 19 21:57 e99681bc5ab2c41e77a1290550d36b22af5994
+
+./.git/objects/e4:
+total 16
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs 1023 Apr 19 21:57 4790b4072a066c6c76a0f5256570c768e4b175
+-r--------  1 hzhu007 csmajs  594 Apr 19 21:57 c22a5d1bafa42c9393df5f59db047da59f4f44
+
+./.git/objects/e7:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  116 Apr 19 21:57 9255e2a1996e35381354598d4bc891cbe506ff
+
+./.git/objects/ec:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  117 Apr 19 21:57 17403804897050f6c90d0c881b8013e2283a45
+
+./.git/objects/f0:
+total 8
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs   53 Apr 19 21:57 32dcd228721def4c57539eee7190b3a6407b97
+
+./.git/objects/fb:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  935 Apr 19 21:57 bcbe8b4b5e0f70ae6dba96f03172cf4c25246e
+
+./.git/objects/fd:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  153 Apr 19 21:57 ab7948c3bd61d9e89bbc6a4f02bd238fa53270
+
+./.git/objects/fe:
+total 12
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  924 Apr 19 21:57 120ccd1a5b23fbc23839cee162350a67ddfb92
+
+./.git/objects/ff:
+total 16
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-r--------  1 hzhu007 csmajs  116 Apr 19 21:57 6b1fb755a4ded1f385d989bad83b6c98cc2e74
+-r--------  1 hzhu007 csmajs  258 Apr 19 21:57 e1a1e2f2e5bae7fb8ad29176d1170713dd0a5e
+
+./.git/objects/info:
+total 8
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+
+./.git/objects/pack:
+total 8
+drwx------  2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 59 hzhu007 csmajs 4096 Apr 19 21:57 ..
+
+./.git/refs:
+total 20
+drwx------ 5 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 8 hzhu007 csmajs 4096 Apr 19 22:00 ..
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 22:00 heads
+drwx------ 3 hzhu007 csmajs 4096 Apr 19 21:57 remotes
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 21:57 tags
+
+./.git/refs/heads:
+total 8
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 22:00 .
+drwx------ 5 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-rw------- 1 hzhu007 csmajs   41 Apr 19 22:00 exec
+-rw------- 1 hzhu007 csmajs   41 Apr 19 21:57 master
+
+./.git/refs/remotes:
+total 12
+drwx------ 3 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 5 hzhu007 csmajs 4096 Apr 19 21:57 ..
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 21:57 origin
+
+./.git/refs/remotes/origin:
+total 8
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 3 hzhu007 csmajs 4096 Apr 19 21:57 ..
+-rw------- 1 hzhu007 csmajs   32 Apr 19 21:57 HEAD
+
+./.git/refs/tags:
+total 8
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 21:57 .
+drwx------ 5 hzhu007 csmajs 4096 Apr 19 21:57 ..
+
+./src:
+total 32
+drwx------ 2 hzhu007 csmajs  4096 Apr 19 23:28 .
+drwx------ 6 hzhu007 csmajs  4096 Apr 19 23:35 ..
+-rw------- 1 hzhu007 csmajs  5782 Apr 19 23:28 main.cpp
+-rw------- 1 hzhu007 csmajs 16384 Apr 19 23:29 .main.cpp.swp
+
+./tests:
+total 8
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 23:37 .
+drwx------ 6 hzhu007 csmajs 4096 Apr 19 23:35 ..
+-rw------- 1 hzhu007 csmajs    0 Apr 19 23:37 exec.script
+hzhu007%hammer.cs.ucr.edu>>#run rshell d from within rshell
+hzhu007%hammer.cs.ucr.edu>>bin/rshell
+hzhu007%hammer.cs.ucr.edu>>#now xit to        exit to original rshell
+hzhu007%hammer.cs.ucr.edu>>exit
+Process ended.
+hzhu007%hammer.cs.ucr.edu>>#commands don;t    't exit
+hzhu007%hammer.cs.ucr.edu>>#commm ands don;t  't exist
+hzhu007%hammer.cs.ucr.edu>>sadd
+ERROR: exec failed
+: No such file or directory
+hzhu007%hammer.cs.ucr.edu>>#no input
+hzhu007%hammer.cs.ucr.edu>>
+hzhu007%hammer.cs.ucr.edu>>#inu put only sao  paces
+hzhu007%hammer.cs.ucr.edu>>   
+hzhu007%hammer.cs.ucr.edu>>#connector ; works
+hzhu007%hammer.cs.ucr.edu>>ls;pwd
+bin  Makefile  README.md  src  tests
+ERROR: exec failed
+: No such file or directory
+ERROR: exec failed
+: No such file or directory
+hzhu007%hammer.cs.ucr.edu>>css   exit
+Process ended.
+~/dl/rshell
+hzhu007@hammer $ cs100
+[0;91m
+===============================================================================
+|                                                                             |
+| You have enabled settings specific for cs100.  Everything you do is being   |
+| recorded to measure your progress in the class.                             |
+|                                                                             |
+| Important commands for the class:                                           |
+|   * calcgrade.sh          displays a detailed breakdown of your grade       |
+|   * typespeed             practice typing unix commands                     |
+|                                                                             |
+| Important commands for general C++ programming:                             |
+|   * make                  don't call g++ manually; let make do the work!    |
+|   * gdb                   the GNU debugger                                  |
+|   * valgrind              get rid of your memory leaks                      |
+|   * cppcheck              static analysis tool                              |
+|   * man                   find help about any syscall / terminal command    |
+|                                                                             |
+===============================================================================
+[0m
+[s%%%%%%%%%%[u[0;32mhzhu007[0;36m@[0;32mcs100[0;36m:[0;32m~[0;95m (master) [0;36m$[0m pwd
+/home/csmajs/hzhu007
+[s%%%%%%%%%%[u[0;32mhzhu007[0;36m@[0;32mcs100[0;36m:[0;32m~[0;95m (master) [0;36m$[0m cd dl/rshell
+[s%%%%%%%%%%[u[0;32mhzhu007[0;36m@[0;32mcs100[0;36m:[0;32m~/dl/rshell[0;95m (exec) [0;36m$[0m bin/rshell
+hzhu007%hammer.cs.ucr.edu>>#connector ; work
+hzhu007%hammer.cs.ucr.edu>>ls;pwd
+bin  Makefile  README.md  src  tests
+ERROR: exec failed
+: No such file or directory
+ERROR: exec failed
+: No such file or directory
+hzhu007%hammer.cs.ucr.edu>>exit
+Process ended.
+[s%%%%%%%%%%[u[0;32mhzhu007[0;36m@[0;32mcs100[0;36m:[0;32m~/dl/rshell[0;95m (exec) [0;36m$[0m bin/rshell
+hzhu007%hammer.cs.ucr.edu>>ls;pwd
+bin  Makefile  README.md  src  tests
+/home/csmajs/hzhu007/dl/rshell
+hzhu007%hammer.cs.ucr.edu>>#this is not my progra  m fault
+hzhu007%hammer.cs.ucr.edu>>#maybe the mistake of system
+hzhu007%hammer.cs.ucr.edu>>adsa;pwd
+ERROR: exec failed
+: No such file or directory
+pwd: ignoring non-option arguments
+/home/csmajs/hzhu007/dl/rshell
+hzhu007%hammer.cs.ucr.edu>>#||| work
+hzhu007%hammer.cs.ucr.edu>>ls||pwd
+bin  Makefile  README.md  src  tests
+ERROR: exec failed
+: No such file or directory
+hzhu007%hammer.cs.ucr.edu>>pwd||ls
+/home/csmajs/hzhu007/dl/rshell
+ERROR: exec failed
+: No such file or directory
+hzhu007%hammer.cs.ucr.edu>>sadasd||pwd
+ERROR: exec failed
+: No such file or directory
+ERROR: exec failed
+: No such file or directory
+hzhu007%hammer.cs.ucr.edu>>exit
+Process ended.
+[s%%%%%%%%%%[u[0;32mhzhu007[0;36m@[0;32mcs100[0;36m:[0;32m~/dl/rshell[0;95m (exec) [0;36m$[0m bin/rshell
+hzhu007%hammer.cs.ucr.edu>>asdsaf||ls
+ERROR: exec failed
+: No such file or directory
+bin  Makefile  README.md  src  tests
+hzhu007%hammer.cs.ucr.edu>>ls||pwd
+bin  Makefile  README.md  src  tests
+/home/csmajs/hzhu007/dl/rshell
+hzhu007%hammer.cs.ucr.edu>>#&&works
+hzhu007%hammer.cs.ucr.edu>>ls&&pwd
+bin  Makefile  README.md  src  tests
+ERROR: exec failed
+: No such file or directory
+hzhu007%hammer.cs.ucr.edu>>exit
+Process ended.
+[s%%%%%%%%%%[u[0;32mhzhu007[0;36m@[0;32mcs100[0;36m:[0;32m~/dl/rshell[0;95m (exec) [0;36m$[0m bin/rshell
+hzhu007%hammer.cs.ucr.edu>>ls&&pwd
+bin  Makefile  README.md  src  tests
+/home/csmajs/hzhu007/dl/rshell
+hzhu007%hammer.cs.ucr.edu>>asdd&&pwd
+ERROR: exec failed
+: No such file or directory
+/home/csmajs/hzhu007/dl/rshell
+hzhu007%hammer.cs.ucr.edu>>ls && ls || pwd ;; pwd || ls &&&  ls ; pwd || ls; pwd
+bin  Makefile  README.md  src  tests
+bin  Makefile  README.md  src  tests
+/home/csmajs/hzhu007/dl/rshell
+/home/csmajs/hzhu007/dl/rshell
+bin  Makefile  README.md  src  tests
+bin  Makefile  README.md  src  tests
+/home/csmajs/hzhu007/dl/rshell
+bin  Makefile  README.md  src  tests
+/home/csmajs/hzhu007/dl/rshell
+hzhu007%hammer.cs.ucr.edu>>#parsing example
+hzhu007%hammer.cs.ucr.edu>>ls -l||cat  ;rm -rf *
+total 20
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 23:35 bin
+-rw------- 1 hzhu007 csmajs  136 Apr 19 22:00 Makefile
+-rw------- 1 hzhu007 csmajs 2011 Apr 19 22:00 README.md
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 23:28 src
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 23:37 tests
+c ^C
+[s%%%%%%%%%%[u[0;32mhzhu007[0;36m@[0;32mcs100[0;36m:[0;32m~/dl/rshell[0;95m (exec) [0;36m$[0m bin/rshell
+hzhu007%hammer.cs.ucr.edu>>#exit by itself
+hzhu007%hammer.cs.ucr.edu>>exit
+Process ended.
+[s%%%%%%%%%%[u[0;32mhzhu007[0;36m@[0;32mcs100[0;36m:[0;32m~/dl/rshell[0;95m (exec) [0;36m$[0m bin/rshell
+hzhu007%hammer.cs.ucr.edu>>#exit with params
+hzhu007%hammer.cs.ucr.edu>>w exit --flag sda
+Process ended.
+[s%%%%%%%%%%[u[0;32mhzhu007[0;36m@[0;32mcs100[0;36m:[0;32m~/dl/rshell[0;95m (exec) [0;36m$[0m bin/rhel
+bash: bin/rhel: No such file or directory
+[s%%%%%%%%%%[u[0;32mhzhu007[0;36m@[0;32mcs100[0;36m:[0;32m~/dl/rshell[0;95m (exec) [0;36m$[0m bin/rshell
+hzhu007%hammer.cs.ucr.edu>>#exit as a param
+hzhu007%hammer.cs.ucr.edu>>ls -l exit
+ls: cannot access exit: No such file or directory
+hzhu007%hammer.cs.ucr.edu>>#exit in a chain
+hzhu007%hammer.cs.ucr.edu>>ls -ll ;exit
+total 20
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 23:35 bin
+-rw------- 1 hzhu007 csmajs  136 Apr 19 22:00 Makefile
+-rw------- 1 hzhu007 csmajs 2011 Apr 19 22:00 README.md
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 23:28 src
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 23:37 tests
+ERROR: exec failed
+: No such file or directory
+hzhu007%hammer.cs.ucr.edu>>exit
+Process ended.
+[s%%%%%%%%%%[u[0;32mhzhu007[0;36m@[0;32mcs100[0;36m:[0;32m~/dl/rshell[0;95m (exec) [0;36m$[0m bin/rshell
+hzhu007%hammer.cs.ucr.edu>>ls -l;exit
+total 20
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 23:35 bin
+-rw------- 1 hzhu007 csmajs  136 Apr 19 22:00 Makefile
+-rw------- 1 hzhu007 csmajs 2011 Apr 19 22:00 README.md
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 23:28 src
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 23:37 tests
+ERROR: exec failed
+: No such file or directory
+hzhu007%hammer.cs.ucr.edu>>exit
+Process ended.
+[s%%%%%%%%%%[u[0;32mhzhu007[0;36m@[0;32mcs100[0;36m:[0;32m~/dl/rshell[0;95m (exec) [0;36m$[0m bin [K/rshell
+hzhu007%hammer.cs.ucr.edu>>ls -l  ; exit
+total 20
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 23:35 bin
+-rw------- 1 hzhu007 csmajs  136 Apr 19 22:00 Makefile
+-rw------- 1 hzhu007 csmajs 2011 Apr 19 22:00 README.md
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 23:28 src
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 23:37 tests
+ERROR: exec failed
+: No such file or directory
+hzhu007%hammer.cs.ucr.edu>>exit; ls -l
+Process ended.
+[s%%%%%%%%%%[u[0;32mhzhu007[0;36m@[0;32mcs100[0;36m:[0;32m~/dl/rshell[0;95m (exec) [0;36m$[0m bin/rshell
+hzhu007%hammer.cs.ucr.edu>>#comments a a c     with a command
+hzhu007%hammer.cs.ucr.edu>>ls -l # this is a comment
+total 20
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 23:35 bin
+-rw------- 1 hzhu007 csmajs  136 Apr 19 22:00 Makefile
+-rw------- 1 hzhu007 csmajs 2011 Apr 19 22:00 README.md
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 23:28 src
+drwx------ 2 hzhu007 csmajs 4096 Apr 19 23:37 tests
+hzhu007%hammer.cs.ucr.edu>>#comment in a line
+hzhu007%hammer.cs.ucr.edu>>#ls
+hzhu007%hammer.cs.ucr.edu>>#ls -l  # comment
+hzhu007%hammer.cs.ucr.edu>>#a  all test cases done
+hzhu007%hammer.cs.ucr.edu>>exit
+Process ended.
+[s%%%%%%%%%%[u[0;32mhzhu007[0;36m@[0;32mcs100[0;36m:[0;32m~/dl/rshell[0;95m (exec) [0;36m$[0m ls
+bin  Makefile  README.md  src  tests
+[s%%%%%%%%%%[u[0;32mhzhu007[0;36m@[0;32mcs100[0;36m:[0;32m~/dl/rshell[0;95m (exec) [0;36m$[0m git status
+# On branch exec
+# Changes not staged for commit:
+#   (use "git add <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	[31mmodified:   src/main.cpp[m
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	[31mbin/[m
+#	[31msrc/.main.cpp.swp[m
+#	[31mtests/[m
+no changes added to commit (use "git add" and/or "git commit -a")
+[s%%%%%%%%%%[u[0;32mhzhu007[0;36m@[0;32mcs100[0;36m:[0;32m~/dl/rshell[0;95m (exec) [0;36m$[0m git add [K[K[K[K[K[K[K[Kexit'[K
+exit
+~/dl/rshell
+hzhu007@hammer $ ls
+[0m[38;5;27mbin[0m/  Makefile  README.md  [38;5;27msrc[0m/  [38;5;27mtests[0m/
+[m~/dl/rshell
+hzhu007@hammer $ exit
+exit
+
+Script done on Sun 19 Apr 2015 11:58:38 PM PDT
