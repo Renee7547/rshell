@@ -11,7 +11,7 @@
 
 
 ## How to use
-run the following commands
+Run the following commands
 ```
 $ git clone https://github.com/Renee7547/rshell.git
 $ cd rshell
