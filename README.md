@@ -2,11 +2,11 @@
 
 ## Features
 This is a basic command shell:
-1. It will print a command prompt.
-2. It can read in a command on one line
-3. It can process connectors: ';', '||', '&&'
-4. a built-in command of 'exit' which exits my shell
-5. Anything that appears after a `#` character should be considered a comment.
+* It will print a command prompt.
+* It can read in a command on one line
+* It can process connectors: ';', '||', '&&'
+* A built-in command of 'exit' which exits my shell
+* Anything that appears after a `#` character should be considered a comment.
 
 
 
