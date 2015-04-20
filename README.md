@@ -1,11 +1,11 @@
-# CS 100-rshell-hw0
+# CS 100 - rshell - hw0
 
 ## Features
-This is a basic command shell:
+* This is a basic command shell.
 * It will print a command prompt.
-* It can read in a command on one line
-* It can process connectors: ';', '||', '&&'
-* A built-in command of 'exit' which exits my shell
+* It can read in a command on one line.
+* It can process connectors: ';', '||', '&&'.
+* A built-in command of 'exit' which exits my shell.
 * Anything that appears after a `#` character should be considered a comment.
 
 
