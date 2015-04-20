@@ -1,7 +1,7 @@
 # CS 100-rshell-hw0
 
 ## Features
-This is a basic command shell.
+This is a basic command shell:
 1. It will print a command prompt.
 2. It can read in a command on one line
 3. It can process connectors: ';', '||', '&&'
