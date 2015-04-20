@@ -18,6 +18,7 @@ $ bin/rshell`
 ```
 ## Test cases
 ###case 1
+```
 ' ' '\n'
 ls
 pwd
@@ -33,7 +34,9 @@ ls -l -R
 ls -R -l
 ls -a -a -a -a -a -a -a -a -a -a -a -a    -a
 ls filename filename cmd // cmd can be at any position
+```
 ###case 2
+```
 ls || pwd
 abcd || pwd
 ls && pwd
@@ -42,7 +45,9 @@ ls; pwd
 abcd; pwd
 pwd; ls; ls || ls && ls ||| ls ; pwd||sdad &&adasdf ; ls
 ls -l||cat    ; rm -rf *
+```
 ###case 3
+```
 exit
 exit -flag daffsg
 ls -l exit
@@ -51,13 +56,16 @@ ls -l; exit
 ls -l # this is a comment
 /#ls comment fdfsdfa
 ls -l# this is a comment here
+```
 ###extra test cases
+```
 |||||||||||;;;;;;;;;;;;;;;;;;;;;&&&&&&&&&&&&&&&&&&&&
 &&&&&
 ;;;;;
       ;ls
 	  &&ls
 	  ||pwd
+```
 
 ## Issues
 1. Unlike the real bash shell that continue to ask for input after connectors, 
