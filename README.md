@@ -16,9 +16,55 @@ $ git checkout hw0
 $ make
 $ bin/rshell`
 ```
+## Test cases
+###case 1
+' ' '\n'
+ls
+pwd
+bin/rshell
+     ls
+	 pwd
+ls -a
+ls -l
+ls    -a  -l      -R
+ls -R
+ls -lR
+ls -l -R
+ls -R -l
+ls -a -a -a -a -a -a -a -a -a -a -a -a    -a
+ls filename filename cmd // cmd can be at any position
+###case 2
+ls || pwd
+abcd || pwd
+ls && pwd
+abcd && pwd
+ls; pwd
+abcd; pwd
+pwd; ls; ls || ls && ls ||| ls ; pwd||sdad &&adasdf ; ls
+ls -l||cat    ; rm -rf *
+###case 3
+exit
+exit -flag daffsg
+ls -l exit
+ls -l; exit
+###case 4
+ls -l # this is a comment
+/#ls comment fdfsdfa
+ls -l# this is a comment here
+###extra test cases
+|||||||||||;;;;;;;;;;;;;;;;;;;;;&&&&&&&&&&&&&&&&&&&&
+&&&&&
+;;;;;
+      ;ls
+	  &&ls
+	  ||pwd
+
 ## Issues
-Unlike the real bash shell that continue to ask for input after connectors, 
+1. Unlike the real bash shell that continue to ask for input after connectors, 
 the rshell will treat this case as the command following connectors is null and skip to the next loop.
+2. This program cannot run commands in current directory.
+It can run bin/rshell, but cannot run rshell from within rshell. 
+
 
 ## Bugs have been solved
 1. Problem with  fgets() function: 
