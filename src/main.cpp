@@ -65,7 +65,7 @@ void format ()
 	string temp;
 
 	int len = strlen(command);
-	
+
 	for (int i = 0; i < len; ++i)
 	{
 		if (command[i] == '#')
@@ -82,8 +82,8 @@ void format ()
 		{
 			command[i] = ' ';
 		}
-	}	
-	
+	}
+
 	// add ' ' between characters and ';'. i.e. convert "a;b" to "a, b"
 	for (int i = 0; i < len; ++i)
 	{
@@ -101,7 +101,7 @@ void format ()
 			i += 2;
 		}
 	}
-	
+
 	// add ' ' between characters and '&&'
 	for (int i = 0; i < len - 1; ++i)
 	{
@@ -194,7 +194,7 @@ void execute (char * cmd[])
 			result = false;
 			exit (1);
 		}
-		if (WEXITSTATUS(status) == 0)	
+		if (WEXITSTATUS(status) == 0)
 		{
 			result = true;
 		}
@@ -218,12 +218,12 @@ void parse(char * cmd[])
 	// "false" means we should not jump the next command
 	// "true" means we should ignore the next command
 	bool jumpflag = false;
-	
+
 	token = strtok_r(command, " ", &saveptr);
 	int m = 0;
 	get[m] = token;
 	temp = token;
-	
+
 	while(token != NULL)
 	{
 		++ m;
@@ -232,7 +232,7 @@ void parse(char * cmd[])
 		token = strtok_r(NULL, " ", &saveptr);
 		get[m] = token;
 	}
-		
+
 	// distinguish the connectors and commands
 	for (unsigned i = 0; i < str.size(); ++i)
 	{
@@ -247,7 +247,7 @@ void parse(char * cmd[])
 			{
 				jumpflag = false;
 			}
-			else 
+			else
 			{
 				jumpflag = true;
 			}
@@ -276,9 +276,13 @@ void parse(char * cmd[])
 				else
 				{
 					cmd[j] = get[i];
-					++ j;			
+					++ j;
 				}
 			}
+            if (jumpflag)
+            {
+                jumpflag = false;
+            }
 			if (!jumpflag)
 			{
 				execute(cmd);
@@ -321,6 +325,6 @@ int main(int argc, const char ** argv)
 		}
 
 		parse(cmd);
-	} 
+	}
     return 0;
 }
