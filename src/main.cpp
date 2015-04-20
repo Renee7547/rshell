@@ -24,7 +24,7 @@ bool result = false;
 void prompt ()
 {
 	char hostname[MAXSIZE];
-    char *username;
+    	char *username;
 
 	bzero(hostname, MAXSIZE);
 
