@@ -3,3 +3,5 @@ all: rshell
 			mv ./rshell ./bin/rshell
 rshell: ./src/main.cpp
 	g++ -Wall -Werror -ansi -pedantic -o rshell ./src/main.cpp
+clean:
+	rm -rf bin
