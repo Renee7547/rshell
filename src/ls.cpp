@@ -120,11 +120,8 @@ void printLong(const char *dirname)
 			<< getpwuid(s.st_uid)->pw_name << " "
 			<< getgrgid(s.st_gid)->gr_name << " "
 			<< setw(5) << s.st_size << " ";
-		//strcpy(time, ctime(&s.st_mtime));
-		//time[strlen(time) - 1] = '\0'; // delete \n
 		strftime(time, sizeof(time), "%b %d %H:%M", localtime(&s.st_mtime));
 		cout << time << " ";
-		//cout << dirname << endl;
 	}
 	else
 	{
@@ -188,50 +185,84 @@ void printF(char flag, const char *dirname)
 
 int main(int argc, char** argv)
 {
-	char path[PATH_MAX];
+	char path[PATH_MAX+1];
 	char flag = '0';
+	int num = 0;	// record the num of "-"
+	struct stat buf;
 
-	if (argc == 1)
+	for (int i = 1; i < argc; ++i)
 	{
-		strcpy(path, "./");	// current path
-		path[2] = '\0';	// add null to the end
-		printF('0', path);
-	}
-	
-	else
-	{
-		for (int i = 1; i < argc; ++i)
+		if (argv[i][0] == '-')
 		{
-			if (argv[i][0] == '-')
+			++ num;
+			for (unsigned int j = 1; j < strlen(argv[i]); ++j)
 			{
-				for (unsigned int j = 1; j < strlen(argv[i]); ++j)
+				if (argv[i][j] == 'a')
 				{
-					if (argv[i][j] == 'a')
-					{
-						flag = 'a';
-					}
-					else if (argv[i][j] == 'l')
-					{
-						flag = 'l';
-					}
-					else if (argv[i][j] == 'R')
-					{
-						flag = 'r';
-					}
-					else
-					{
-						cout << "invalid parameter: " << argv[i][j] << endl;
-						exit(1);
-					}
+					flag = 'a';
 				}
+				else if (argv[i][j] == 'l')
+				{
+					flag = 'l';
+				}
+				else if (argv[i][j] == 'R')
+				{
+					flag = 'r';
+				}
+				else
+				{
+					cout << "invalid parameter: " << argv[i][j] << endl;
+					exit(1);
+				}
+			}
+		}
+	}
+	// if there is no filename, then print out the info of curr dir
+	if ((num + 1) == argc)
+	{
+		strcpy(path, "./");	// current folder
+		path[2] = '\0';
+		is_dir(flag, path);
+		return 0;
+	}
+
+	// if contains filename
+	int k = 1;
+	do
+	{
+		if (argv[k][0] == '-')
+		{
+			++k;
+			continue;
+		}
+		else
+		{
+			strcpy(path, argv[k]);
+			if (stat(path, &buf) == -1)
+			{
+				perror("There was an error with stat. ");
+			}
+			if (S_ISDIR(buf.st_mode))
+			{
+				if (path[strlen(argv[k]) - 1] != '/')
+				{
+					path[strlen(argv[k])] = '/';
+					path[strlen(argv[k])+1] = '\0';
+				}
+				else
+				{
+					path[strlen(argv[k])] = '\0'
+				}
+				is_dir(flag, path);
 			}
 			else
 			{
-
+				IS_DIR(flag, path);
+				++k;
 			}
 		}
 
-	}
-	
+	}	while(k < argc)
+
 	return 0;
 }
