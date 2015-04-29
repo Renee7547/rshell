@@ -17,41 +17,13 @@
 
 #define MAXROWLEN 80 // the maximum length of a row
 
-int g_leave_len = MAXROWLEN; // the length left, for aligning
-int g_maxlen; // store the maximum len of filename
+unsigned int g_leave_len = MAXROWLEN; // the length left, for aligning
+unsigned int g_maxlen; // store the maximum len of filename
 
 using namespace std;
 
-// list files in directory called dirname
-void printNoflag(const char *dirname)
-{	
-	DIR *dirp;	// the directory
-	if(NULL == (dirp = opendir(dirname)))
-	{
-		perror("There was an error with opendir(). ");
-		exit(1);
-	}
-	struct dirent *filespecs; // each entry
-	errno = 0;
-	while(NULL != (filespecs = readdir(dirp)))
-	{
-		cout << filespecs->d_name << " ";
-	}
-	if(errno != 0)
-	{
-		perror("There was an error with readdir(). ");
-		exit(1);
-	}
-	cout << endl;
-	if(-1 == closedir(dirp))
-	{
-		perror("There was an error with closedir(). ");
-		exit(1);
-	}
-}
-
 // print out one filename
-void printSingle(const char *dirname)
+void printSingle(char *dirname)
 {
 	int len;
 	// if the current line cannot hold the filename, then go to the next line
@@ -99,9 +71,9 @@ void printAll(const char * dirname)
 	}
 }
 
-void printLong(const char *dirname)
+void printLong(struct stat s, char *dirname)
 {
-	struct stat s;
+	//struct stat s;
 	char time[32]; // store time
 
 	if (stat(dirname, &s) == 0)
@@ -134,11 +106,11 @@ void printRecur(char *dirname)
 
 }
 
-void printF(char flag, const char *dirname)
+void printF(char flag, char *dirname)
 {
 	unsigned int i;
 	int j;
-	//struct stat buf;
+	struct stat buf;
 	char name[NAME_MAX+1];
 	for (i = 0, j = 0; i < strlen(dirname); ++i)
 	{
@@ -166,12 +138,12 @@ void printF(char flag, const char *dirname)
 			// eliminate dot
 			if (name[0] != '.')
 			{
-				printLong(name);
+				printLong(buf, name);
 				cout << name << endl;
 			}
 			break;
 		case 'm': // flag -a and -l
-			printLong(name);
+			printLong(buf, name);
 			cout << name << endl;
 			break;
 		case 'r':	// flag -R
@@ -180,6 +152,84 @@ void printF(char flag, const char *dirname)
 		default:
 			break;
 	}
+}
+
+// preprocess the filenames
+void pre_handle(char flag, char *dirname)
+{
+	DIR *dirp;	// the directory
+	
+	int count = 0;	// record the file num
+	char filenames[256][PATH_MAX+1];
+	char temp[PATH_MAX+1];
+
+	// get the longest filename
+	if(NULL == (dirp = opendir(dirname)))
+	{
+		perror("There was an error with opendir(). ");
+		exit(1);
+	}
+	struct dirent *filespecs; // each entry
+	errno = 0;
+	while(NULL != (filespecs = readdir(dirp)))
+	{
+		// set g_maxlen as the longest filename
+		if (g_maxlen < strlen(filespecs->d_name))
+			g_maxlen = strlen(filespecs->d_name);
+		++count;
+	}
+	if(errno != 0)
+	{
+		perror("There was an error with readdir(). ");
+		exit(1);
+	}
+	cout << endl;
+	if(-1 == closedir(dirp))
+	{
+		perror("There was an error with closedir(). ");
+		exit(1);
+	}
+
+	if (count > 256)
+	{
+		perror("Too many files in this dir");
+	}
+	
+	int len = strlen(dirname);
+	// get all the filename in the dir
+	dirp = opendir(dirname);
+	for (int i = 0; i < count; ++i)
+	{
+		filespecs = readdir(dirp);
+		strncpy(filenames[i], dirname, len);
+		// add null to the end of filenames[i]
+		filenames[i][len] = '\0';
+		strcat(filenames[i], filespecs->d_name);
+		filenames[i][len + strlen(filespecs->d_name)] = '\0';
+	}
+
+	// sort the filenames, use bubble-sort
+	for (int i = 0; i < count - 1; ++i)
+	{
+		for (int j = 0; j < count - 1; ++j)
+		{
+			if (strcmp(filenames[j], filenames[j+1]) > 0)
+			{
+				strcpy(temp, filenames[j + 1]);
+				temp[strlen(filenames[j + 1])] = '\0';
+				strcpy(filenames[j + 1], filenames[j]);
+				filenames[j + 1][strlen(filenames[j])] = '\0';
+				strcpy(filenames[j], temp);
+				filenames[j][strlen(temp)] = '\0';
+			}
+		}
+		for (int i = 0; i < count; ++i)
+		{
+			printF(flag, filenames[i]);
+		}
+		closedir(dirp);
+	}
+
 }
 
 
@@ -222,7 +272,7 @@ int main(int argc, char** argv)
 	{
 		strcpy(path, "./");	// current folder
 		path[2] = '\0';
-		is_dir(flag, path);
+		pre_handle(flag, path);
 		return 0;
 	}
 
@@ -251,18 +301,18 @@ int main(int argc, char** argv)
 				}
 				else
 				{
-					path[strlen(argv[k])] = '\0'
+					path[strlen(argv[k])] = '\0';
 				}
-				is_dir(flag, path);
+				pre_handle(flag, path);
 			}
 			else
 			{
-				IS_DIR(flag, path);
+				pre_handle(flag, path);
 				++k;
 			}
 		}
 
-	}	while(k < argc)
+	}	while(k < argc);
 
 	return 0;
 }
