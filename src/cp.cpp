@@ -1,32 +1,25 @@
 #include <iostream>
 #include <fstream>
-#include <sys/stat.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/stat.h>
+#include "Timer.h"
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/types.h>
 
 using namespace std;
 
-bool exists(const char* file)
+bool file_exist(char *name)
 {
-	struct stat buffer;
-	/*int check = stat(file, &buffer);
-	if(check == -1)
-	{
-		perror("stat");
-		_exit(1);
-	}*/
-	return (stat (file, &buffer) == 0);
+	struct stat buf;
+	return (stat(name, &buf) == 0);
 }
 
-void method1(char* in, char* out)
+void method1(char *in, char *out)
 {
 	ifstream inf(in);
-	ofstream outf(out);	
-	
-	
+	ofstream outf(out);
 	char c;
 	while (inf.get(c))
 	{
@@ -35,7 +28,7 @@ void method1(char* in, char* out)
 	inf.close();
 }
 
-void method2(char* in, char* out)
+void method2(char *in, char *out)
 {
 	int fdnew;
 	int fdold;
@@ -49,7 +42,6 @@ void method2(char* in, char* out)
 		perror("open()");
 		_exit(1);
 	}
-
 	int sz;
 	char c[1];
 	if(-1 == (sz = read(fdold, c, sizeof(c))))
@@ -57,7 +49,6 @@ void method2(char* in, char* out)
 		perror("read()");
 		_exit(1);
 	}
-
 	while(sz > 0)
 	{
 		if(-1 == write(fdnew, c, sz))
@@ -70,9 +61,7 @@ void method2(char* in, char* out)
 			perror("read()");
 			_exit(1);
 		}
-	}
-	
-	if(-1 == close(fdnew))
+	}																				if(-1 == close(fdnew))
 	{
 		perror("close()");
 		_exit(1);
@@ -84,7 +73,7 @@ void method2(char* in, char* out)
 	}
 }
 
-void method3(char* in, char* out)
+void method3(char *in, char *out)
 {
 	int fdnew;
 	int fdold;
@@ -98,7 +87,6 @@ void method3(char* in, char* out)
 		perror("open()");
 		_exit(1);
 	}
-
 	int sz;
 	char c[BUFSIZ];
 	if(-1 == (sz = read(fdold, c, sizeof(c))))
@@ -106,7 +94,6 @@ void method3(char* in, char* out)
 		perror("read()");
 		_exit(1);
 	}
-
 	while(sz > 0)
 	{
 		if(-1 == write(fdnew, c, sz))
@@ -119,9 +106,7 @@ void method3(char* in, char* out)
 			perror("read()");
 			_exit(1);
 		}
-	}
-	
-	if(-1 == close(fdnew))
+	}																				if(-1 == close(fdnew))
 	{
 		perror("close()");
 		_exit(1);
@@ -131,21 +116,62 @@ void method3(char* in, char* out)
 		perror("close()");
 		_exit(1);
 	}
+
 }
 
-int main(int argc, char *argv[])
+int main (int argc, char **argv)
 {
-	if(argc < 3 || argc > 4)
+	Timer t;
+	double wc;
+	double ut;
+	double st;
+	if (argc == 3)
 	{
-		cout << "wrong number of arguments" << endl;
+		if (file_exist(argv[2]))
+		{
+			cout << "File already exists" << endl;
+			exit(1);
+		}
+		else
+			method3(argv[1], argv[2]);
 	}
+	else if (argc == 4)
+	{
+		if (file_exist(argv[2]))
+		{
+			cout << "File already exists" << endl;
+			exit(1);
+		}
+		else
+		{
+			t.start();
+			method1(argv[1], argv[2]);
+			t.elapsedWallclockTime(wc);
+			t.elapsedUserTime(ut);
+			t.elapsedSystemTime(st);
+			cout << "wc: " << wc << " ut: " << ut << " st: " << st << endl;
+			
+			t.start();
+			method2(argv[1], argv[2]);
+			t.elapsedWallclockTime(wc);
+			t.elapsedUserTime(ut);
+			t.elapsedSystemTime(st);
+			cout << "wc: " << wc << " ut: " << ut << " st: " << st << endl;
+
+			t.start();
+			method3(argv[1], argv[2]);
+			t.elapsedWallclockTime(wc);
+			t.elapsedUserTime(ut);
+			t.elapsedSystemTime(st);
+			cout << "wc: " << wc << " ut: " << ut << " st: " << st << endl;
 	
-	if(exists(argv[2]))
-	{
-		cout << "ERROR: output file already exists" << endl;
-		exit(1);
+		}
 	}
-	method2(argv[1], argv[2]);	
+	else 
+	{
+		cout << "please type in 3 or 4 arguments";
+	}
 	
 	return 0;
 }
+
