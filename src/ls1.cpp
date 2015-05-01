@@ -75,44 +75,75 @@ void printLong(struct stat s, char *dirname)
 	}
 	else
 	{
-		perror("There was an error with stat. ");
+		perror("There was an error with stat.9 ");
 		exit(1);
 	}
 }
 
-void printRecur(char *dirname)
+void process(struct stat s, char *dirname, char filenames[][PATH_MAX+1]);
+
+void printRecur(char *dirname, char filenames[][PATH_MAX+1])
 {
+	struct stat s;
+	
+	//for (int i = 0; i < )
+	//cout << filenames[][] << endl;
+	process(s, dirname, filenames);
+
+	/*
+	struct stat s;
 	DIR *dirp;
 	struct dirent *entry;
-	char *temp;
+	char temp[PATH_MAX+1];
+	char temp1[PATH_MAX+1];
 	if (NULL == (dirp = opendir(dirname)))
 	{
 		perror("There was an error with opendir(). ");
 		exit(1);
 	}
-	//const char *d_name;
 	errno = 0;
 	while (NULL != (entry = readdir(dirp)))
 	{
+		//char *temp;
+		// ignore the parent and current folder
 		if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
 			continue;
-		if (entry->d_type & DT_DIR)
+		cout << dirname << ":" << endl;
+		process(s, dirname);
+		if (S_ISDIR(s.st_mode))
+		//if (entry->d_type & DT_DIR)
 		{
-			cout << entry->d_name << "####:" << endl;
+			strcpy(temp1, dirname);
+			temp1[strlen(dirname)-1] = '\0';
+			cout << temp1  << ":" << endl;
 			
+			cout << endl;
 			strcpy(temp, dirname);
 			strcat(temp, "/");
 			strcat(temp, entry->d_name);
 			printRecur(temp);
 		}
-		else
-			cout << entry->d_name << endl;
+		else if (entry->d_type & DT_REG)
+		{
+			cout << dirname << ":" << endl
+				<< entry->d_name << endl;
+			return;
+			//cout << dirname << ":" << endl;
+			//cout << entry->d_name << endl;
+		}
+		else if (-1 == stat(entry->d_name, &s))
+		{
+			perror("There was an error with stat. ");
+			exit(1);
+		}
+
 	}
 	if (-1 == closedir(dirp))
 	{
 		perror("There was an error with closedir(). ");
 		exit(1);
 	}
+	*/
 }
 
 void printF(char *dirname)
@@ -134,28 +165,76 @@ void printF(char *dirname)
 	}
 	name[j] = '\0';
 
-
+	if (!flagA)
+	{
+		// ignore files starting with "."
+		if (name[0] != '.')
+		{
+			if (flagL)
+			{
+				printLong(buf, dirname);
+				cout << name << endl;
+			}
+			else if (!flagL)
+			{
+				printSingle(name);
+			}
+		}
+	}
+	else if (flagA)
+	{
+		if (flagL)
+		{
+			printLong(buf, dirname);
+			cout << name << endl;
+		}
+		else if (!flagL)
+		{
+			printSingle(name);
+		}
+	}
 }
 
 
 
 // preprocess the filenames
-void process(struct stat s, char *dirname, char name[][NAME_MAX+1])
+void process(struct stat s, char *dirname, char filenames[][PATH_MAX+1])
 {
 	DIR *dirp;	// the directory
 	
-	int count = 0;	// record the file num
+	int count = 0;
+	//int count = 0;	// record the file num
 	// at most 256 files
-	char filenames[256][PATH_MAX+1];
+	//char filenames[256][PATH_MAX+1];
 	char nodot[256][PATH_MAX+1];
 	char temp[PATH_MAX+1];
 	
 	int total = 0;
+	// while the dirname is not a directory
+	if (stat(dirname, &s) == 0)
+	{	
+		if (S_ISREG(s.st_mode))
+		{
+		//	cout << "hello" << endl;
+			printF(dirname);
+			
+			if (!flagL)
+			{
+				cout << endl;
+			}
+		//	cout << dirname;
+			return;
+		}
+	}
+	else
+	{
+		perror("The file doesn't exist.10 ");
+	}
 
 	// get the longest filename
 	if(NULL == (dirp = opendir(dirname)))
 	{
-		perror("There was an error with opendir(). ");
+		perror("There was an error with opendir().1 ");
 		exit(1);
 	}
 	struct dirent *filespecs; // each entry
@@ -169,12 +248,12 @@ void process(struct stat s, char *dirname, char name[][NAME_MAX+1])
 	}
 	if(errno != 0)
 	{
-		perror("There was an error with readdir(). ");
+		perror("There was an error with readdir().2 ");
 		exit(1);
 	}
 	if(-1 == closedir(dirp))
 	{
-		perror("There was an error with closedir(). ");
+		perror("There was an error with closedir().3 ");
 		exit(1);
 	}
 	if (count > 256)
@@ -188,7 +267,7 @@ void process(struct stat s, char *dirname, char name[][NAME_MAX+1])
 	//dirp = opendir(dirname);
 	if(NULL == (dirp = opendir(dirname)))
 	{
-		perror("There was an error with opendir(). ");
+		perror("There was an error with opendir().4 ");
 		exit(1);
 	}
 
@@ -198,7 +277,7 @@ void process(struct stat s, char *dirname, char name[][NAME_MAX+1])
 		strncpy(filenames[i], dirname, len);
 		// add null to the end of filenames[i]
 		filenames[i][len] = '\0';
-
+		// 
 		strcat(filenames[i], filespecs->d_name);
 		filenames[i][len + strlen(filespecs->d_name)] = '\0';
 	}
@@ -224,7 +303,7 @@ void process(struct stat s, char *dirname, char name[][NAME_MAX+1])
 		}
 	}
 
-	//char name[256][NAME_MAX+1];
+	char name[256][NAME_MAX+1];
 	int start = 0;
 	for (int i = 0; i < count; ++i)
 	{
@@ -251,7 +330,7 @@ void process(struct stat s, char *dirname, char name[][NAME_MAX+1])
 			{
 				if (-1 == stat(filenames[i], &s))
 				{
-					perror("There was an error with stat. ");
+					perror("There was an error with stat.5 ");
 					exit(1);
 				}
 				total += s.st_blocks;
@@ -259,7 +338,7 @@ void process(struct stat s, char *dirname, char name[][NAME_MAX+1])
 			cout << "total " << total/2 << endl;
 			for (i = 0; i < count; ++i)
 			{
-				//printF(filenames[i]);
+				printF(filenames[i]);
 			}
 		}
 		else
@@ -272,7 +351,7 @@ void process(struct stat s, char *dirname, char name[][NAME_MAX+1])
 			{
 				if (-1 == stat(filenames[i], &s))
 				{
-					perror("There was an error with stat1. ");
+					perror("There was an error with stat.6 ");
 					exit(0);
 				}
 				if (name[i][0] != '.')
@@ -287,7 +366,7 @@ void process(struct stat s, char *dirname, char name[][NAME_MAX+1])
 			{
 				if (-1 == stat(nodot[i], &s))
 				{
-					perror("There was an error with stat2. ");
+					perror("There was an error with stat.7 ");
 					exit(1);
 				}
 				total += s.st_blocks;
@@ -300,7 +379,7 @@ void process(struct stat s, char *dirname, char name[][NAME_MAX+1])
 			}
 		}
 	}
-	else
+	else if (!flagL)
 	{
 		for (i = 0; i < count - 1; ++i)
 		{
@@ -314,6 +393,7 @@ void process(struct stat s, char *dirname, char name[][NAME_MAX+1])
 
 int main(int argc, char** argv)
 {
+	char filenames[256][PATH_MAX+1];
 	char path[PATH_MAX+1];
 	int num = 0;	// record the num of "-"
 	struct stat buf;
@@ -351,14 +431,20 @@ int main(int argc, char** argv)
 	{
 		strcpy(path, "./");	// current folder
 		path[2] = '\0';
-		process(buf, path, name);
+		if (flagR)
+		{
+			printRecur(path, filenames);
+		}
+		else
+		{
+			process(buf, path, filenames);
+		}
 		return 0;
 	}
 	
 	// if contains filename
 	else
 	{
-
 		int k = 1;
 		while (k  < argc)
 		{
@@ -367,13 +453,13 @@ int main(int argc, char** argv)
 				++k;
 				continue;
 			}
-			else
+			else	// getting filename
 			{
 				strcpy(path, argv[k]);
 				// tell whether it's a filename
 				if (stat(path, &buf) == -1)
 				{
-					perror("There was an error with stat. ");
+					perror("There was an error with stat.88888888 ");
 					exit(1);
 				}
 
@@ -390,13 +476,22 @@ int main(int argc, char** argv)
 					{
 						path[strlen(argv[k])] = '\0';
 					}
-					process(buf, path, name);
-					++k;
+					if (flagR)
+					{
+						printRecur(path, filenames);
+						++k;
+					}
+					else if (!flagR)
+					{
+						process(buf, path, filenames);
+						++k;
+					}
 				}
 				// if the getting path is not a dir
 				else
 				{
-					process(buf, path, name);
+					//cout << path << endl;
+					process(buf, path, filenames);
 					++k;
 				}
 			}
