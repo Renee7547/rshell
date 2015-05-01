@@ -20,9 +20,14 @@
 unsigned int g_leave_len = MAXROWLEN; // the length left, for aligning
 unsigned int g_maxlen; // store the maximum len of filename
 
+bool flagA = false;
+bool flagL = false;
+bool flagR = false;
+
 using namespace std;
 
 // print out one filename
+// make the filenames align in column
 void printSingle(char *dirname)
 {
 	int len;
@@ -35,6 +40,7 @@ void printSingle(char *dirname)
 	len = strlen(dirname);
 	len = g_maxlen - len;
 	cout << dirname;
+	// output the extra spaces
 	for (int i = 0; i < len; ++i)
 	{
 		cout << " ";
@@ -42,33 +48,6 @@ void printSingle(char *dirname)
 	cout << " ";
 	// leave two spaces
 	g_leave_len -= g_maxlen + 2;
-}
-
-void printAll(const char * dirname)
-{
-	DIR *dirp;	// the directory
-	if(NULL == (dirp = opendir(dirname)))
-	{
-		perror("There was an error with opendir(). ");
-		exit(1);
-	}
-	struct dirent *filespecs; // each entry
-	errno = 0;
-	while(NULL != (filespecs = readdir(dirp)))
-	{
-		cout << filespecs->d_name << " ";
-	}
-	if(errno != 0)
-	{
-		perror("There was an error with readdir(). ");
-		exit(1);
-	}
-	cout << endl;
-	if(-1 == closedir(dirp))
-	{
-		perror("There was an error with closedir(). ");
-		exit(1);
-	}
 }
 
 void printLong(struct stat s, char *dirname)
@@ -106,7 +85,7 @@ void printRecur(char *dirname)
 
 }
 
-void printF(char flag, char *dirname)
+void printF(char *dirname)
 {
 	unsigned int i;
 	int j;
@@ -123,6 +102,29 @@ void printF(char flag, char *dirname)
 	}
 	name[j] = '\0';
 	
+	if (!(flagL||flagA||flagR))
+	{
+		if (name[0] != '.')
+		{
+			printSingle(name);
+		}
+	}
+
+	if (flagL)
+	{
+		
+	}
+
+	if (flagA)
+	{
+
+	}
+	
+	if (flagR)
+	{
+
+	}
+
 	switch(flag)
 	{
 		case '0':	// no flag
@@ -150,16 +152,16 @@ void printF(char flag, char *dirname)
 			printRecur(name);
 			break;
 		default:
-			break;
-	}
+	
 }
 
 // preprocess the filenames
-void pre_handle(char flag, char *dirname)
+void file_sort(char flag, char *dirname)
 {
 	DIR *dirp;	// the directory
 	
 	int count = 0;	// record the file num
+	// at most 256 files
 	char filenames[256][PATH_MAX+1];
 	char temp[PATH_MAX+1];
 
@@ -223,20 +225,18 @@ void pre_handle(char flag, char *dirname)
 				filenames[j][strlen(temp)] = '\0';
 			}
 		}
-		for (int i = 0; i < count; ++i)
-		{
-			printF(flag, filenames[i]);
-		}
-		closedir(dirp);
 	}
-
+	for (int i = 0; i < count; ++i)
+	{
+		printF(flag, filenames[i]);
+	}	
+	closedir(dirp);
 }
 
 
 int main(int argc, char** argv)
 {
 	char path[PATH_MAX+1];
-	char flag = '0';
 	int num = 0;	// record the num of "-"
 	struct stat buf;
 
@@ -249,15 +249,15 @@ int main(int argc, char** argv)
 			{
 				if (argv[i][j] == 'a')
 				{
-					flag = 'a';
+					flagA = true;
 				}
 				else if (argv[i][j] == 'l')
 				{
-					flag = 'l';
+					flagL = true;
 				}
 				else if (argv[i][j] == 'R')
 				{
-					flag = 'r';
+					flagR = true;
 				}
 				else
 				{
@@ -272,47 +272,48 @@ int main(int argc, char** argv)
 	{
 		strcpy(path, "./");	// current folder
 		path[2] = '\0';
-		pre_handle(flag, path);
+		fileSort(path);
 		return 0;
 	}
-
+	
 	// if contains filename
-	int k = 1;
-	do
+	else
 	{
-		if (argv[k][0] == '-')
+		int k = 1;
+		do
 		{
-			++k;
-			continue;
-		}
-		else
-		{
-			strcpy(path, argv[k]);
-			if (stat(path, &buf) == -1)
+			if (argv[k][0] == '-')
 			{
-				perror("There was an error with stat. ");
-			}
-			if (S_ISDIR(buf.st_mode))
-			{
-				if (path[strlen(argv[k]) - 1] != '/')
-				{
-					path[strlen(argv[k])] = '/';
-					path[strlen(argv[k])+1] = '\0';
-				}
-				else
-				{
-					path[strlen(argv[k])] = '\0';
-				}
-				pre_handle(flag, path);
+				++k;
+				continue;
 			}
 			else
 			{
-				pre_handle(flag, path);
-				++k;
+				strcpy(path, argv[k]);
+				if (stat(path, &buf) == -1)
+				{
+					perror("There was an error with stat. ");
+				}
+				if (S_ISDIR(buf.st_mode))
+				{
+					if (path[strlen(argv[k]) - 1] != '/')
+					{
+						path[strlen(argv[k])] = '/';
+						path[strlen(argv[k])+1] = '\0';
+					}
+					else
+					{
+						path[strlen(argv[k])] = '\0';
+					}
+					fileSort(flag, path);
+				}
+				else
+				{
+					file_sort(flag, path);
+					++k;
+				}
 			}
-		}
-
-	}	while(k < argc);
-
+		}	while(k < argc);
+	}
 	return 0;
 }
