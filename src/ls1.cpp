@@ -134,70 +134,13 @@ void printF(char *dirname)
 	}
 	name[j] = '\0';
 
-	if (flagA)
-	{
-		if (flagL)
-		{
-			if (flagR)
-			{
-				//printLong(buf, name);
-				printRecur(dirname);
-			}
-			else if (!flagR)
-			{
-				//cout << name << " " << dirname << endl;
-				printLong(buf, dirname);
-				cout << name << endl;
-			}
-		}
-		else if (!flagL)
-		{
-			if (flagR)
-			{
-				printRecur(dirname);
-			}
-			else if (!flagR)
-			{
-				printSingle(name);
-			}
-		}
-	}
-	else if (!flagA)
-	{
-		if (name[0] != '.')
-		{
-			if (flagL)
-			{
-				if (flagR)
-				{
-					printRecur(dirname);
-				}
-				else if (!flagR)
-				{
-					printLong(buf, dirname);
-					cout << name << endl;
-				}
-			}
-			else if (!flagL)
-			{
-				if (flagR)
-				{
-					printRecur(dirname);
-				}
-				// no param
-				else if (!flagR)
-				{
-					printSingle(name);
-				}
-			}
-		}
-	}
+
 }
 
 
 
 // preprocess the filenames
-void file_sort(struct stat s, char *dirname, char name[][NAME_MAX+1])
+void process(struct stat s, char *dirname, char name[][NAME_MAX+1])
 {
 	DIR *dirp;	// the directory
 	
@@ -316,7 +259,7 @@ void file_sort(struct stat s, char *dirname, char name[][NAME_MAX+1])
 			cout << "total " << total/2 << endl;
 			for (i = 0; i < count; ++i)
 			{
-				printF(filenames[i]);
+				//printF(filenames[i]);
 			}
 		}
 		else
@@ -408,7 +351,7 @@ int main(int argc, char** argv)
 	{
 		strcpy(path, "./");	// current folder
 		path[2] = '\0';
-		file_sort(buf, path, name);
+		process(buf, path, name);
 		return 0;
 	}
 	
@@ -447,13 +390,13 @@ int main(int argc, char** argv)
 					{
 						path[strlen(argv[k])] = '\0';
 					}
-					file_sort(buf, path, name);
+					process(buf, path, name);
 					++k;
 				}
 				// if the getting path is not a dir
 				else
 				{
-					file_sort(buf, path, name);
+					process(buf, path, name);
 					++k;
 				}
 			}
