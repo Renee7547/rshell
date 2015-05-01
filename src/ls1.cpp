@@ -76,14 +76,44 @@ void printLong(struct stat s, char *dirname)
 	else
 	{
 		perror("There was an error with stat. ");
+		exit(1);
 	}
 }
 
 void printRecur(char *dirname)
 {
-
+	DIR *dirp;
+	struct dirent *entry;
+	char *temp;
+	if (NULL == (dirp = opendir(dirname)))
+	{
+		perror("There was an error with opendir(). ");
+		exit(1);
+	}
+	//const char *d_name;
+	errno = 0;
+	while (NULL != (entry = readdir(dirp)))
+	{
+		if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
+			continue;
+		if (entry->d_type & DT_DIR)
+		{
+			cout << entry->d_name << "####:" << endl;
+			
+			strcpy(temp, dirname);
+			strcat(temp, "/");
+			strcat(temp, entry->d_name);
+			printRecur(temp);
+		}
+		else
+			cout << entry->d_name << endl;
+	}
+	if (-1 == closedir(dirp))
+	{
+		perror("There was an error with closedir(). ");
+		exit(1);
+	}
 }
-
 
 void printF(char *dirname)
 {
@@ -111,7 +141,7 @@ void printF(char *dirname)
 			if (flagR)
 			{
 				//printLong(buf, name);
-				//printRecur();
+				printRecur(dirname);
 			}
 			else if (!flagR)
 			{
@@ -124,6 +154,7 @@ void printF(char *dirname)
 		{
 			if (flagR)
 			{
+				printRecur(dirname);
 			}
 			else if (!flagR)
 			{
@@ -139,6 +170,7 @@ void printF(char *dirname)
 			{
 				if (flagR)
 				{
+					printRecur(dirname);
 				}
 				else if (!flagR)
 				{
@@ -150,6 +182,7 @@ void printF(char *dirname)
 			{
 				if (flagR)
 				{
+					printRecur(dirname);
 				}
 				// no param
 				else if (!flagR)
@@ -161,8 +194,10 @@ void printF(char *dirname)
 	}
 }
 
+
+
 // preprocess the filenames
-void file_sort(struct stat s, char *dirname)
+void file_sort(struct stat s, char *dirname, char name[][NAME_MAX+1])
 {
 	DIR *dirp;	// the directory
 	
@@ -202,11 +237,18 @@ void file_sort(struct stat s, char *dirname)
 	if (count > 256)
 	{
 		perror("Too many files in this dir");
+		exit(1);
 	}
 	
 	int len = strlen(dirname);
 	// get all the filename in the dir
-	dirp = opendir(dirname);
+	//dirp = opendir(dirname);
+	if(NULL == (dirp = opendir(dirname)))
+	{
+		perror("There was an error with opendir(). ");
+		exit(1);
+	}
+
 	for (int i = 0; i < count; ++i)
 	{
 		filespecs = readdir(dirp);
@@ -226,6 +268,7 @@ void file_sort(struct stat s, char *dirname)
 			if (strcmp(filenames[j], filenames[j+1]) > 0)
 			{
 				// assign temp with a[j+1]
+				
 				strcpy(temp, filenames[j+1]);
 				temp[strlen(filenames[j+1])] = '\0';
 				// assign a[j] with a[j+1]
@@ -236,6 +279,23 @@ void file_sort(struct stat s, char *dirname)
 				filenames[j][strlen(temp)] = '\0';
 			}
 		}
+	}
+
+	//char name[256][NAME_MAX+1];
+	int start = 0;
+	for (int i = 0; i < count; ++i)
+	{
+		for (int j = 0; j < strlen(filenames[i]); ++j)
+		{
+			if (filenames[i][j] == '/')
+			{
+				start = 0;
+				continue;
+			}
+			name[i][start] = filenames[i][j];
+			++start;
+		}
+		name[i][start] = '\0';
 	}
 	// print total for -l
 	int i = 0;
@@ -261,23 +321,6 @@ void file_sort(struct stat s, char *dirname)
 		}
 		else
 		{	
-			char name[256][NAME_MAX+1];
-			int start = 0;
-			for (i = 0; i < count; ++i)
-			{
-				for (int j = 0; j < strlen(filenames[i]); ++j)
-				{
-					if (filenames[i][j] == '/')
-					{
-						start = 0;
-						continue;
-					}
-					name[i][start] = filenames[i][j];
-					++start;
-				}
-				name[i][start] = '\0';
-			}
-
 			total = 0;
 			char nodot[256][NAME_MAX+1];
 			int j = 0;
@@ -331,6 +374,7 @@ int main(int argc, char** argv)
 	char path[PATH_MAX+1];
 	int num = 0;	// record the num of "-"
 	struct stat buf;
+	char name[256][NAME_MAX+1];
 
 	for (int i = 1; i < argc; ++i)
 	{
@@ -364,13 +408,14 @@ int main(int argc, char** argv)
 	{
 		strcpy(path, "./");	// current folder
 		path[2] = '\0';
-		file_sort(buf, path);
+		file_sort(buf, path, name);
 		return 0;
 	}
 	
 	// if contains filename
 	else
 	{
+
 		int k = 1;
 		while (k  < argc)
 		{
@@ -386,6 +431,7 @@ int main(int argc, char** argv)
 				if (stat(path, &buf) == -1)
 				{
 					perror("There was an error with stat. ");
+					exit(1);
 				}
 
 				// if the getting path is a dir
@@ -401,13 +447,13 @@ int main(int argc, char** argv)
 					{
 						path[strlen(argv[k])] = '\0';
 					}
-					file_sort(buf, path);
+					file_sort(buf, path, name);
 					++k;
 				}
 				// if the getting path is not a dir
 				else
 				{
-					file_sort(buf, path);
+					file_sort(buf, path, name);
 					++k;
 				}
 			}
