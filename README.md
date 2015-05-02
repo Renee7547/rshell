@@ -23,6 +23,7 @@ They are in rshell/tests
 
 ## Issues
 1. There are some issues with recursively sorting(-R).
+	I will fix it as soon as possible.
 2. Unlike the real bash, the files are listed ascending from left to right.
 
 ## Bugs have been solved
