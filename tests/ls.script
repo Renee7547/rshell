@@ -1,0 +1,758 @@
+Script started on Fri 01 May 2015 10:33:35 PM PDT
+]0;renee@renee-VPCEG27YC: ~/cs100/rshell/testsrenee@renee-VPCEG27YC:~/cs100/rshell/tests$ cd ..
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/[K[K[K[K#no param
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls
+[94m[94m[94mLICENSE   [0mMakefile  [0mREADME.md [0m[94mbin       [0mls.script [0m[94msrc       [0m[94mtest      [0m[94m
+test1     [0m[94mtests     [0m
+[0m]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ #-l
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ #-lbin/ls -l
+total 48
+[0m-rw-rw-r--  1 renee renee  1474 Apr 28 00:03 [0mLICENSE
+[0m-rw-rw-r--  1 renee renee   249 Apr 28 00:39 [0mMakefile
+[0m-rw-rw-r--  1 renee renee   929 May 01 20:55 [0mREADME.md
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:28 [0m[94mbin
+[0m-rw-rw-r--  1 renee renee 13019 May 01 20:47 [0mls.script
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:30 [0m[94msrc
+[94m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94mtest
+[94m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:50 [0m[94mtest1
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:33 [0m[94mtests
+[0m]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls -l[1Pl
+There was an error with stat.8 : No such file or directory
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ #-a
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ #-abin/ls l[Ka-a
+[94m[100m.         [0m[94m[100m..        [0m[94m[100m.git      [0mLICENSE   [0mMakefile  [0mREADME.md [0m[94mbin       [0m
+ls.script [0m[94msrc       [0m[94mtest      [0m[94mtest1     [0m[94mtests     [0m
+[0m]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls -a[1Pa
+There was an error with stat.8 : No such file or directory
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ #cobinationmbination[C[C[C[C[C[C[C[C
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin.ls -a -l
+bin.ls: command not found
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin.ls -a -l[1P[1@/
+total 60
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:28 [0m[94m.
+[94m[100m[0mdrwxrwxr-x  4 renee renee  4096 Apr 28 00:03 [0m[94m..
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:29 [0m[94m.git
+[0m-rw-rw-r--  1 renee renee  1474 Apr 28 00:03 [0mLICENSE
+[0m-rw-rw-r--  1 renee renee   249 Apr 28 00:39 [0mMakefile
+[0m-rw-rw-r--  1 renee renee   929 May 01 20:55 [0mREADME.md
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:28 [0m[94mbin
+[0m-rw-rw-r--  1 renee renee 13019 May 01 20:47 [0mls.script
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:30 [0m[94msrc
+[94m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94mtest
+[94m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:50 [0m[94mtest1
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:33 [0m[94mtests
+[0m]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls -a -l[C[C[C -a
+total 60
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:28 [0m[94m.
+[94m[100m[0mdrwxrwxr-x  4 renee renee  4096 Apr 28 00:03 [0m[94m..
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:29 [0m[94m.git
+[0m-rw-rw-r--  1 renee renee  1474 Apr 28 00:03 [0mLICENSE
+[0m-rw-rw-r--  1 renee renee   249 Apr 28 00:39 [0mMakefile
+[0m-rw-rw-r--  1 renee renee   929 May 01 20:55 [0mREADME.md
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:28 [0m[94mbin
+[0m-rw-rw-r--  1 renee renee 13019 May 01 20:47 [0mls.script
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:30 [0m[94msrc
+[94m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94mtest
+[94m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:50 [0m[94mtest1
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:33 [0m[94mtests
+[0m]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls -a -l -a[1P[1P
+total 60
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:28 [0m[94m.
+[94m[100m[0mdrwxrwxr-x  4 renee renee  4096 Apr 28 00:03 [0m[94m..
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:29 [0m[94m.git
+[0m-rw-rw-r--  1 renee renee  1474 Apr 28 00:03 [0mLICENSE
+[0m-rw-rw-r--  1 renee renee   249 Apr 28 00:39 [0mMakefile
+[0m-rw-rw-r--  1 renee renee   929 May 01 20:55 [0mREADME.md
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:28 [0m[94mbin
+[0m-rw-rw-r--  1 renee renee 13019 May 01 20:47 [0mls.script
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:30 [0m[94msrc
+[94m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94mtest
+[94m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:50 [0m[94mtest1
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:33 [0m[94mtests
+[0m]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls  -l -al[1P-al[1P-al[1Pal
+total 60
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:28 [0m[94m.
+[94m[100m[0mdrwxrwxr-x  4 renee renee  4096 Apr 28 00:03 [0m[94m..
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:29 [0m[94m.git
+[0m-rw-rw-r--  1 renee renee  1474 Apr 28 00:03 [0mLICENSE
+[0m-rw-rw-r--  1 renee renee   249 Apr 28 00:39 [0mMakefile
+[0m-rw-rw-r--  1 renee renee   929 May 01 20:55 [0mREADME.md
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:28 [0m[94mbin
+[0m-rw-rw-r--  1 renee renee 13019 May 01 20:47 [0mls.script
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:30 [0m[94msrc
+[94m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94mtest
+[94m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:50 [0m[94mtest1
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:33 [0m[94mtests
+[0m]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls  -al[1Pl[Ca
+total 60
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:28 [0m[94m.
+[94m[100m[0mdrwxrwxr-x  4 renee renee  4096 Apr 28 00:03 [0m[94m..
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:29 [0m[94m.git
+[0m-rw-rw-r--  1 renee renee  1474 Apr 28 00:03 [0mLICENSE
+[0m-rw-rw-r--  1 renee renee   249 Apr 28 00:39 [0mMakefile
+[0m-rw-rw-r--  1 renee renee   929 May 01 20:55 [0mREADME.md
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:28 [0m[94mbin
+[0m-rw-rw-r--  1 renee renee 13019 May 01 20:47 [0mls.script
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:30 [0m[94msrc
+[94m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94mtest
+[94m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:50 [0m[94mtest1
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:33 [0m[94mtests
+[0m]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls  -la -al
+total 60
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:28 [0m[94m.
+[94m[100m[0mdrwxrwxr-x  4 renee renee  4096 Apr 28 00:03 [0m[94m..
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:29 [0m[94m.git
+[0m-rw-rw-r--  1 renee renee  1474 Apr 28 00:03 [0mLICENSE
+[0m-rw-rw-r--  1 renee renee   249 Apr 28 00:39 [0mMakefile
+[0m-rw-rw-r--  1 renee renee   929 May 01 20:55 [0mREADME.md
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:28 [0m[94mbin
+[0m-rw-rw-r--  1 renee renee 13019 May 01 20:47 [0mls.script
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:30 [0m[94msrc
+[94m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94mtest
+[94m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:50 [0m[94mtest1
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:33 [0m[94mtests
+[0m]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls  -la -al    -a
+total 60
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:28 [0m[94m.
+[94m[100m[0mdrwxrwxr-x  4 renee renee  4096 Apr 28 00:03 [0m[94m..
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:29 [0m[94m.git
+[0m-rw-rw-r--  1 renee renee  1474 Apr 28 00:03 [0mLICENSE
+[0m-rw-rw-r--  1 renee renee   249 Apr 28 00:39 [0mMakefile
+[0m-rw-rw-r--  1 renee renee   929 May 01 20:55 [0mREADME.md
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:28 [0m[94mbin
+[0m-rw-rw-r--  1 renee renee 13019 May 01 20:47 [0mls.script
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:30 [0m[94msrc
+[94m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94mtest
+[94m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:50 [0m[94mtest1
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:33 [0m[94mtests
+[0m]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls  -la -al    -a      -l - [Kl -a -a - [Kl -a -a -a -a -l -l  -als
+invalid parameter: s
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls  -la -al    -a      -l -l -a -a -l -a -a -a -a -l -l  -als[K
+total 60
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:28 [0m[94m.
+[94m[100m[0mdrwxrwxr-x  4 renee renee  4096 Apr 28 00:03 [0m[94m..
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:29 [0m[94m.git
+[0m-rw-rw-r--  1 renee renee  1474 Apr 28 00:03 [0mLICENSE
+[0m-rw-rw-r--  1 renee renee   249 Apr 28 00:39 [0mMakefile
+[0m-rw-rw-r--  1 renee renee   929 May 01 20:55 [0mREADME.md
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:28 [0m[94mbin
+[0m-rw-rw-r--  1 renee renee 13019 May 01 20:47 [0mls.script
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:30 [0m[94msrc
+[94m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94mtest
+[94m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:50 [0m[94mtest1
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:33 [0m[94mtests
+[0m]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls  -la -al    -a      -l -l -a -a -l -a -a -a -a -l -l  -alasd[K[Kllllllllaaaaaaaaaaaa
+total 60
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:28 [0m[94m.
+[94m[100m[0mdrwxrwxr-x  4 renee renee  4096 Apr 28 00:03 [0m[94m..
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:29 [0m[94m.git
+[0m-rw-rw-r--  1 renee renee  1474 Apr 28 00:03 [0mLICENSE
+[0m-rw-rw-r--  1 renee renee   249 Apr 28 00:39 [0mMakefile
+[0m-rw-rw-r--  1 renee renee   929 May 01 20:55 [0mREADME.md
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:28 [0m[94mbin
+[0m-rw-rw-r--  1 renee renee 13019 May 01 20:47 [0mls.script
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:30 [0m[94msrc
+[94m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94mtest
+[94m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:50 [0m[94mtest1
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:33 [0m[94mtests
+[0m]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ #invalid flag
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ #invalid flagbin/ls  -la -al    -a      -l -l -a -a -l -a -a -a -a -l -l  -alallllllllaaaaaaaaaaaa[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Ksdad
+invalid parameter: s
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ #with filename()n)o) )f)o)l)d)e)r)
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ #with filename(no folder)[8Pbin/ls  -la -sdad[K[K[K[K[K[K[K[K[KREADME.md 
+README.md [0m
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls  README.md -l
+[0m-rw-rw-r--  1 renee renee   929 May 01 20:55 [0mREADME.md
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls  README.md -l[1@-[1@a[1@ 
+[0m-rw-rw-r--  1 renee renee   929 May 01 20:55 [0mREADME.md
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls  -a README.md -l  -a
+[0m-rw-rw-r--  1 renee renee   929 May 01 20:55 [0mREADME.md
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls  -a README.md -l  -a[C[K[K[K[K[K[K[K
+README.md [0m
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls  -a README.mdl README.md
+[0m-rw-rw-r--  1 renee renee   929 May 01 20:55 [0mREADME.md
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ #with folder [K name [K()n)o) )f)i)l)e) )n)a)e)m)[1P)[1P)m)e)
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ #with folder name(no file name)[10Pbin/ls  -al README.md[K[K[K[K[K[K[K[K[K[K [K[K[K[Ktest
+[94m[94mnew.cpp  [0mnewf.cpp [0m[94mnewfile1 [0m[94mnewfile2 [0m[94mnewfile3 [0m[94mnewfile4 [0m[94mnewfile5 [0m[94mnewfile6 [0m[94m
+newfile7 [0m[94mnewfile8 [0m
+[0m]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls  test -a
+[94m[100m.        [0m[94m[100m..       [0mnew.cpp  [0mnewf.cpp [0m[94mnewfile1 [0m[94mnewfile2 [0m[94mnewfile3 [0m[94mnewfile4 [0m[94m
+newfile5 [0m[94mnewfile6 [0m[94mnewfile7 [0m[94mnewfile8 [0m
+[0m]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls  test -al
+total 48
+[94m[100m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94m.
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:28 [0m[94m..
+[0m-rw-rw-r--  1 renee renee    19 Apr 30 19:59 [0mnew.cpp
+[0m-rw-rw-r--  1 renee renee    19 Apr 30 19:59 [0mnewf.cpp
+[94m[0mdrwxrwxr-x  3 renee renee  4096 May 01 03:25 [0m[94mnewfile1
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile2
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile3
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile4
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:58 [0m[94mnewfile5
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile6
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile7
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile8
+[0m]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls  test -al[1@-[1@l[1@ 
+total 48
+[94m[100m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94m.
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:28 [0m[94m..
+[0m-rw-rw-r--  1 renee renee    19 Apr 30 19:59 [0mnew.cpp
+[0m-rw-rw-r--  1 renee renee    19 Apr 30 19:59 [0mnewf.cpp
+[94m[0mdrwxrwxr-x  3 renee renee  4096 May 01 03:25 [0m[94mnewfile1
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile2
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile3
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile4
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:58 [0m[94mnewfile5
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile6
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile7
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile8
+[0m]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ #mre[K[Kore the [K[Kan one filenames
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ #more than one filenames[5Pbin/ls  -l test -al[1P -al[1P -al[1P -al[1P -al[1P-al[1Pal[1Pl[KREADME.md Makefile 
+[0m-rw-rw-r--  1 renee renee   929 May 01 20:55 [0mREADME.md
+
+[0m-rw-rw-r--  1 renee renee   249 Apr 28 00:39 [0mMakefile
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls  -l README.md Makefile [C-a
+[0m-rw-rw-r--  1 renee renee   929 May 01 20:55 [0mREADME.md
+
+[0m-rw-rw-r--  1 renee renee   249 Apr 28 00:39 [0mMakefile
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls  -l README.md Makefile -a[K#more than one [K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kbin/ls  -l README.md Makefile -a ls.script [K[K[K[K[K[K[K[K[K[KLICENSE r[KREADME.md LICENSE  Makefile README.md Makefile LICENSE LICENSE README.md 
+[0m-rw-rw-r--  1 renee renee   929 May 01 20:55 [0mREADME.md
+
+[0m-rw-rw-r--  1 renee renee   249 Apr 28 00:39 [0mMakefile
+
+[0m-rw-rw-r--  1 renee renee  1474 Apr 28 00:03 [0mLICENSE
+
+[0m-rw-rw-r--  1 renee renee   929 May 01 20:55 [0mREADME.md
+
+[0m-rw-rw-r--  1 renee renee  1474 Apr 28 00:03 [0mLICENSE
+
+[0m-rw-rw-r--  1 renee renee   249 Apr 28 00:39 [0mMakefile
+
+[0m-rw-rw-r--  1 renee renee   929 May 01 20:55 [0mREADME.md
+
+[0m-rw-rw-r--  1 renee renee   249 Apr 28 00:39 [0mMakefile
+
+[0m-rw-rw-r--  1 renee renee  1474 Apr 28 00:03 [0mLICENSE
+
+[0m-rw-rw-r--  1 renee renee  1474 Apr 28 00:03 [0mLICENSE
+
+[0m-rw-rw-r--  1 renee renee   929 May 01 20:55 [0mREADME.md
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ #more than on foldes()[C[K[Ke foldes[C[C[C[C[C[C[C
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ #more than one foldesbin/ls  -l README.md Makefile -a LICENSE README.md LICENSE MMakefile README.md Makefile LICENSE LICENSE README.md [A[38P#more than one foldes
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Kbin/ls test test1 ttes[K[K[Kesy[Kts test/newfii[Kle1 test/newfile2 test/ne wfile3 test [K/ [Knewfile4 test [K/newfile5 test [K/newfile6 test1 test
+
+test:
+[94m[94mnew.cpp  [0mnewf.cpp [0m[94mnewfile1 [0m[94mnewfile2 [0m[94mnewfile3 [0m[94mnewfile4 [0m[94mnewfile5 [0m[94mnewfile6 [0m[94m
+newfile7 [0m[94mnewfile8 [0m
+[0m
+test1:
+[94m[94mnew.cpp  [0mnewf.cpp [0m[94mnewfile1 [0m[94mnewfile2 [0m[94mnewfile3 [0m[94mnewfile4 [0m[94m
+newfile5 [0m[94mnewfile6 [0m[94mnewfile7 [0m[94mnewfile8 [0m
+[0m
+tests:
+[94m[94mexec.script [0mls.script   [0m
+[0m
+test/newfile1:
+[94m[94m[94mhello       [0m
+[0m
+test/newfile2:
+[94m[94m
+[0m
+test/newfile3:
+[94m[94m
+[0m
+test/newfile4:
+[94m[94m
+[0m
+test/newfile5:
+[94m[94m
+[0m
+test/newfile6:
+[94m[94m
+[0m
+test1:
+[94m[94m
+new.cpp     [0mnewf.cpp    [0m[94mnewfile1    [0m[94mnewfile2    [0m[94mnewfile3    [0m[94mnewfile4    [0m[94m
+newfile5    [0m[94mnewfile6    [0m[94mnewfile7    [0m[94mnewfile8    [0m
+[0m
+test:
+[94m[94mnew.cpp     [0mnewf.cpp    [0m[94m
+newfile1    [0m[94mnewfile2    [0m[94mnewfile3    [0m[94mnewfile4    [0m[94mnewfile5    [0m[94mnewfile6    [0m[94m
+newfile7    [0m[94mnewfile8    [0m
+[0m]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls test test1 tests test/newfile1 test/newfile2 test/newwfile3 test/newfile4 test/newfile5 test/newfile6 test1 test -a
+
+test:
+[94m[100m.        [0m[94m[100m..       [0mnew.cpp  [0mnewf.cpp [0m[94mnewfile1 [0m[94mnewfile2 [0m[94mnewfile3 [0m[94mnewfile4 [0m[94m
+newfile5 [0m[94mnewfile6 [0m[94mnewfile7 [0m[94mnewfile8 [0m
+[0m
+test1:
+[94m[100m.        [0m[94m[100m..       [0mnew.cpp  [0mnewf.cpp [0m[94m
+newfile1 [0m[94mnewfile2 [0m[94mnewfile3 [0m[94mnewfile4 [0m[94mnewfile5 [0m[94mnewfile6 [0m[94mnewfile7 [0m[94mnewfile8 [0m
+[0m
+tests:
+[94m[100m
+.           [0m[94m[100m..          [0mexec.script [0mls.script   [0m
+[0m
+test/newfile1:
+[94m[100m.           [0m[94m[100m..          [0m[94m
+hello       [0m
+[0m
+test/newfile2:
+[94m[100m.           [0m[94m[100m..          [0m
+[0m
+test/newfile3:
+[94m[100m.           [0m[94m[100m..          [0m
+[0m
+test/newfile4:
+[94m[100m.           [0m[94m[100m
+..          [0m
+[0m
+test/newfile5:
+[94m[100m.           [0m[94m[100m..          [0m
+[0m
+test/newfile6:
+[94m[100m.           [0m[94m[100m..          [0m
+[0m
+test1:
+[94m[100m.           [0m[94m[100m
+..          [0mnew.cpp     [0mnewf.cpp    [0m[94mnewfile1    [0m[94mnewfile2    [0m[94mnewfile3    [0m[94m
+newfile4    [0m[94mnewfile5    [0m[94mnewfile6    [0m[94mnewfile7    [0m[94mnewfile8    [0m
+[0m
+test:
+[94m[100m.           [0m[94m[100m
+..          [0mnew.cpp     [0mnewf.cpp    [0m[94mnewfile1    [0m[94mnewfile2    [0m[94mnewfile3    [0m[94m
+newfile4    [0m[94mnewfile5    [0m[94mnewfile6    [0m[94mnewfile7    [0m[94mnewfile8    [0m
+[0m]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls test test1 tests test/newfile1 test/newfile2 test/newwfile3 test/newfile4 test/newfile5 test/newfile6 test1 test -al
+
+test:
+total 48
+[94m[100m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94m.
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:28 [0m[94m..
+[0m-rw-rw-r--  1 renee renee    19 Apr 30 19:59 [0mnew.cpp
+[0m-rw-rw-r--  1 renee renee    19 Apr 30 19:59 [0mnewf.cpp
+[94m[0mdrwxrwxr-x  3 renee renee  4096 May 01 03:25 [0m[94mnewfile1
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile2
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile3
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile4
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:58 [0m[94mnewfile5
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile6
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile7
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile8
+[0m
+test1:
+total 48
+[94m[100m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:50 [0m[94m.
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:28 [0m[94m..
+[0m-rw-rw-r--  1 renee renee    19 May 01 06:49 [0mnew.cpp
+[0m-rw-rw-r--  1 renee renee    19 May 01 06:49 [0mnewf.cpp
+[94m[0mdrwxrwxr-x  3 renee renee  4096 May 01 06:49 [0m[94mnewfile1
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile2
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile3
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile4
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile5
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile6
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile7
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile8
+[0m
+tests:
+total 60
+[94m[100m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:33 [0m[94m.
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:28 [0m[94m..
+[0m-rw-rw-r--  1 renee renee 32049 Apr 28 00:03 [0mexec.script
+[0m-rw-rw-r--  1 renee renee 20480 May 01 22:42 [0mls.script
+[0m
+test/newfile1:
+total 12
+[94m[100m[0mdrwxrwxr-x  3 renee renee  4096 May 01 03:25 [0m[94m.
+[94m[100m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94m..
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 03:25 [0m[94mhello
+[0m
+test/newfile2:
+total 8
+[94m[100m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94m.
+[94m[100m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94m..
+[0m
+test/newfile3:
+total 8
+[94m[100m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94m.
+[94m[100m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94m..
+[0m
+test/newfile4:
+total 8
+[94m[100m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94m.
+[94m[100m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94m..
+[0m
+test/newfile5:
+total 8
+[94m[100m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:58 [0m[94m.
+[94m[100m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94m..
+[0m
+test/newfile6:
+total 8
+[94m[100m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94m.
+[94m[100m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94m..
+[0m
+test1:
+total 48
+[94m[100m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:50 [0m[94m.
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:28 [0m[94m..
+[0m-rw-rw-r--  1 renee renee    19 May 01 06:49 [0mnew.cpp
+[0m-rw-rw-r--  1 renee renee    19 May 01 06:49 [0mnewf.cpp
+[94m[0mdrwxrwxr-x  3 renee renee  4096 May 01 06:49 [0m[94mnewfile1
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile2
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile3
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile4
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile5
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile6
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile7
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile8
+[0m
+test:
+total 48
+[94m[100m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94m.
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:28 [0m[94m..
+[0m-rw-rw-r--  1 renee renee    19 Apr 30 19:59 [0mnew.cpp
+[0m-rw-rw-r--  1 renee renee    19 Apr 30 19:59 [0mnewf.cpp
+[94m[0mdrwxrwxr-x  3 renee renee  4096 May 01 03:25 [0m[94mnewfile1
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile2
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile3
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile4
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:58 [0m[94mnewfile5
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile6
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile7
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile8
+[0m]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ #param [Ks are pathna[K[K name and file name
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ #params are path name and file namebin/ls test test1 tests test/newfile1 test/newfile2 test/newwfile3 test/newfile4 test/newfile5 test/newfile6 test1 test -al  [K[K[K -al [A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[CRtest/newfile1 test/newfile2 test/ne[1@w[A]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ [C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[CEtest/newfile1 test/newfile2 test/n[1@e[A]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ [C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[CADME.mdtest/newfile1 test/newfile2[7@ test/n[A]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ [C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C test/newfile1 test/newfile[1@2[A]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ [C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[24P#params are path name and file name
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cbin/ls test test1 tests README.md test/newfile1 test/newfilee2 test/newfile3 test/newfile4 test/newfile5 test/newfile6 test1 test -al Makefile test
+
+test:
+total 48
+[94m[100m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94m.
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:28 [0m[94m..
+[0m-rw-rw-r--  1 renee renee    19 Apr 30 19:59 [0mnew.cpp
+[0m-rw-rw-r--  1 renee renee    19 Apr 30 19:59 [0mnewf.cpp
+[94m[0mdrwxrwxr-x  3 renee renee  4096 May 01 03:25 [0m[94mnewfile1
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile2
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile3
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile4
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:58 [0m[94mnewfile5
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile6
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile7
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile8
+[0m
+test1:
+total 48
+[94m[100m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:50 [0m[94m.
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:28 [0m[94m..
+[0m-rw-rw-r--  1 renee renee    19 May 01 06:49 [0mnew.cpp
+[0m-rw-rw-r--  1 renee renee    19 May 01 06:49 [0mnewf.cpp
+[94m[0mdrwxrwxr-x  3 renee renee  4096 May 01 06:49 [0m[94mnewfile1
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile2
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile3
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile4
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile5
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile6
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile7
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile8
+[0m
+tests:
+total 68
+[94m[100m[0mdrwxrwxr-x  2 renee renee  4096 May 01 22:33 [0m[94m.
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:28 [0m[94m..
+[0m-rw-rw-r--  1 renee renee 32049 Apr 28 00:03 [0mexec.script
+[0m-rw-rw-r--  1 renee renee 28672 May 01 22:43 [0mls.script
+[0m
+[0m-rw-rw-r--  1 renee renee   929 May 01 20:55 [0mREADME.md
+
+test/newfile1:
+total 12
+[94m[100m[0mdrwxrwxr-x  3 renee renee  4096 May 01 03:25 [0m[94m.
+[94m[100m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94m..
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 03:25 [0m[94mhello
+[0m
+test/newfile2:
+total 8
+[94m[100m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94m.
+[94m[100m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94m..
+[0m
+test/newfile3:
+total 8
+[94m[100m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94m.
+[94m[100m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94m..
+[0m
+test/newfile4:
+total 8
+[94m[100m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94m.
+[94m[100m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94m..
+[0m
+test/newfile5:
+total 8
+[94m[100m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:58 [0m[94m.
+[94m[100m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94m..
+[0m
+test/newfile6:
+total 8
+[94m[100m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94m.
+[94m[100m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94m..
+[0m
+test1:
+total 48
+[94m[100m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:50 [0m[94m.
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:28 [0m[94m..
+[0m-rw-rw-r--  1 renee renee    19 May 01 06:49 [0mnew.cpp
+[0m-rw-rw-r--  1 renee renee    19 May 01 06:49 [0mnewf.cpp
+[94m[0mdrwxrwxr-x  3 renee renee  4096 May 01 06:49 [0m[94mnewfile1
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile2
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile3
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile4
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile5
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile6
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile7
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile8
+[0m
+test:
+total 48
+[94m[100m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94m.
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:28 [0m[94m..
+[0m-rw-rw-r--  1 renee renee    19 Apr 30 19:59 [0mnew.cpp
+[0m-rw-rw-r--  1 renee renee    19 Apr 30 19:59 [0mnewf.cpp
+[94m[0mdrwxrwxr-x  3 renee renee  4096 May 01 03:25 [0m[94mnewfile1
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile2
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile3
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile4
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:58 [0m[94mnewfile5
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile6
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile7
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile8
+[0m
+[0m-rw-rw-r--  1 renee renee   249 Apr 28 00:39 [0mMakefile
+
+test:
+total 48
+[94m[100m[0mdrwxrwxr-x 10 renee renee  4096 May 01 06:48 [0m[94m.
+[94m[100m[0mdrwxrwxr-x  8 renee renee  4096 May 01 22:28 [0m[94m..
+[0m-rw-rw-r--  1 renee renee    19 Apr 30 19:59 [0mnew.cpp
+[0m-rw-rw-r--  1 renee renee    19 Apr 30 19:59 [0mnewf.cpp
+[94m[0mdrwxrwxr-x  3 renee renee  4096 May 01 03:25 [0m[94mnewfile1
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile2
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile3
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile4
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:58 [0m[94mnewfile5
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile6
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile7
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile8
+[0m]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls test test1 tests README.md test/newfile1 test/newfilee2 test/newfile3 test/newfile4 test/newfile5 test/newfile6 test1 test -al Makefile test[1P
+
+test:
+total 40
+[0m-rw-rw-r--  1 renee renee    19 Apr 30 19:59 [0mnew.cpp
+[0m-rw-rw-r--  1 renee renee    19 Apr 30 19:59 [0mnewf.cpp
+[94m[0mdrwxrwxr-x  3 renee renee  4096 May 01 03:25 [0m[94mnewfile1
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile2
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile3
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile4
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:58 [0m[94mnewfile5
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile6
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile7
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile8
+[0m
+test1:
+total 40
+[0m-rw-rw-r--  1 renee renee    19 May 01 06:49 [0mnew.cpp
+[0m-rw-rw-r--  1 renee renee    19 May 01 06:49 [0mnewf.cpp
+[94m[0mdrwxrwxr-x  3 renee renee  4096 May 01 06:49 [0m[94mnewfile1
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile2
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile3
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile4
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile5
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile6
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile7
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile8
+[0m
+tests:
+total 64
+[0m-rw-rw-r--  1 renee renee 32049 Apr 28 00:03 [0mexec.script
+[0m-rw-rw-r--  1 renee renee 32768 May 01 22:43 [0mls.script
+[0m
+[0m-rw-rw-r--  1 renee renee   929 May 01 20:55 [0mREADME.md
+
+test/newfile1:
+total 4
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 03:25 [0m[94mhello
+[0m
+test/newfile2:
+total 0
+[0m
+test/newfile3:
+total 0
+[0m
+test/newfile4:
+total 0
+[0m
+test/newfile5:
+total 0
+[0m
+test/newfile6:
+total 0
+[0m
+test1:
+total 40
+[0m-rw-rw-r--  1 renee renee    19 May 01 06:49 [0mnew.cpp
+[0m-rw-rw-r--  1 renee renee    19 May 01 06:49 [0mnewf.cpp
+[94m[0mdrwxrwxr-x  3 renee renee  4096 May 01 06:49 [0m[94mnewfile1
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile2
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile3
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile4
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile5
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile6
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile7
+[94m[0mdrwxrwxr-x  2 renee renee  4096 May 01 06:49 [0m[94mnewfile8
+[0m
+test:
+total 40
+[0m-rw-rw-r--  1 renee renee    19 Apr 30 19:59 [0mnew.cpp
+[0m-rw-rw-r--  1 renee renee    19 Apr 30 19:59 [0mnewf.cpp
+[94m[0mdrwxrwxr-x  3 renee renee  4096 May 01 03:25 [0m[94mnewfile1
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile2
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile3
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile4
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:58 [0m[94mnewfile5
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile6
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile7
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile8
+[0m
+[0m-rw-rw-r--  1 renee renee   249 Apr 28 00:39 [0mMakefile
+
+test:
+total 40
+[0m-rw-rw-r--  1 renee renee    19 Apr 30 19:59 [0mnew.cpp
+[0m-rw-rw-r--  1 renee renee    19 Apr 30 19:59 [0mnewf.cpp
+[94m[0mdrwxrwxr-x  3 renee renee  4096 May 01 03:25 [0m[94mnewfile1
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile2
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile3
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:57 [0m[94mnewfile4
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 19:58 [0m[94mnewfile5
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile6
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile7
+[94m[0mdrwxrwxr-x  2 renee renee  4096 Apr 30 20:02 [0m[94mnewfile8
+[0m]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls test test1 tests README.md test/newfile1 test/newfilee2 test/newfile3 test/newfile4 test/newfile5 test/newfile6 test1 test -l Makefile test[1P[1@a
+
+test:
+[94m[100m.        [0m[94m[100m..       [0mnew.cpp  [0mnewf.cpp [0m[94mnewfile1 [0m[94mnewfile2 [0m[94mnewfile3 [0m[94mnewfile4 [0m[94m
+newfile5 [0m[94mnewfile6 [0m[94mnewfile7 [0m[94mnewfile8 [0m
+[0m
+test1:
+[94m[100m.        [0m[94m[100m..       [0mnew.cpp  [0mnewf.cpp [0m[94m
+newfile1 [0m[94mnewfile2 [0m[94mnewfile3 [0m[94mnewfile4 [0m[94mnewfile5 [0m[94mnewfile6 [0m[94mnewfile7 [0m[94mnewfile8 [0m
+[0m
+tests:
+[94m[100m
+.           [0m[94m[100m..          [0mexec.script [0mls.script   [0m
+[0m
+README.md   [0m
+
+test/newfile1:
+[94m[100m.           [0m[94m[100m
+..          [0m[94mhello       [0m
+[0m
+test/newfile2:
+[94m[100m.           [0m[94m[100m..          [0m
+[0m
+test/newfile3:
+[94m[100m.           [0m[94m[100m..          [0m
+[0m
+test/newfile4:
+[94m[100m
+.           [0m[94m[100m..          [0m
+[0m
+test/newfile5:
+[94m[100m.           [0m[94m[100m..          [0m
+[0m
+test/newfile6:
+[94m[100m.           [0m[94m[100m..          [0m
+[0m
+test1:
+[94m[100m
+.           [0m[94m[100m..          [0mnew.cpp     [0mnewf.cpp    [0m[94mnewfile1    [0m[94mnewfile2    [0m[94m
+newfile3    [0m[94mnewfile4    [0m[94mnewfile5    [0m[94mnewfile6    [0m[94mnewfile7    [0m[94mnewfile8    [0m
+[0m
+test:
+[94m[100m
+.           [0m[94m[100m..          [0mnew.cpp     [0mnewf.cpp    [0m[94mnewfile1    [0m[94mnewfile2    [0m[94m
+newfile3    [0m[94mnewfile4    [0m[94mnewfile5    [0m[94mnewfile6    [0m[94mnewfile7    [0m[94mnewfile8    [0m
+[0m
+
+Makefile    [0m
+
+test:
+[94m[100m.           [0m[94m[100m..          [0mnew.cpp     [0mnewf.cpp    [0m[94mnewfile1    [0m[94m
+newfile2    [0m[94mnewfile3    [0m[94mnewfile4    [0m[94mnewfile5    [0m[94mnewfile6    [0m[94mnewfile7    [0m[94m
+newfile8    [0m
+[0m]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls test test1 tests README.md test/newfile1 test/newfilee2 test/newfile3 test/newfile4 test/newfile5 test/newfile6 test1 test -a Makefile test[1P[1P[1P[1P[1@ 
+
+test:
+[94m[94mnew.cpp  [0mnewf.cpp [0m[94mnewfile1 [0m[94mnewfile2 [0m[94mnewfile3 [0m[94mnewfile4 [0m[94mnewfile5 [0m[94mnewfile6 [0m[94m
+newfile7 [0m[94mnewfile8 [0m
+[0m
+test1:
+[94m[94mnew.cpp  [0mnewf.cpp [0m[94mnewfile1 [0m[94mnewfile2 [0m[94mnewfile3 [0m[94mnewfile4 [0m[94m
+newfile5 [0m[94mnewfile6 [0m[94mnewfile7 [0m[94mnewfile8 [0m
+[0m
+tests:
+[94m[94mexec.script [0mls.script   [0m
+[0m
+README.md   [0m
+
+test/newfile1:
+[94m[94m[94m
+hello       [0m
+[0m
+test/newfile2:
+[94m[94m
+[0m
+test/newfile3:
+[94m[94m
+[0m
+test/newfile4:
+[94m[94m
+[0m
+test/newfile5:
+[94m[94m
+[0m
+test/newfile6:
+[94m[94m
+[0m
+test1:
+[94m[94mnew.cpp     [0mnewf.cpp    [0m[94mnewfile1    [0m[94mnewfile2    [0m[94mnewfile3    [0m[94m
+newfile4    [0m[94mnewfile5    [0m[94mnewfile6    [0m[94mnewfile7    [0m[94mnewfile8    [0m
+[0m
+test:
+[94m[94mnew.cpp     [0m
+newf.cpp    [0m[94mnewfile1    [0m[94mnewfile2    [0m[94mnewfile3    [0m[94mnewfile4    [0m[94mnewfile5    [0m[94m
+newfile6    [0m[94mnewfile7    [0m[94mnewfile8    [0m
+[0m
+Makefile    [0m
+
+test:
+[94m[94mnew.cpp     [0mnewf.cpp    [0m[94m
+newfile1    [0m[94mnewfile2    [0m[94mnewfile3    [0m[94mnewfile4    [0m[94mnewfile5    [0m[94mnewfile6    [0m[94m
+newfile7    [0m[94mnewfile8    [0m
+[0m]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ #bin[K[K[Kls with simple filename
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/l s[K[Ks .
+[94m[94m[94mLICENSE   [0mMakefile  [0mREADME.md [0m[94mbin       [0mls.script [0m[94msrc       [0m[94mtest      [0m[94m
+test1     [0m[94mtests     [0m
+[0m]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls ./
+[94m[94m[94mLICENSE   [0mMakefile  [0mREADME.md [0m[94mbin       [0mls.script [0m[94msrc       [0m[94mtest      [0m[94m
+test1     [0m[94mtests     [0m
+[0m]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls ./[K[K/
+[94m[94m[94mbin            [0m[94mboot           [0m[94mcdrom          [0m[94mdev            [0m[94metc            [0m[94m
+home           [0minitrd.img     [0minitrd.img.old [0m[94mlib            [0m[94mlib64          [0m[94m
+lost+found     [0m[94mmedia          [0m[94mmnt            [0m[94mopt            [0m[94mproc           [0m[94m
+root           [0m[94mrun            [0m[94msbin           [0m[94msrv            [0m[94msys            [0m[94m
+tmp            [0m[94musr            [0m[94mvar            [0mvmlinuz        [0mvmlinuz.old    [0m
+[0m]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ bin/ls /[K#Done, T[K[K[K. Thank you!
+]0;renee@renee-VPCEG27YC: ~/cs100/rshellrenee@renee-VPCEG27YC:~/cs100/rshell$ exit
+exit
+
+Script done on Fri 01 May 2015 10:45:16 PM PDT
