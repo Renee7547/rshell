@@ -171,10 +171,10 @@ void printF(char *dirname)
 
 
 // preprocess the filenames
-void process(struct stat s, char *dirname)
+void process(char *dirname)
 {
 	DIR *dirp;	// the directory
-	
+	struct stat s;	
 	int count = 0;
 	//int count = 0;	// record the file num
 	// at most 256 files
@@ -256,7 +256,11 @@ void process(struct stat s, char *dirname)
 		strncpy(filenames[i], dirname, len);
 	
 		// add null to the end of filenames[i]
-		
+	
+		filenames[i][len] = '\0';
+		strcat(filenames[i], filespecs->d_name);
+		filenames[i][len + strlen(filespecs->d_name)] = '\0';
+		/*
 		if (filenames[i][len - 1] == '/')
 		{
 			strcat(filenames[i], filespecs->d_name);
@@ -267,7 +271,7 @@ void process(struct stat s, char *dirname)
 			strcat(filenames[i], "/\0");
 			strcat(filenames[i], filespecs->d_name);
 			filenames[i][len+strlen(filespecs->d_name)+1] = '\0';
-		}
+		}*/
 	/*
 		// folder or file
 		if (stat(filenames[i], &s) == -1)
@@ -398,7 +402,7 @@ void process(struct stat s, char *dirname)
 	{
 		for (int i = 0; i < num; ++i)
 		{
-			process(s, newdir[i]);
+			process(newdir[i]);
 		}
 	}
 	RESET;
@@ -409,6 +413,7 @@ int main(int argc, char** argv)
 {
 	char path[PATH_MAX+1];
 	int num = 0;	// record the num of "-"
+	int num1 = 0;	// record the num of dirnames
 	struct stat buf;
 
 	for (int i = 1; i < argc; ++i)
@@ -437,6 +442,19 @@ int main(int argc, char** argv)
 				}
 			}
 		}
+		else
+		{
+			if (stat(argv[i], &buf) == -1)
+			{
+				perror("There was an error with stat.8 ");
+				exit(1);
+			}
+			// if the getting path is a dir
+			if (S_ISDIR(buf.st_mode))
+			{
+				++num1;
+			}
+		}
 	}
 	// if there is no filename, then print out the info of curr dir
 	if ((num + 1) == argc)
@@ -446,11 +464,11 @@ int main(int argc, char** argv)
 		if (flagR)
 		{
 			//printRecur(path, filenames);
-			process(buf, path);
+			process(path);
 		}
 		else
 		{
-			process(buf, path);
+			process(path);
 		}
 		return 0;
 	}
@@ -459,7 +477,8 @@ int main(int argc, char** argv)
 	else
 	{
 		int k = 1;
-		do //while (k  < argc)
+		int cnt = 0;
+		while (k  < argc)
 		{
 			if (argv[k][0] == '-')
 			{
@@ -479,7 +498,7 @@ int main(int argc, char** argv)
 				// if the getting path is a dir
 				if (S_ISDIR(buf.st_mode))
 				{
-					// process the input filenames
+					// preprocess the input filenames to dir format
 					if (path[strlen(argv[k]) - 1] != '/')
 					{
 						path[strlen(argv[k])] = '/';
@@ -489,27 +508,32 @@ int main(int argc, char** argv)
 					{
 						path[strlen(argv[k])] = '\0';
 					}
-					if (flagR)
-					{	
-						process(buf, path);
-						//printRecur(path, filenames);
-						++k;
-					}
-					else if (!flagR)
+					if (num1 >= 2)
 					{
-						process(buf, path);
-						++k;
+						if (cnt < (num1 - 1))
+						{
+							cout << argv[k] << ":" << endl;
+							++cnt;
+							process(path);
+							++k;
+						}
+						else if (cnt == (num1 - 1))
+						{
+							cout << endl << argv[k] << ":" << endl;
+							process(path);
+							++k;
+						}
 					}
 				}
 				// if the getting path is not a dir
 				else
 				{
 					//cout << path << endl;
-					process(buf, path);
+					process(path);
 					++k;
 				}
 			}
-		} while(k < argc);
+		}
 	}
 	return 0;
 }
