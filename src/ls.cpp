@@ -29,6 +29,8 @@ unsigned int g_maxlen; // store the maximum len of filename
 bool flagA = false;
 bool flagL = false;
 bool flagR = false;
+bool flagDir = false; // if there exit a dir or filename before
+bool flagTitle = false; // whether to output a tile for folder
 
 using namespace std;
 
@@ -450,11 +452,15 @@ int main(int argc, char** argv)
 				exit(1);
 			}
 			// if the getting path is a dir
-			if (S_ISDIR(buf.st_mode))
+			if (S_ISDIR(buf.st_mode) || S_ISREG(buf.st_mode))
 			{
 				++num1;
 			}
 		}
+	}
+	if (num1 >= 2)
+	{
+		flagTitle = true;
 	}
 	// if there is no filename, then print out the info of curr dir
 	if ((num + 1) == argc)
@@ -477,7 +483,7 @@ int main(int argc, char** argv)
 	else
 	{
 		int k = 1;
-		int cnt = 0;
+		flagDir = false;
 		while (k  < argc)
 		{
 			if (argv[k][0] == '-')
@@ -498,6 +504,7 @@ int main(int argc, char** argv)
 				// if the getting path is a dir
 				if (S_ISDIR(buf.st_mode))
 				{
+					flagDir = true;
 					// preprocess the input filenames to dir format
 					if (path[strlen(argv[k]) - 1] != '/')
 					{
@@ -508,28 +515,35 @@ int main(int argc, char** argv)
 					{
 						path[strlen(argv[k])] = '\0';
 					}
-					if (num1 >= 2)
+
+					if (flagTitle)
 					{
-						if (cnt < (num1 - 1))
+						if (flagDir)
 						{
-							cout << argv[k] << ":" << endl;
-							++cnt;
-							process(path);
-							++k;
+							cout << endl;
 						}
-						else if (cnt == (num1 - 1))
-						{
-							cout << endl << argv[k] << ":" << endl;
-							process(path);
-							++k;
-						}
+
+						cout << argv[k] << ":" << endl;
+						process(path);
+						++k;
+						flagDir = true;
+					}
+					else
+					{
+						process(path);
+						++k;
 					}
 				}
+
 				// if the getting path is not a dir
 				else
 				{
-					//cout << path << endl;
+					if (flagDir)
+					{
+						cout << endl;
+					}
 					process(path);
+					flagDir = true;
 					++k;
 				}
 			}
