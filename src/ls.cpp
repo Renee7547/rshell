@@ -66,7 +66,25 @@ void printLong(struct stat s, char *dirname)
 	//struct stat s;
 	RESET;
 	char time[32]; // store time
-	if (stat(dirname, &s) == 0)
+
+	struct passwd *p;
+	struct group *g;
+	if ((p = getpwuid(s.st_uid)) == NULL)
+	{
+		perror("getpwduid ");
+		exit(1);
+	}
+	if ((g = getgrgid(s.st_gid)) == NULL)
+	{
+		perror("getgrgid ");
+		exit(1);
+	}
+	if (-1 == stat(dirname, &s))
+	{
+		perror("stat ");
+		exit(1);
+	}
+	else
 	{
 		if (S_ISDIR(s.st_mode)) cout << "d"; else cout << "-";
 		if (s.st_mode & S_IRUSR) cout << "r"; else cout << "-";
@@ -79,8 +97,8 @@ void printLong(struct stat s, char *dirname)
 		if (s.st_mode & S_IWOTH) cout << "w"; else cout << "-";
 		if (s.st_mode & S_IXOTH) cout << "x"; else cout << "-";
 		cout << " " << setw(2) << s.st_nlink << " "
-			<< getpwuid(s.st_uid)->pw_name << " "
-			<< getgrgid(s.st_gid)->gr_name << " "
+			<< p->pw_name << " "
+			<< g->gr_name << " "
 			<< setw(5) << s.st_size << " ";
 		strftime(time, sizeof(time), "%b %d %H:%M", localtime(&s.st_mtime));
 		cout << time << " ";
@@ -93,11 +111,6 @@ void printLong(struct stat s, char *dirname)
 		{
 			GREEN;
 		}
-	}
-	else
-	{
-		perror("There was an error with stat.9 ");
-		exit(1);
 	}
 }
 
@@ -253,7 +266,11 @@ void process(char *dirname)
 	}
 	for (int i = 0; i < count; ++i)
 	{
-		filespecs = readdir(dirp);
+		if (NULL == (filespecs = readdir(dirp)))
+		{
+			perror ("read");
+			exit(1);
+		}
 
 		strncpy(filenames[i], dirname, len);
 	
@@ -408,7 +425,11 @@ void process(char *dirname)
 		}
 	}
 	RESET;
-	closedir(dirp);
+	if (-1 == closedir(dirp))
+	{
+		perror("close");
+		exit(1);
+	}
 }
 
 int main(int argc, char** argv)
