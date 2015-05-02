@@ -123,7 +123,7 @@ void printF(char *dirname)
 		GREEN;
 	}
 
-	for (int i = 0; i < strlen(dirname); ++i)
+	for (unsigned int i = 0; i < strlen(dirname); ++i)
 	{
 		if (dirname[i] == '/')
 		{

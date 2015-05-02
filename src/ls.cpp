@@ -17,6 +17,12 @@
 
 #define MAXROWLEN 80 // the maximum length of a row
 
+#define BLUE printf("\x1b[94m")
+#define GREEN printf("\x1b[92m")
+#define GRAY printf("\x1b[100m")
+#define RESET printf("\x1b[0m")
+
+
 unsigned int g_leave_len = MAXROWLEN; // the length left, for aligning
 unsigned int g_maxlen; // store the maximum len of filename
 
@@ -30,6 +36,7 @@ using namespace std;
 // make the filenames align in column
 void printSingle(char *dirname)
 {
+	//struct stat s;
 	int len;
 	// if the current line cannot hold the filename, then go to the next line
 	if (g_leave_len < g_maxlen)
@@ -48,13 +55,15 @@ void printSingle(char *dirname)
 	cout << " ";
 	// leave two spaces
 	g_leave_len -= g_maxlen + 2;
+
+	RESET;
 }
 
 void printLong(struct stat s, char *dirname)
 {
 	//struct stat s;
+	RESET;
 	char time[32]; // store time
-
 	if (stat(dirname, &s) == 0)
 	{
 		if (S_ISDIR(s.st_mode)) cout << "d"; else cout << "-";
@@ -67,108 +76,137 @@ void printLong(struct stat s, char *dirname)
 		if (s.st_mode & S_IROTH) cout << "r"; else cout << "-";
 		if (s.st_mode & S_IWOTH) cout << "w"; else cout << "-";
 		if (s.st_mode & S_IXOTH) cout << "x"; else cout << "-";
-		cout << " " << s.st_nlink << " "
+		cout << " " << setw(2) << s.st_nlink << " "
 			<< getpwuid(s.st_uid)->pw_name << " "
 			<< getgrgid(s.st_gid)->gr_name << " "
 			<< setw(5) << s.st_size << " ";
 		strftime(time, sizeof(time), "%b %d %H:%M", localtime(&s.st_mtime));
 		cout << time << " ";
+		RESET;
+		if (S_ISDIR(s.st_mode)) 
+		{
+			BLUE;
+		}
+		else if (s.st_mode & S_IXUSR) 
+		{
+			GREEN;
+		}
 	}
 	else
 	{
-		perror("There was an error with stat. ");
+		perror("There was an error with stat.9 ");
+		exit(1);
 	}
 }
 
-void printRecur(char *dirname)
-{
-
-}
 
 void printF(char *dirname)
 {
-	unsigned int i;
-	int j;
 	struct stat buf;
 	char name[NAME_MAX+1];
-	for (i = 0, j = 0; i < strlen(dirname); ++i)
+
+	// get filename from dirname
+	int j = 0;
+	
+	if (-1 == stat(dirname, &buf))
+	{
+		perror("Stat(). ");
+		exit(1);
+	}
+
+	if (S_ISDIR(buf.st_mode))
+	{
+		BLUE;
+	}
+	else if (buf.st_mode & S_IXUSR)
+	{
+		GREEN;
+	
+	}
+	for (unsigned int i = 0; i < strlen(dirname); ++i)
 	{
 		if (dirname[i] == '/')
 		{
 			j = 0;
 			continue;
 		}
-		name[j++] = dirname[i];
+		name[j] = dirname[i];
+		++j;
 	}
 	name[j] = '\0';
-	
-	if (!(flagL||flagA||flagR))
+
+	if (!flagA)
 	{
+		// ignore files starting with "."
 		if (name[0] != '.')
+		{
+			if (flagL)
+			{
+				printLong(buf, dirname);
+				cout << name << endl;
+			}
+			else if (!flagL)
+			{
+				printSingle(name);
+			}
+		}
+	}
+	else if (flagA)
+	{
+		if (name[0] == '.')
+		{
+			GRAY;
+		}
+		if (flagL)
+		{
+			printLong(buf, dirname);
+			cout << name << endl;
+		}
+		else if (!flagL)
 		{
 			printSingle(name);
 		}
 	}
-
-	if (flagL)
-	{
-		
-	}
-
-	if (flagA)
-	{
-
-	}
-	
-	if (flagR)
-	{
-
-	}
-
-	switch(flag)
-	{
-		case '0':	// no flag
-			if (name[0] != '.')
-			{
-				printSingle(name);
-			}
-			break;
-		case 'a':	// flag -a
-			printSingle(name);
-			break;
-		case 'l':	// flag -l
-			// eliminate dot
-			if (name[0] != '.')
-			{
-				printLong(buf, name);
-				cout << name << endl;
-			}
-			break;
-		case 'm': // flag -a and -l
-			printLong(buf, name);
-			cout << name << endl;
-			break;
-		case 'r':	// flag -R
-			printRecur(name);
-			break;
-		default:
-	
 }
 
+
 // preprocess the filenames
-void file_sort(char flag, char *dirname)
+void process(struct stat s, char *dirname)
 {
 	DIR *dirp;	// the directory
 	
-	int count = 0;	// record the file num
+	int count = 0;
+	//int count = 0;	// record the file num
 	// at most 256 files
 	char filenames[256][PATH_MAX+1];
+	//char nodot[256][PATH_MAX+1];
 	char temp[PATH_MAX+1];
+	
+	int total = 0;
+	// while the dirname is not a directory
+	//cout << "dirname " << dirname << endl;
+	if (stat(dirname, &s) == 0)
+	{	
+		if (S_ISREG(s.st_mode))
+		{
+			printF(dirname);
+			
+			if (!flagL)
+			{
+				cout << endl;
+			}
+			return;
+		}
+	}
+	else
+	{
+		perror("The file doesn't exist.10 ");
+	}
 
 	// get the longest filename
 	if(NULL == (dirp = opendir(dirname)))
 	{
-		perror("There was an error with opendir(). ");
+		perror("There was an error with opendir().1 ");
 		exit(1);
 	}
 	struct dirent *filespecs; // each entry
@@ -182,57 +220,190 @@ void file_sort(char flag, char *dirname)
 	}
 	if(errno != 0)
 	{
-		perror("There was an error with readdir(). ");
+		perror("There was an error with readdir().2 ");
 		exit(1);
 	}
-	cout << endl;
 	if(-1 == closedir(dirp))
 	{
-		perror("There was an error with closedir(). ");
+		perror("There was an error with closedir().3 ");
 		exit(1);
 	}
-
 	if (count > 256)
 	{
 		perror("Too many files in this dir");
+		exit(1);
 	}
 	
-	int len = strlen(dirname);
 	// get all the filename in the dir
-	dirp = opendir(dirname);
+	int len = strlen(dirname);
+	if(NULL == (dirp = opendir(dirname)))
+	{
+		perror("There was an error with opendir().4 ");
+		exit(1);
+	}
+	
+	char newdir[256][PATH_MAX+1];
+
+	int num = 0;
+	if (flagR)
+	{
+		cout << dirname << ":" << endl;
+	}
 	for (int i = 0; i < count; ++i)
 	{
 		filespecs = readdir(dirp);
+
 		strncpy(filenames[i], dirname, len);
+	
 		// add null to the end of filenames[i]
-		filenames[i][len] = '\0';
-		strcat(filenames[i], filespecs->d_name);
-		filenames[i][len + strlen(filespecs->d_name)] = '\0';
+		
+		if (filenames[i][len - 1] == '/')
+		{
+			strcat(filenames[i], filespecs->d_name);
+			filenames[i][len+strlen(filespecs->d_name)+1] = '\0';
+		}
+		else 
+		{
+			strcat(filenames[i], "/\0");
+			strcat(filenames[i], filespecs->d_name);
+			filenames[i][len+strlen(filespecs->d_name)+1] = '\0';
+		}
+	/*
+		// folder or file
+		if (stat(filenames[i], &s) == -1)
+		{
+			perror("There was an error with stat.8 ");
+			exit(1);
+		}
+		// if the getting path is a dir
+		if (S_ISDIR(s.st_mode))
+		{
+			strcpy(newdir[num], filenames[i]);
+			newdir[num][strlen(filenames[i])] = '\0';
+			++num;
+			cout << "###" << newdir[i] << " " << endl;
+		}
+	*/	
 	}
 
 	// sort the filenames, use bubble-sort
 	for (int i = 0; i < count - 1; ++i)
 	{
-		for (int j = 0; j < count - 1; ++j)
+		for (int j = 0; j < count - 1 - i; ++j)
 		{
 			if (strcmp(filenames[j], filenames[j+1]) > 0)
 			{
-				strcpy(temp, filenames[j + 1]);
-				temp[strlen(filenames[j + 1])] = '\0';
-				strcpy(filenames[j + 1], filenames[j]);
-				filenames[j + 1][strlen(filenames[j])] = '\0';
+				// assign temp with a[j+1]
+				
+				strcpy(temp, filenames[j+1]);
+				temp[strlen(filenames[j+1])] = '\0';
+				// assign a[j] with a[j+1]
+				strcpy(filenames[j+1], filenames[j]);
+				filenames[j+1][strlen(filenames[j])] = '\0';
+				// assign a[j] with temp
 				strcpy(filenames[j], temp);
 				filenames[j][strlen(temp)] = '\0';
 			}
 		}
 	}
+
+	char name[256][NAME_MAX+1];
+	int start = 0;
 	for (int i = 0; i < count; ++i)
 	{
-		printF(flag, filenames[i]);
-	}	
+		for (unsigned int j = 0; j < strlen(filenames[i]); ++j)
+		{
+			if (filenames[i][j] == '/')
+			{
+				start = 0;
+				continue;
+			}
+			name[i][start] = filenames[i][j];
+			++start;
+		}
+		name[i][start] = '\0';
+	}
+
+	// print total for -l
+	int i = 0;
+	if (flagL)
+	{
+		if (flagA)
+		{
+			total = 0;
+			for (i = 0; i < count; ++i)
+			{
+				if (-1 == stat(filenames[i], &s))
+				{
+					perror("There was an error with stat.5 ");
+					exit(1);
+				}
+				total += s.st_blocks;
+			}
+			cout << "total " << total/2 << endl;
+			for (i = 0; i < count; ++i)
+			{
+				printF(filenames[i]);
+			}
+		}
+		else
+		{	
+			total = 0;
+			char nodot[256][NAME_MAX+1];
+			int j = 0;
+			int count2 = 0;
+			for (i = 0; i < count; ++i)
+			{
+				if (-1 == stat(filenames[i], &s))
+				{
+					perror("There was an error with stat.6 ");
+					exit(0);
+				}
+				if (name[i][0] != '.')
+				{
+					strcpy(nodot[j], filenames[i]);
+					++j;
+					++ count2;
+					//total += s.st_blocks;
+				}
+			}
+			for (i = 0; i < count2; ++i)
+			{
+				if (-1 == stat(nodot[i], &s))
+				{
+					perror("There was an error with stat.7 ");
+					exit(1);
+				}
+				total += s.st_blocks;
+			}
+			cout << "total " << total/2 << endl;
+			for (i = 0; i < count2; ++i)
+			{
+				printF(nodot[i]);
+		
+			}
+		}
+	}
+	else if (!flagL)
+	{
+		for (i = 0; i < count - 1; ++i)
+		{
+			printF(filenames[i]);
+		}
+		printF(filenames[i]);
+		cout << endl;
+	}
+	//if for recur
+	if (flagR)
+	{
+		for (int i = 0; i < num; ++i)
+		{
+			process(s, newdir[i]);
+		}
+	}
+	RESET;
 	closedir(dirp);
 }
-
 
 int main(int argc, char** argv)
 {
@@ -251,15 +422,15 @@ int main(int argc, char** argv)
 				{
 					flagA = true;
 				}
-				else if (argv[i][j] == 'l')
+				if (argv[i][j] == 'l')
 				{
 					flagL = true;
 				}
-				else if (argv[i][j] == 'R')
+				if (argv[i][j] == 'R')
 				{
 					flagR = true;
 				}
-				else
+				else if (argv[i][j] != 'a' && argv[i][j] != 'l' && argv[i][j] != 'R')
 				{
 					cout << "invalid parameter: " << argv[i][j] << endl;
 					exit(1);
@@ -272,7 +443,15 @@ int main(int argc, char** argv)
 	{
 		strcpy(path, "./");	// current folder
 		path[2] = '\0';
-		fileSort(path);
+		if (flagR)
+		{
+			//printRecur(path, filenames);
+			process(buf, path);
+		}
+		else
+		{
+			process(buf, path);
+		}
 		return 0;
 	}
 	
@@ -280,40 +459,57 @@ int main(int argc, char** argv)
 	else
 	{
 		int k = 1;
-		do
+		do //while (k  < argc)
 		{
 			if (argv[k][0] == '-')
 			{
 				++k;
 				continue;
 			}
-			else
+			else	// getting filename
 			{
 				strcpy(path, argv[k]);
+				// tell whether it's a filename
 				if (stat(path, &buf) == -1)
 				{
-					perror("There was an error with stat. ");
+					perror("There was an error with stat.8 ");
+					exit(1);
 				}
+
+				// if the getting path is a dir
 				if (S_ISDIR(buf.st_mode))
 				{
+					// process the input filenames
 					if (path[strlen(argv[k]) - 1] != '/')
 					{
 						path[strlen(argv[k])] = '/';
-						path[strlen(argv[k])+1] = '\0';
+						path[strlen(argv[k]) + 1] = '\0';
 					}
 					else
 					{
 						path[strlen(argv[k])] = '\0';
 					}
-					fileSort(flag, path);
+					if (flagR)
+					{	
+						process(buf, path);
+						//printRecur(path, filenames);
+						++k;
+					}
+					else if (!flagR)
+					{
+						process(buf, path);
+						++k;
+					}
 				}
+				// if the getting path is not a dir
 				else
 				{
-					file_sort(flag, path);
+					//cout << path << endl;
+					process(buf, path);
 					++k;
 				}
 			}
-		}	while(k < argc);
+		} while(k < argc);
 	}
 	return 0;
 }
