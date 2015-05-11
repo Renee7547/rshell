@@ -1,4 +1,4 @@
-all: rshell ls
+all: rshell ls cp rm mv
 			mkdir bin
 			mv ./rshell ./bin/rshell
 			mv ./ls ./bin/ls
