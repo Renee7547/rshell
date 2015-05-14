@@ -13,6 +13,8 @@ using namespace std;
 #define MAXSIZE 1000
 
 bool result = false;
+const int PIPE_READ = 0;
+const int PIPE_WRITE = 1;
 
 struct redir
 {
@@ -38,6 +40,7 @@ void execute (char *cmd[]);
 void digitCmd (string str);
 void parse (char *cmd[], char command[], vector<struct redir*> &files);
 void redirCmd (const vector<struct redir*> &files);
+void process3 ();
 
 void prompt ()
 {
@@ -140,12 +143,25 @@ void format (char command[])
 	len = strlen(command);
 	for (int i = 0; i < len; ++i)
 	{
+		if (command[i] == '\'' || command[i] == '\"')
+		{
+			for (int j = i; j < len; ++j)
+			{
+				command[j] = command[j+1];
+			}
+			--len;
+			--i;
+		}
+	}
+	len = strlen(command);
+	for (int i = 0; i < len; ++i)
+	{
 		if (command[i] == '\t')
 		{
 			command[i] = ' ';
 		}
 	}
-	// 0.., 1.., 2.., <, <<<, >, >>, |
+	// 0, 1, 2.., <, <<<, >, >>, |
 	for (int i = 0; i < len; ++i)
 	{
 		if (i == 0)
@@ -171,6 +187,8 @@ void format (char command[])
 				len2(command, len, i);
 			else if (command[i] == '|'&&command[i+1] != '|')
 				len1(command, len, i);
+	//		else if (command[i] == '\"' || command[i] == '\'')
+	//			len1(command, len, i);
 		}
 		else
 		{
@@ -195,6 +213,8 @@ void format (char command[])
 				len2(command, len, i);
 			else if (command[i] == '|'&&command[i+1] != '|')
 				len1(command, len, i);
+	//		else if (command[i] == '\"' || command[i] == '\'')
+	//			len1(command, len, i);
 		}
 	}
 	// delete the extra spaces
@@ -238,6 +258,7 @@ void execute (char *cmd[], const vector<struct redir*> files)
 	else if (pid == 0)
 	{
 		redirCmd(files);
+
 		if (execvp(*cmd, cmd) < 0)
 		{
 			perror ("ERROR: exec failed\n");
@@ -312,10 +333,11 @@ void parse (char *cmd[], char command[], vector<struct redir*> &files)
 		token = strtok_r(NULL, " ", &saveptr);
 		get[m] = token;
 	}
+
 	int j = 0;
 	int fd;
 	int type;
-	
+
 	for(unsigned i = 0; i < str.size(); ++i)
 	{	
 		if(i < str.size() - 1)
@@ -375,6 +397,19 @@ void parse (char *cmd[], char command[], vector<struct redir*> &files)
 			}
 		}
 	}
+	/***** test ******
+		for (int i = 0; cmd[i] != '\0'; ++i)
+		{
+			cout << i  << " " << cmd[i] << endl;
+		}
+		cout << endl;
+		for (int i = 0; i < files.size(); ++i)
+		{
+			cout << i << " " << files.at(i)->filename 
+			<< " " << files.at(i)->type 
+			<< " " << files.at(i)->fd << endl;
+		}
+	*/	
 	execute(cmd, files);
 }
 
@@ -385,6 +420,9 @@ void redirCmd (const vector<struct redir*> &files)
 	for(unsigned i = 0; i < files.size(); ++i)
 	{
 		int fd;
+		int fd1[2];
+		int len1 = strlen(files.at(i)->filename);
+		char temp[len1+1];int len;
 		switch(files.at(i)->type)
 		{
 			case 0: // >
@@ -426,7 +464,29 @@ void redirCmd (const vector<struct redir*> &files)
 				}
 				continue;
 			case 3: // <<<
-				break;
+				strcpy(temp, files.at(i)->filename);
+				strcat(temp, "\n");
+				if(-1 == pipe(fd1))
+				{
+					perror("ERROR: pipe(). ");
+					exit(1);
+				}
+				if(-1 == write(fd1[PIPE_WRITE], temp, len1+1))
+				{
+					perror("ERROR: write(). ");
+					exit(1);
+				}
+				if(-1 == dup2(fd1[PIPE_READ], 0))
+				{
+					perror("ERROR: dup2(). ");
+					exit(1);
+				}
+				if(-1 == close(fd1[PIPE_WRITE]))
+				{
+					perror("ERROR: close(). ");
+					exit(1);
+				}
+				continue;
 		}
 	}
 }
@@ -440,10 +500,6 @@ int main (int argc, char **argv)
 		prompt();
 		char command[MAXSIZE];
 		memset(command, '\0', MAXSIZE);
-		//for (int i = 0; i < MAXSIZE; ++i)
-		//{
-		//	command[i] = '\0';
-		//}
 		getInput(command);
 		format(command);
 		if (command[0] == '\0')
