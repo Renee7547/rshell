@@ -24,7 +24,7 @@ bool result = false;
 void prompt ()
 {
 	char hostname[MAXSIZE];
-    	char *username;
+   	char *username;
 
 	bzero(hostname, MAXSIZE);
 
@@ -44,13 +44,11 @@ void prompt ()
 
 void getInput (char str[])
 {
-
 	// get input
 	if (!fgets(str, MAXSIZE, stdin))
 	{
 		return;
 	}
-
 	int len1 = strlen(str);
 	// when there is no input
 	if (str[len1 - 1] == '\n')
@@ -63,7 +61,6 @@ void getInput (char str[])
 void format ()
 {
 	string temp;
-
 	int len = strlen(command);
 
 	for (int i = 0; i < len; ++i)
@@ -84,7 +81,7 @@ void format ()
 		}
 	}
 
-	// add ' ' between characters and ';'. i.e. convert "a;b" to "a, b"
+	// add ' ' between characters and ';'. i.e. convert "a;b" to "a; b"
 	for (int i = 0; i < len; ++i)
 	{
 		if (command[i] == ';')
@@ -103,7 +100,7 @@ void format ()
 	}
 
 	// add ' ' between characters and '&&'
-	for (int i = 0; i < len - 1; ++i)
+	for (int i = 0; i < len; ++i)
 	{
 		if (command[i] == '&' && command[i+1] == '&')
 		{
@@ -137,6 +134,7 @@ void format ()
 			i += 3;
 		}
 	}
+	
 
 	//remove all extra " ". i.e. reduce two continuous ' ' to one
 	for (int i = 0; i < len; ++i)
@@ -288,6 +286,7 @@ void parse(char * cmd[])
 				execute(cmd);
 			}
 			-- i;
+			// jump to the next command
 			for (int i = 0; i < j; ++i)
 			{
 				cmd[i] = NULL;

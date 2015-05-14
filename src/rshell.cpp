@@ -7,6 +7,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <errno.h>
+#include <fcntl.h>
 using namespace std;
 
 #define MAXSIZE 1000
@@ -36,7 +37,7 @@ void format (char command[]);
 void execute (char *cmd[]);
 void digitCmd (string str);
 void parse (char *cmd[], char command[], vector<struct redir*> &files);
-//void redirCmd (const vector<struct redir*> &files);
+void redirCmd (const vector<struct redir*> &files);
 
 void prompt ()
 {
@@ -224,11 +225,10 @@ void format (char command[])
 	}
 }
 
-void execute (char *cmd[])
+void execute (char *cmd[], const vector<struct redir*> files)
 {
 	pid_t pid;
 	int status;
-	vector<struct redir*> files;
 	if ((pid = fork()) < 0)
 	{
 		perror("ERROR: forking child process failed\n");
@@ -237,7 +237,7 @@ void execute (char *cmd[])
 	}
 	else if (pid == 0)
 	{
-		//redirCmd(files);
+		redirCmd(files);
 		if (execvp(*cmd, cmd) < 0)
 		{
 			perror ("ERROR: exec failed\n");
@@ -312,7 +312,6 @@ void parse (char *cmd[], char command[], vector<struct redir*> &files)
 		token = strtok_r(NULL, " ", &saveptr);
 		get[m] = token;
 	}
-	//execute(cmd);
 	int j = 0;
 	int fd;
 	int type;
@@ -376,9 +375,9 @@ void parse (char *cmd[], char command[], vector<struct redir*> &files)
 			}
 		}
 	}
-	//execute(cmd);
+	execute(cmd, files);
 }
-/*
+
 void redirCmd (const vector<struct redir*> &files)
 {
 	if(files.size() == 0)
@@ -388,19 +387,50 @@ void redirCmd (const vector<struct redir*> &files)
 		int fd;
 		switch(files.at(i)->type)
 		{
-			case 0:
+			case 0: // >
 				fd = open(files.at(i)->filename, O_CREAT|O_RDWR|O_TRUNC, S_IRUSR|S_IWUSR);
+				if(-1 == fd)
+				{
+					perror("ERROR: open(). 0");
+					exit(1);
+				}
+				if(-1 == dup2(fd, files.at(i)->fd))
+				{
+					perror("ERROR: dup2(). 0");
+					exit(1);
+				}
 				continue;
-			case 1:
+			case 1: // >>
+				fd = open(files.at(i)->filename, O_CREAT|O_RDWR|O_APPEND, S_IRUSR|S_IWUSR);
+				if(-1 == fd)
+				{
+					perror("ERROR: open(). 1");
+					exit(1);
+				}
+				if(-1 == dup2(fd, files.at(i)->fd))
+				{
+					perror("ERROR: dup2(). 1");
+					exit(1);
+				}
 				continue;
-			case 2:
+			case 2: // <
+				fd = open(files.at(i)->filename, O_RDONLY);
+				if(-1 == fd)
+				{
+					perror("ERROR: open(). 2");
+					exit(1);
+				}
+				if(-1 == dup2(fd, files.at(i)->fd))
+				{
+					perror("ERROR: dup2(). 2");
+				}
 				continue;
-			case 3:
-				continue;
+			case 3: // <<<
+				break;
 		}
 	}
 }
-*/
+
 int main (int argc, char **argv)
 {
 	char *cmd[MAXSIZE];
@@ -428,7 +458,7 @@ int main (int argc, char **argv)
 		}
 		//cout << command;
 		parse(cmd, command, files);
-		
+		/***** test ******
 		for (int i = 0; cmd[i] != '\0'; ++i)
 		{
 			cout << i  << " " << cmd[i] << endl;
@@ -440,7 +470,9 @@ int main (int argc, char **argv)
 			<< " " << files.at(i)->type 
 			<< " " << files.at(i)->fd << endl;
 		}
-
+		*/
+		// delete all the elements in cmd[] and files
+		memset(cmd, '\0', MAXSIZE);
 		int len = files.size();
 		for (int i = 0; i < len; ++i)
 		{

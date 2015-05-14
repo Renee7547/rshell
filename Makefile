@@ -5,8 +5,8 @@ all: rshell ls cp rm mv
 			mv ./cp ./bin/cp
 			mv ./rm ./bin/rm
 			mv ./mv ./bin/mv
-rshell: ./src/main.cpp
-	g++ -Wall -Werror -ansi -pedantic -o rshell ./src/main.cpp
+rshell: ./src/rshell.cpp
+	g++ -Wall -Werror -ansi -pedantic -o rshell ./src/rshell.cpp
 ls: ./src/ls.cpp
 	g++ -Wall -Werror -ansi -pedantic -o ls ./src/ls.cpp
 cp: ./src/cp.cpp
