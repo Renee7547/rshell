@@ -36,7 +36,7 @@ struct redir
 
 void getInput(char str[]);
 void format (char command[]);
-void execute (char *cmd[]);
+void execute (char command[]);
 void digitCmd (string str);
 void parse (char *cmd[], char command[], vector<struct redir*> &files);
 void redirCmd (const vector<struct redir*> &files);
@@ -242,23 +242,28 @@ void format (char command[])
 			command[i] = command[i+1];
 		}
 	}
+	// delete the spaces at the end
+	len = strlen(command);
+	while (command[len-1] == ' ')
+	{
+		command[len-1] = '\0';
+		-- len;
+	}
 }
 
 void execute (char command[])
 {
-	char *cmd[MAXSIZE];
+	char *cmd[MAXSIZE] = {0};
 	char *lhs, *rhs;
 	unsigned i = 0;
+
 	for (i = 0; i < strlen(command); ++i)
 	{
-		if (command[i] == '|')
+		if (command[i] == '|' && i != 0 && i != strlen(command)-1)
 		{
 			lhs = command; 
-			command[i] = '\0';
+			command[i] = '\0'; // split the command line
 			rhs = command + i + 1;
-
-	//		cout << "lhs: " << lhs << endl
-	//			<< "rhs: " << rhs << endl;
 
 			int fd[2];
 			if(-1 == pipe(fd))
@@ -330,7 +335,6 @@ void execute (char command[])
 	else if (pid == 0)
 	{
 		redirCmd(files);
-
 		if (execvp(*cmd, cmd) < 0)
 		{
 			perror ("ERROR: exec failed\n");
