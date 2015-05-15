@@ -40,7 +40,6 @@ void execute (char *cmd[]);
 void digitCmd (string str);
 void parse (char *cmd[], char command[], vector<struct redir*> &files);
 void redirCmd (const vector<struct redir*> &files);
-void process3 ();
 
 void prompt ()
 {
@@ -245,8 +244,81 @@ void format (char command[])
 	}
 }
 
-void execute (char *cmd[], const vector<struct redir*> files)
+void execute (char command[])
 {
+	char *cmd[MAXSIZE];
+	char *lhs, *rhs;
+	unsigned i = 0;
+	for (i = 0; i < strlen(command); ++i)
+	{
+		if (command[i] == '|')
+		{
+			lhs = command; 
+			command[i] = '\0';
+			rhs = command + i + 1;
+
+	//		cout << "lhs: " << lhs << endl
+	//			<< "rhs: " << rhs << endl;
+
+			int fd[2];
+			if(-1 == pipe(fd))
+			{
+				perror("ERROR: pipe(). ");
+				exit(1);
+			}
+			pid_t pid;
+			if(-1 == (pid = fork()))
+			{
+				perror("ERROR: fork(). ");
+				exit(1);
+			}
+			else if(pid == 0)
+			{
+				if(-1 == dup2(fd[PIPE_WRITE], 1))
+				{
+					perror("ERROR: dup2(). ");
+					exit(1);
+				}	
+				if(-1 == close(fd[PIPE_READ]))
+				{
+					perror("ERROR: close(). ");
+					exit(1);
+				}
+				execute(lhs);
+				exit(0);
+			}
+			else
+			{
+				int save_stdin;
+				if(-1 == (save_stdin = dup(0)))
+				{
+					perror("ERROR: dup(). ");
+					exit(1);
+				}
+				if(-1 == dup2(fd[PIPE_READ], 0))
+				{
+					perror("ERROR: dup2(). ");
+					exit(1);
+				}
+				if(-1 == close(fd[PIPE_WRITE]))
+				{
+					perror("ERROR: close(). ");
+					exit(1);
+				}
+				execute(rhs);
+				if(-1 == dup2(save_stdin, 0))
+				{
+					perror("ERROR: dup2(). ");
+					exit(1);
+				}
+				return;
+			}
+		}
+	}
+	
+	vector<struct redir*> files;
+	parse(cmd, command, files);
+	
 	pid_t pid;
 	int status;
 	if ((pid = fork()) < 0)
@@ -283,6 +355,7 @@ void execute (char *cmd[], const vector<struct redir*> files)
 			result = false;
 		}
 	}
+	return;
 }
 
 // whether the symbol is like "0>"
@@ -410,7 +483,7 @@ void parse (char *cmd[], char command[], vector<struct redir*> &files)
 			<< " " << files.at(i)->fd << endl;
 		}
 	*/	
-	execute(cmd, files);
+//	execute(cmd);
 }
 
 void redirCmd (const vector<struct redir*> &files)
@@ -422,7 +495,8 @@ void redirCmd (const vector<struct redir*> &files)
 		int fd;
 		int fd1[2];
 		int len1 = strlen(files.at(i)->filename);
-		char temp[len1+1];int len;
+		//int len2 = len1+1;
+		char temp[MAXSIZE];
 		switch(files.at(i)->type)
 		{
 			case 0: // >
@@ -493,15 +567,17 @@ void redirCmd (const vector<struct redir*> &files)
 
 int main (int argc, char **argv)
 {
-	char *cmd[MAXSIZE];
+	//char *cmd[MAXSIZE];
 	vector<struct redir*> files;
 	while (1)
 	{
 		prompt();
 		char command[MAXSIZE];
 		memset(command, '\0', MAXSIZE);
+
 		getInput(command);
 		format(command);
+
 		if (command[0] == '\0')
 			continue;
 		if (strncmp(command, "exit", 4) == 0)
@@ -512,8 +588,8 @@ int main (int argc, char **argv)
 				exit(0);
 			}
 		}
-		//cout << command;
-		parse(cmd, command, files);
+		execute(command);
+
 		/***** test ******
 		for (int i = 0; cmd[i] != '\0'; ++i)
 		{
@@ -528,7 +604,7 @@ int main (int argc, char **argv)
 		}
 		*/
 		// delete all the elements in cmd[] and files
-		memset(cmd, '\0', MAXSIZE);
+		//memset(cmd, '\0', MAXSIZE);
 		int len = files.size();
 		for (int i = 0; i < len; ++i)
 		{
