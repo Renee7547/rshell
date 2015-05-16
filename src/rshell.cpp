@@ -322,7 +322,7 @@ void execute (char command[], int save_stdin)
 					exit(1);
 				}
 				// close PIPE_READ after each fork
-				// or the child process cannot exit(*important)
+				// otherwise the child process cannot exit(*important)
 				// when a large file comes into the pipe
 				if(-1 == close(fd[PIPE_READ]))
 				{

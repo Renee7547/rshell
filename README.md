@@ -25,4 +25,5 @@ They are in rshell/tests
 
 ## Bugs have been solved
 1. new cmd and files with old parts, then we need to set them to NULL after each while loop;
-2.
+2. pipe: the save_stdin should be only restored in the first command.
+3. we should close PIPE_READ after each fork, otherwise the child process cannot exit normally when the file is really large.
