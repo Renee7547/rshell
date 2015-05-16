@@ -36,7 +36,7 @@ struct redir
 
 void getInput(char str[]);
 void format (char command[]);
-void execute (char command[]);
+void execute (char command[], int save_stdin = -1);
 void digitCmd (string str);
 void parse (char *cmd[], char command[], vector<struct redir*> &files);
 void redirCmd (const vector<struct redir*> &files);
@@ -251,7 +251,7 @@ void format (char command[])
 	}
 }
 
-void execute (char command[])
+void execute (char command[], int save_stdin)
 {
 	char *cmd[MAXSIZE] = {0};
 	char *lhs, *rhs;
@@ -277,7 +277,7 @@ void execute (char command[])
 				perror("ERROR: fork(). ");
 				exit(1);
 			}
-			else if(pid == 0)
+			else if(pid == 0) // child process
 			{
 				if(-1 == dup2(fd[PIPE_WRITE], 1))
 				{
@@ -289,31 +289,50 @@ void execute (char command[])
 					perror("ERROR: close(). ");
 					exit(1);
 				}
-				execute(lhs);
-				exit(0);
+				execute(lhs, save_stdin);
+				exit(0); // prevent zombie process
 			}
-			else
+			else // parent
 			{
-				int save_stdin;
-				if(-1 == (save_stdin = dup(0)))
+				// only restore the stdin in the first command
+				if (save_stdin == -1)
 				{
-					perror("ERROR: dup(). ");
-					exit(1);
-				}
-				if(-1 == dup2(fd[PIPE_READ], 0))
-				{
-					perror("ERROR: dup2(). ");
-					exit(1);
-				}
+					if(-1 == (save_stdin = dup(0)))
+					{
+						perror("ERROR: dup(). ");
+						exit(1);
+					}
+				}	
+				//close the write end of the pipe in the parent
 				if(-1 == close(fd[PIPE_WRITE]))
 				{
 					perror("ERROR: close(). ");
 					exit(1);
 				}
-				execute(rhs);
-				if(-1 == dup2(save_stdin, 0))
+				// make stdin the read end of the pipe
+				if(-1 == dup2(fd[PIPE_READ], 0))
 				{
 					perror("ERROR: dup2(). ");
+					exit(1);
+				}
+				execute(rhs, save_stdin);
+				if(-1 == dup2(save_stdin, 0)) // restore stdin
+				{
+					perror("ERROR: dup2(). ");
+					exit(1);
+				}
+				// close PIPE_READ after each fork
+				// or the child process cannot exit(*important)
+				// when a large file comes into the pipe
+				if(-1 == close(fd[PIPE_READ]))
+				{
+					perror("ERROR: close(). ");
+					exit(1);
+				}
+				// wait for all the cmd work
+				if(-1 == wait(0))
+				{
+					perror("ERROR: wait(). ");
 					exit(1);
 				}
 				return;
@@ -335,6 +354,7 @@ void execute (char command[])
 	else if (pid == 0)
 	{
 		redirCmd(files);
+		
 		if (execvp(*cmd, cmd) < 0)
 		{
 			perror ("ERROR: exec failed\n");
@@ -515,7 +535,7 @@ void redirCmd (const vector<struct redir*> &files)
 					perror("ERROR: dup2(). 0");
 					exit(1);
 				}
-				continue;
+				break;
 			case 1: // >>
 				fd = open(files.at(i)->filename, O_CREAT|O_RDWR|O_APPEND, S_IRUSR|S_IWUSR);
 				if(-1 == fd)
@@ -528,7 +548,7 @@ void redirCmd (const vector<struct redir*> &files)
 					perror("ERROR: dup2(). 1");
 					exit(1);
 				}
-				continue;
+				break;
 			case 2: // <
 				fd = open(files.at(i)->filename, O_RDONLY);
 				if(-1 == fd)
@@ -540,7 +560,7 @@ void redirCmd (const vector<struct redir*> &files)
 				{
 					perror("ERROR: dup2(). 2");
 				}
-				continue;
+				break;
 			case 3: // <<<
 				strcpy(temp, files.at(i)->filename);
 				strcat(temp, "\n");
@@ -564,7 +584,7 @@ void redirCmd (const vector<struct redir*> &files)
 					perror("ERROR: close(). ");
 					exit(1);
 				}
-				continue;
+				break;
 		}
 	}
 }
