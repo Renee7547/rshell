@@ -46,7 +46,7 @@ void execute (char command[], int save_stdin = -1);
 // tell whether the redirection symbol has digit num before
 void digitCmd (string str);
 // parse the formated input into commands
-void parse (char *cmd[], char command[], vector<struct redir*> &files);
+void parse (char *cmd[], char command[], vector<struct redir*> &files, int &flag);
 // determine what to do with different types of redirection
 void redirCmd (const vector<struct redir*> &files);
 
@@ -265,6 +265,7 @@ void execute (char command[], int save_stdin)
 	char *cmd[MAXSIZE] = {0};
 	char *lhs, *rhs;
 	unsigned i = 0;
+	int flag = 0;
 
 	for (i = 0; i < strlen(command); ++i)
 	{
@@ -348,10 +349,13 @@ void execute (char command[], int save_stdin)
 			}
 		}
 	}
-	
 	vector<struct redir*> files;
-	parse(cmd, command, files);
-	
+	parse(cmd, command, files, flag);
+	if(flag == 1)
+	{
+		cerr << "Syntax error." << endl;
+		return;
+	}
 	pid_t pid;
 	int status;
 	if ((pid = fork()) < 0)
@@ -417,8 +421,9 @@ bool digitCmd(string str, int &type)
 	return false;
 }
 
-void parse (char *cmd[], char command[], vector<struct redir*> &files)
+void parse (char *cmd[], char command[], vector<struct redir*> &files, int &flag)
 {
+	flag = 0;
 	vector<string> str;
 	char * token;
 	char *saveptr;
@@ -443,11 +448,19 @@ void parse (char *cmd[], char command[], vector<struct redir*> &files)
 	int j = 0;
 	int fd;
 	int type;
+	for (unsigned i = 0; i < str.size()-1; ++i)
+	{
+		if((str.at(i)=="<"||str.at(i)=="<<<"||str.at(i)==">"||str.at(i)==">>"||digitCmd(str.at(i), type)) 
+				&& (str.at(i+1)=="<"||str.at(i+1)=="<<<"||str.at(i+1)==">"||str.at(i+1)==">>"||digitCmd(str.at(i+1), type)))
+		{
+		//	cerr << "syntax error. " << endl;
+		//	exit(1);
+			flag = 1;
+		}
+	}
 
 	for(unsigned i = 0; i < str.size(); ++i)
 	{	
-		if(i < str.size() - 1)
-		{
 			if(str.at(i) == ">") 
 			{
 				// fd = STDOUT_FILENO;
@@ -488,20 +501,6 @@ void parse (char *cmd[], char command[], vector<struct redir*> &files)
 				cmd[j] = get[i];
 				++j;
 			}
-		}
-		else if(i == str.size()-1)
-		{
-			if(str.at(i) == ">" || str.at(i) == ">>" || str.at(i) == "<" 
-					|| str.at(i) == "<<<" || digitCmd(str.at(i), type))
-			{
-				cerr << "ERROR: No input afetr symbol" << endl;
-				return;
-			}
-			else
-			{
-				cmd[j] = get[i];
-			}
-		}
 	}
 	/***** test ******
 		for (int i = 0; cmd[i] != '\0'; ++i)
@@ -611,6 +610,11 @@ int main (int argc, char **argv)
 		getInput(command);
 		format(command);
 
+		if (command[strlen(command)-1] == '>' || command[strlen(command)-1] == '<')
+		{
+			cerr << "No input afetr redirection. " << endl;
+			continue;
+		}
 		if (command[0] == '\0')
 			continue;
 		if (strncmp(command, "exit", 4) == 0)
