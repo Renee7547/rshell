@@ -16,6 +16,8 @@ bool result = false;
 const int PIPE_READ = 0;
 const int PIPE_WRITE = 1;
 
+// use the structure to record the filename, the type of the redirection before it,
+// and the file descriptor
 struct redir
 {
 	char *filename;
@@ -34,11 +36,18 @@ struct redir
 	}
 };
 
+// get input
 void getInput(char str[]);
+// format the input by adding spaces beside symbols
 void format (char command[]);
+// execute the single command, 
+// when there is pipe symbols, recursively execute the commands
 void execute (char command[], int save_stdin = -1);
+// tell whether the redirection symbol has digit num before
 void digitCmd (string str);
+// parse the formated input into commands
 void parse (char *cmd[], char command[], vector<struct redir*> &files);
+// determine what to do with different types of redirection
 void redirCmd (const vector<struct redir*> &files);
 
 void prompt ()

@@ -1,10 +1,12 @@
 # CS 100 - rshell - hw2
 
 ## Features
-* This is a C++ program properly handle 
-	1. input redirection <
-	2. output redirection > and >>
-	3. file descriptors (extra credits)
+### This is a C++ program properly handle 
+1. input redirection <
+2. output redirection > and >>
+3. pipe |
+4. <<< (extra credits)
+5. file descriptors (extra credits)
 
 ## Folders
 piping.script is in tests folder.
@@ -22,6 +24,7 @@ $ bin/rshell
 They are in rshell/tests
 
 ## Issues
+This program would ignore any quotes " or ' in the input line.
 
 ## Bugs have been solved
 1. new cmd and files with old parts, then we need to set them to NULL after each while loop;
