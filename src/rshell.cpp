@@ -438,7 +438,7 @@ void parse (char *cmd[], char command[], vector<struct redir*> &files, int &flag
 	char *saveptr;
 	string temp;
 	char * get[MAXSIZE];
-	struct redir* temp1;
+	struct redir* temp1 = 0;
 
 	token = strtok_r(command, " ", &saveptr);
 	int m = 0;
@@ -509,6 +509,11 @@ void parse (char *cmd[], char command[], vector<struct redir*> &files, int &flag
 			{
 				cmd[j] = get[i];
 				++j;
+			}
+			// memory leak fixed
+			if (temp1 != 0) {
+				delete temp1;
+				temp1 = 0;
 			}
 	}
 	/***** test ******
