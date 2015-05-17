@@ -267,8 +267,6 @@ void format (char command[], int &flagP)
 			flagP = 1;
 		}
 	}
-
-
 }
 
 void execute (char command[], int save_stdin)
