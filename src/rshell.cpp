@@ -510,11 +510,7 @@ void parse (char *cmd[], char command[], vector<struct redir*> &files, int &flag
 				cmd[j] = get[i];
 				++j;
 			}
-			// memory leak fixed
-			if (temp1 != 0) {
-				delete temp1;
-				temp1 = 0;
-			}
+
 	}
 	/***** test ******
 		for (int i = 0; cmd[i] != '\0'; ++i)
@@ -666,8 +662,12 @@ int main (int argc, char **argv)
 		int len = files.size();
 		for (int i = 0; i < len; ++i)
 		{
-			files.pop_back();
+			if (files.at(i) != 0) {
+				delete files.at(i);
+				files.at(i) = 0;
+			}
 		}
+		files.clear();
 	}
 	return 0;
 }
