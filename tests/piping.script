@@ -1747,3 +1747,59 @@ dlei004@hammer $ exit
 exit
 
 Script done on Sun 17 May 2015 05:15:58 AM PDT
+Script started on Sun 17 May 2015 05:24:22 AM PDT
+~
+dlei004@hammer $ cs100
+[0;91m
+===============================================================================
+|                                                                             |
+| You have enabled settings specific for cs100.  Everything you do is being   |
+| recorded to measure your progress in the class.                             |
+|                                                                             |
+| Important commands for the class:                                           |
+|   * calcgrade.sh          displays a detailed breakdown of your grade       |
+|   * checksyscalls.sh      is your cpp file doing proper error checking?     |
+|   * typespeed             practice typing unix commands                     |
+|                                                                             |
+| Important commands for general C++ programming:                             |
+|   * make                  don't call g++ manually; let make do the work!    |
+|   * gdb                   the GNU debugger                                  |
+|   * valgrind              get rid of your memory leaks                      |
+|   * cppcheck              static analysis tool                              |
+|   * man                   find help about any syscall / terminal command    |
+|                                                                             |
+===============================================================================
+[0m
+[s%%%%%%%%%%[u[0;32mdlei004[0;36m@[0;32mcs100[0;36m:[0;32m~[0;95m [0;36m$[0m cd rshell
+[s%%%%%%%%%%[u[0;32mdlei004[0;36m@[0;32mcs100[0;36m:[0;32m~/rshell[0;95m (master) [0;36m$[0m bin/rshe;[Kll
+dlei004%hammer.cs.ucr.edu$#some extra cases
+dlei004%hammer.cs.ucr.edu$>1>2
+Syntax error.
+dlei004%hammer.cs.ucr.edu$? >a>b
+dlei004%hammer.cs.ucr.edu$ls
+a  b  bin  case  LICENSE  Makefile  README.md  src  test  tests
+dlei004%hammer.cs.ucr.edu$<a
+dlei004%hammer.cs.ucr.edu$ls
+a  b  bin  case  LICENSE  Makefile  README.md  src  test  tests
+dlei004%hammer.cs.ucr.edu$<c
+ERROR: open(). 2: No such file or directory
+dlei004%hammer.cs.ucr.edu$ls  >>1>>2>>3
+Syntax error.
+dlei004%hammer.cs.ucr.edu$>>a>>b>>c>>d
+dlei004%hammer.cs.ucr.edu$ls
+a  b  bin  c  case  d  LICENSE	Makefile  README.md  src  test	tests
+dlei004%hammer.cs.ucr.edu$<<<c
+dlei004%hammer.cs.ucr.edu$ls
+a  b  bin  c  case  d  LICENSE	Makefile  README.md  src  test	tests
+dlei004%hammer.cs.ucr.edu$<<<e
+dlei004%hammer.cs.ucr.edu$ls
+a  b  bin  c  case  d  LICENSE	Makefile  README.md  src  test	tests
+dlei004%hammer.cs.ucr.edu$exit
+Process ended.
+[s%%%%%%%%%%[u[0;32mdlei004[0;36m@[0;32mcs100[0;36m:[0;32m~/rshell[0;95m (master) [0;36m$[0m exit
+exit
+~
+dlei004@hammer $ exit
+exit
+
+Script done on Sun 17 May 2015 05:26:18 AM PDT
