@@ -1,0 +1,1749 @@
+Script started on Sun 17 May 2015 04:10:50 AM PDT
+~
+dlei004@hammer $ cs100
+[0;91m
+===============================================================================
+|                                                                             |
+| You have enabled settings specific for cs100.  Everything you do is being   |
+| recorded to measure your progress in the class.                             |
+|                                                                             |
+| Important commands for the class:                                           |
+|   * calcgrade.sh          displays a detailed breakdown of your grade       |
+|   * checksyscalls.sh      is your cpp file doing proper error checking?     |
+|   * typespeed             practice typing unix commands                     |
+|                                                                             |
+| Important commands for general C++ programming:                             |
+|   * make                  don't call g++ manually; let make do the work!    |
+|   * gdb                   the GNU debugger                                  |
+|   * valgrind              get rid of your memory leaks                      |
+|   * cppcheck              static analysis tool                              |
+|   * man                   find help about any syscall / terminal command    |
+|                                                                             |
+===============================================================================
+[0m
+[s%%%%%%%%%%[u[0;32mdlei004[0;36m@[0;32mcs100[0;36m:[0;32m~[0;95m [0;36m$[0m cd rshell
+[s%%%%%%%%%%[u[0;32mdlei004[0;36m@[0;32mcs100[0;36m:[0;32m~/rshell[0;95m (master) [0;36m$[0m bin/rshell
+dlei004%hammer.cs.ucr.edu$#input redirection <
+dlei004%hammer.cs.ucr.edu$cat case/test.cpp
+#include <iostream>
+#include <string.h>
+
+using namespace std;
+
+int main()
+{
+	char cmd[20][20];
+	memset(cmd, '\0', 20);
+	for (int i = 0; i < 1000; ++i)
+	{
+		cout << cmd[i] << endl;
+	}
+	strcpy(cmd[0], "hello");
+	strcpy(cmd[1], "thank you");
+	cout << cmd[0] << endl;
+	return 0;
+}
+		
+dlei004%hammer.cs.ucr.edu$cat < case/test.cpp
+#include <iostream>
+#include <string.h>
+
+using namespace std;
+
+int main()
+{
+	char cmd[20][20];
+	memset(cmd, '\0', 20);
+	for (int i = 0; i < 1000; ++i)
+	{
+		cout << cmd[i] << endl;
+	}
+	strcpy(cmd[0], "hello");
+	strcpy(cmd[1], "thank you");
+	cout << cmd[0] << endl;
+	return 0;
+}
+		
+dlei004%hammer.cs.ucr.edu$grep include<case/test.cpp
+#include <iostream>
+#include <string.h>
+dlei004%hammer.cs.ucr.edu$cat hello
+cat: hello: No such file or directory
+dlei004%hammer.cs.ucr.edu$cat <hello
+ERROR: open(). 2: No such file or directory
+dlei004%hammer.cs.ucr.edu$cat <
+No input afetr redirection. 
+dlei004%hammer.cs.ucr.edu$< 
+No input afetr redirection. 
+dlei004%hammer.cs.ucr.edu$< test
+dlei004%hammer.cs.ucr.edu$cat test
+bin
+case
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+bin
+case
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+dlei004%hammer.cs.ucr.edu$     <  test
+dlei004%hammer.cs.ucr.edu$cat <       ls
+bin  case  LICENSE  Makefile  README.md  src  test  tests
+dlei004%hammer.cs.ucr.edu$cat case      t<case/test.cpp<test<case    README.md<L Makefile
+all: rshell ls cp rm mv
+			mkdir bin
+			mv ./rshell ./bin/rshell
+			mv ./ls ./bin/ls
+			mv ./cp ./bin/cp
+			mv ./rm ./bin/rm
+			mv ./mv ./bin/mv
+rshell: ./src/rshell.cpp
+	g++ -Wall -Werror -ansi -pedantic -o rshell ./src/rshell.cpp
+ls: ./src/ls.cpp
+	g++ -Wall -Werror -ansi -pedantic -o ls ./src/ls.cpp
+cp: ./src/cp.cpp
+	g++ -Wall -Werror -ansi -pedantic -o cp ./src/cp.cpp
+rm: ./src/rm.cpp
+	g++ -Wall -Werror -ansi -pedantic -o rm ./src/rm.cpp
+mv: ./src/mv.cpp
+	g++ -Wall -Werror -ansi -pedantic -o mv ./src/mv.cpp
+clean:
+	rm -rf bin
+dlei004%hammer.cs.ucr.edu$#input redirection <<<
+dlei004%hammer.cs.ucr.edu$cat <<< hello
+hello
+dlei004%hammer.cs.ucr.edu$cat <<< ""^[[D     hello"
+hello
+dlei004%hammer.cs.ucr.edu$grep 2 -a <<< ""^[[D     hello"
+dlei004%hammer.cs.ucr.edu$cat <<< "" hello world: "
+cat: world: No such file or directory
+dlei004%hammer.cs.ucr.edu$#  because this program just ignore any quotes, so      
+dlei004%hammer.cs.ucr.edu$cat <<<
+No input afetr redirection. 
+dlei004%hammer.cs.ucr.edu$cat <<< hello <<< world <<< how <<<are <<<<  you<<<thank<<<< you<<<hi<<<ha<<<ha<<<good
+good
+dlei004%hammer.cs.ucr.edu$#output redirection >
+dlei004%hammer.cs.ucr.edu$la s
+bin  case  LICENSE  Makefile  README.md  src  test  tests
+dlei004%hammer.cs.ucr.edu$rm -rf test
+dlei004%hammer.cs.ucr.edu$ls
+bin  case  LICENSE  Makefile  README.md  src  tests
+dlei004%hammer.cs.ucr.edu$ls >test
+dlei004%hammer.cs.ucr.edu$cat test
+bin
+case
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+dlei004%hammer.cs.ucr.edu$ls 0 -l >test
+dlei004%hammer.cs.ucr.edu$cat test
+total 28
+drwx------ 2 dlei004 csmajs 4096 May 17 04:02 bin
+drwx------ 2 dlei004 csmajs 4096 May 17 04:01 case
+-rw------- 1 dlei004 csmajs 1474 May 17 04:01 LICENSE
+-rw------- 1 dlei004 csmajs  535 May 17 04:01 Makefile
+-rw------- 1 dlei004 csmajs 1180 May 17 04:01 README.md
+drwx------ 2 dlei004 csmajs 4096 May 17 04:01 src
+-rw------- 1 dlei004 csmajs    0 May 17 04:15 test
+drwx------ 2 dlei004 csmajs 4096 May 17 04:02 tests
+dlei004%hammer.cs.ucr.edu$ls  asdasd>test
+ERROR: exec failed
+: No such file or directory
+dlei004%hammer.cs.ucr.edu$cat test
+dlei004%hammer.cs.ucr.edu$ls >
+No input afetr redirection. 
+dlei004%hammer.cs.ucr.edu$>test
+dlei004%hammer.cs.ucr.edu$cat  ets   test
+dlei004%hammer.cs.ucr.edu$>
+No input afetr redirection. 
+dlei004%hammer.cs.ucr.edu$ls >1>  a>b>c>d>c>e>f>g>h>i>j>k
+dlei004%hammer.cs.ucr.edu$ls
+a  bin	case  e  g  i  k	Makefile   src	 tests
+b  c	d     f  h  j  LICENSE	README.md  test
+dlei004%hammer.cs.ucr.edu$cat a
+dlei004%hammer.cs.ucr.edu$cat b
+dlei004%hammer.cs.ucr.edu$cat e
+dlei004%hammer.cs.ucr.edu$cat f
+dlei004%hammer.cs.ucr.edu$cat g
+dlei004%hammer.cs.ucr.edu$cat h
+dlei004%hammer.cs.ucr.edu$cat j
+dlei004%hammer.cs.ucr.edu$cat k
+a
+b
+bin
+c
+case
+d
+e
+f
+g
+h
+i
+j
+k
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+dlei004%hammer.cs.ucr.edu$#with file descriptot r
+dlei004%hammer.cs.ucr.edu$ls 0>a
+a  bin	case  e  g  i  k	Makefile   src	 tests
+b  c	d     f  h  j  LICENSE	README.md  test
+dlei004%hammer.cs.ucr.edu$cat a
+dlei004%hammer.cs.ucr.edu$ls asdasd 0>a
+ls: cannot access asdasd: No such file or directory
+dlei004%hammer.cs.ucr.edu$ls0>a
+ERROR: exec failed
+: No such file or directory
+dlei004%hammer.cs.ucr.edu$ls 1>a
+dlei004%hammer.cs.ucr.edu$cat a
+a
+b
+bin
+c
+case
+d
+e
+f
+g
+h
+i
+j
+k
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+dlei004%hammer.cs.ucr.edu$ls asdas>a   1>a
+ls: cannot access asdas: No such file or directory
+dlei004%hammer.cs.ucr.edu$cat a
+dlei004%hammer.cs.ucr.edu$sada 3>a
+ERROR: exec failed
+: No such file or directory
+dlei004%hammer.cs.ucr.edu$cat a
+dlei004%hammer.cs.ucr.edu$sada 2>a
+dlei004%hammer.cs.ucr.edu$cat a
+ERROR: exec failed
+: No such file or directory
+dlei004%hammer.cs.ucr.edu$ls 3>a
+a  bin	case  e  g  i  k	Makefile   src	 tests
+b  c	d     f  h  j  LICENSE	README.md  test
+dlei004%hammer.cs.ucr.edu$ls 2>a
+a  bin	case  e  g  i  k	Makefile   src	 tests
+b  c	d     f  h  j  LICENSE	README.md  test
+dlei004%hammer.cs.ucr.edu$cat a
+dlei004%hammer.cs.ucr.edu$#multiple files with dire    redirection with dec scriptors
+dlei004%hammer.cs.ucr.edu$ls > 2>a3 1>b>0 >c>d 1>e6 3 1? >f
+dlei004%hammer.cs.ucr.edu$ls
+0  a1  bin  case  e   f  h  j  LICENSE	 README.md  test
+a  b   c    d	  e3  g  i  k  Makefile  src	    tests
+dlei004%hammer.cs.ucr.edu$cat a1
+dlei004%hammer.cs.ucr.edu$cat b
+dlei004%hammer.cs.ucr.edu$cat c
+dlei004%hammer.cs.ucr.edu$cat e3
+dlei004%hammer.cs.ucr.edu$cat f
+0
+a
+a1
+b
+bin
+c
+case
+d
+e
+e3
+f
+g
+h
+i
+j
+k
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+dlei004%hammer.cs.ucr.edu$ls
+0  a1  bin  case  e   f  h  j  LICENSE	 README.md  test
+a  b   c    d	  e3  g  i  k  Makefile  src	    tests
+dlei004%hammer.cs.ucr.edu$rm -rf a1 0 e f h j a b c d e3 g j   i k
+dlei004%hammer.cs.ucr.edu$ls
+bin  case  LICENSE  Makefile  README.md  src  test  tests
+dlei004%hammer.cs.ucr.edu$#output redirection
+dlei004%hammer.cs.ucr.edu$#outp  ut redirection >>
+dlei004%hammer.cs.ucr.edu$ls  cat test
+dlei004%hammer.cs.ucr.edu$ls >test
+dlei004%hammer.cs.ucr.edu$ls >>     cat test
+bin
+case
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+dlei004%hammer.cs.ucr.edu$cat     ls >>>  test
+dlei004%hammer.cs.ucr.edu$cat test
+bin
+case
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+bin
+case
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+dlei004%hammer.cs.ucr.edu$c ls -l >>test
+dlei004%hammer.cs.ucr.edu$cat test
+bin
+case
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+bin
+case
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+total 32
+drwx------ 2 dlei004 csmajs 4096 May 17 04:02 bin
+drwx------ 2 dlei004 csmajs 4096 May 17 04:01 case
+-rw------- 1 dlei004 csmajs 1474 May 17 04:01 LICENSE
+-rw------- 1 dlei004 csmajs  535 May 17 04:01 Makefile
+-rw------- 1 dlei004 csmajs 1180 May 17 04:01 README.md
+drwx------ 2 dlei004 csmajs 4096 May 17 04:01 src
+-rw------- 1 dlei004 csmajs  102 May 17 04:26 test
+drwx------ 2 dlei004 csmajs 4096 May 17 04:02 tests
+dlei004%hammer.cs.ucr.edu$ls  >>
+No input afetr redirection. 
+dlei004%hammer.cs.ucr.edu$ls
+bin  case  LICENSE  Makefile  README.md  src  test  tests
+dlei004%hammer.cs.ucr.edu$cat     >>test
+dlei004%hammer.cs.ucr.edu$cat test
+bin
+case
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+bin
+case
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+total 32
+drwx------ 2 dlei004 csmajs 4096 May 17 04:02 bin
+drwx------ 2 dlei004 csmajs 4096 May 17 04:01 case
+-rw------- 1 dlei004 csmajs 1474 May 17 04:01 LICENSE
+-rw------- 1 dlei004 csmajs  535 May 17 04:01 Makefile
+-rw------- 1 dlei004 csmajs 1180 May 17 04:01 README.md
+drwx------ 2 dlei004 csmajs 4096 May 17 04:01 src
+-rw------- 1 dlei004 csmajs  102 May 17 04:26 test
+drwx------ 2 dlei004 csmajs 4096 May 17 04:02 tests
+dlei004%hammer.cs.ucr.edu$>>
+No input afetr redirection. 
+dlei004%hammer.cs.ucr.edu$ls
+bin  case  LICENSE  Makefile  README.md  src  test  tests
+dlei004%hammer.cs.ucr.edu$ls >>a>>b>>c>>d>>> f e>>f>>g>>h>>i>>j>>k>>l>>m
+dlei004%hammer.cs.ucr.edu$ls
+a  bin	case  e  g  i  k  LICENSE  Makefile   src   tests
+b  c	d     f  h  j  l  m	   README.md  test
+dlei004%hammer.cs.ucr.edu$cat a
+dlei004%hammer.cs.ucr.edu$cat l
+dlei004%hammer.cs.ucr.edu$cat m
+a
+b
+bin
+c
+case
+d
+e
+f
+g
+h
+i
+j
+k
+l
+LICENSE
+m
+Makefile
+README.md
+src
+test
+tests
+dlei004%hammer.cs.ucr.edu$dasda >>a
+ERROR: exec failed
+: No such file or directory
+dlei004%hammer.cs.ucr.edu$cat a
+dlei004%hammer.cs.ucr.edu$dasda >>m
+ERROR: exec failed
+: No such file or directory
+dlei004%hammer.cs.ucr.edu$cat m
+a
+b
+bin
+c
+case
+d
+e
+f
+g
+h
+i
+j
+k
+l
+LICENSE
+m
+Makefile
+README.md
+src
+test
+tests
+dlei004%hammer.cs.ucr.edu$ls 0>>a
+a  bin	case  e  g  i  k  LICENSE  Makefile   src   tests
+b  c	d     f  h  j  l  m	   README.md  test
+dlei004%hammer.cs.ucr.edu$cat a
+dlei004%hammer.cs.ucr.edu$ls 1>>a
+dlei004%hammer.cs.ucr.edu$cat a
+a
+b
+bin
+c
+case
+d
+e
+f
+g
+h
+i
+j
+k
+l
+LICENSE
+m
+Makefile
+README.md
+src
+test
+tests
+dlei004%hammer.cs.ucr.edu$ls  1>>a
+ERROR: exec failed
+: No such file or directory
+dlei004%hammer.cs.ucr.edu$cat a
+a
+b
+bin
+c
+case
+d
+e
+f
+g
+h
+i
+j
+k
+l
+LICENSE
+m
+Makefile
+README.md
+src
+test
+tests
+dlei004%hammer.cs.ucr.edu$ls 1>>   a
+dlei004%hammer.cs.ucr.edu$cat a
+a
+b
+bin
+c
+case
+d
+e
+f
+g
+h
+i
+j
+k
+l
+LICENSE
+m
+Makefile
+README.md
+src
+test
+tests
+a
+b
+bin
+c
+case
+d
+e
+f
+g
+h
+i
+j
+k
+l
+LICENSE
+m
+Makefile
+README.md
+src
+test
+tests
+dlei004%hammer.cs.ucr.edu$dasda 3>>b
+ERROR: exec failed
+: No such file or directory
+dlei004%hammer.cs.ucr.edu$ca  sasd 2>>b
+dlei004%hammer.cs.ucr.edu$cat b
+ERROR: exec failed
+: No such file or directory
+dlei004%hammer.cs.ucr.edu$asd2>>b
+ERROR: exec failed
+: No such file or directory
+dlei004%hammer.cs.ucr.edu$cat b
+ERROR: exec failed
+: No such file or directory
+dlei004%hammer.cs.ucr.edu$#combination of redirections
+dlei004%hammer.cs.ucr.edu$ls >test<test
+dlei004%hammer.cs.ucr.edu$cat ttes   est
+a
+b
+bin
+c
+case
+d
+e
+f
+g
+h
+i
+j
+k
+l
+LICENSE
+m
+Makefile
+README.md
+src
+test
+tests
+dlei004%hammer.cs.ucr.edu$rm -r f  f a b c d e f g h i j k l
+dlei004%hammer.cs.ucr.edu$ls
+bin  case  LICENSE  m  Makefile  README.md  src  test  tests
+dlei004%hammer.cs.ucr.edu$rm -rf m
+dlei004%hammer.cs.ucr.edu$ls
+bin  case  LICENSE  Makefile  README.md  src  test  tests
+dlei004%hammer.cs.ucr.edu$ls >test <a
+ERROR: open(). 2: No such file or directory
+dlei004%hammer.cs.ucr.edu$ls >test >>a <a
+dlei004%hammer.cs.ucr.edu$ls
+a  bin	case  LICENSE  Makefile  README.md  src  test  tests
+dlei004%hammer.cs.ucr.edu$cata  a
+a
+bin
+case
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+dlei004%hammer.cs.ucr.edu$ls > test   >>>  a <<<te   <hello
+dlei004%hammer.cs.ucr.edu$ls
+a  bin	case  LICENSE  Makefile  README.md  src  test  tests
+dlei004%hammer.cs.ucr.edu$cat a
+a
+bin
+case
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+a
+bin
+case
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+dlei004%hammer.cs.ucr.edu$
+dlei004%hammer.cs.ucr.edu$cat test
+dlei004%hammer.cs.ucr.edu$ls    asda 2> error >>test <<<hello
+dlei004%hammer.cs.ucr.edu$ls
+a  bin	case  error  LICENSE  Makefile	README.md  src	test  tests
+dlei004%hammer.cs.ucr.edu$cat error
+ERROR: exec failed
+: No such file or directory
+dlei004%hammer.cs.ucr.edu$cat test
+dlei004%hammer.cs.ucr.edu$ls 2>error 0>>test <<<hi
+a  bin	case  error  LICENSE  Makefile	README.md  src	test  tests
+dlei004%hammer.cs.ucr.edu$ls 2>error 1>>test <<<ji
+dlei004%hammer.cs.ucr.edu$ls
+a  bin	case  error  LICENSE  Makefile	README.md  src	test  tests
+dlei004%hammer.cs.ucr.edu$cat test
+a
+bin
+case
+error
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+dlei004%hammer.cs.ucr.edu$cat < test <<<test
+test
+dlei004%hammer.cs.ucr.edu$cat <<<test<test
+a
+bin
+case
+error
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+dlei004%hammer.cs.ucr.edu$#error check
+dlei004%hammer.cs.ucr.edu$ls>
+No input afetr redirection. 
+dlei004%hammer.cs.ucr.edu$>ls
+dlei004%hammer.cs.ucr.edu$ls
+a  bin	case  error  LICENSE  ls  Makefile  README.md  src  test  tests
+dlei004%hammer.cs.ucr.edu$rm -rf a ls
+dlei004%hammer.cs.ucr.edu$ls
+bin  case  error  LICENSE  Makefile  README.md	src  test  tests
+dlei004%hammer.cs.ucr.edu$rm -rf error
+dlei004%hammer.cs.ucr.edu$ls
+bin  case  LICENSE  Makefile  README.md  src  test  tests
+dlei004%hammer.cs.ucr.edu$ls > >>test
+Syntax error.
+dlei004%hammer.cs.ucr.edu$          ls >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+No input afetr redirection. 
+dlei004%hammer.cs.ucr.edu$ls >>>>>>>>>>>>>>>>>>>>>>>>>>>>>test
+Syntax error.
+dlei004%hammer.cs.ucr.edu$ls >> >> >>> >>>      >> >>test
+Syntax error.
+dlei004%hammer.cs.ucr.edu$ls >> .
+ERROR: open(). 1: Is a directory
+dlei004%hammer.cs.ucr.edu$ls >>test a b c 
+ls: cannot access a: No such file or directory
+ls: cannot access b: No such file or directory
+ls: cannot access c: No such file or directory
+dlei004%hammer.cs.ucr.edu$ls 1> 2>> test
+Syntax error.
+dlei004%hammer.cs.ucr.edu$ls 1>2>> test
+Syntax error.
+dlei004%hammer.cs.ucr.edu$#the program treat ref dic rection with fi                   number with           number before redirection as file descriptor
+dlei004%hammer.cs.ucr.edu$ls a>  1> 2 >>test
+dlei004%hammer.cs.ucr.edu$ls
+2  bin	case  LICENSE  Makefile  README.md  src  test  tests
+dlei004%hammer.cs.ucr.edu$#when there is a space betwwen     een num and redirection, num whould be regr arded as a file
+dlei004%hammer.cs.ucr.edu$rm -rf 2
+dlei004%hammer.cs.ucr.edu$#test pipe
+dlei004%hammer.cs.ucr.edu$ls | cat
+bin
+case
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+dlei004%hammer.cs.ucr.edu$              ls            |      cay t
+bin
+case
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+dlei004%hammer.cs.ucr.edu$asd|cat
+ERROR: exec failed
+: No such file or directory
+dlei004%hammer.cs.ucr.edu$|
+ERROR: exec failed
+: No such file or directory
+dlei004%hammer.cs.ucr.edu$ |ls
+ERROR: exec failed
+: No such file or directory
+dlei004%hammer.cs.ucr.edu$ls |
+ls: cannot access |: No such file or directory
+dlei004%hammer.cs.ucr.edu$ls ||
+ERROR: syntax error.
+dlei004%hammer.cs.ucr.edu$||
+ERROR: syntax error.
+dlei004%hammer.cs.ucr.edu$ls    #  I have deleted the connectors uf  function  
+dlei004%hammer.cs.ucr.edu$#so the program just regard  s consecutive pie   pe as an erro
+dlei004%hammer.cs.ucr.edu$cat test
+a
+bin
+case
+error
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+2
+bin
+case
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+dlei004%hammer.cs.ucr.edu$ls >test
+dlei004%hammer.cs.ucr.edu$cat test
+bin
+case
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+dlei004%hammer.cs.ucr.edu$cat test |tr a-z A-A Z |sort
+BIN
+CASE
+LICENSE
+MAKEFILE
+README.MD
+SRC
+TEST
+TESTS
+dlei004%hammer.cs.ucr.edu$cat <test |tr A-Z a-z |sort |tee new|grep a
+case
+makefile
+readme.md
+dlei004%hammer.cs.ucr.edu$cat < test |tr a-z A-Z |sort |tee new1 >new2
+dlei004%hammer.cs.ucr.edu$ls
+bin  case  LICENSE  Makefile  new  new1  new2  README.md  src  test  tests
+dlei004%hammer.cs.ucr.edu$cat new1
+BIN
+CASE
+LICENSE
+MAKEFILE
+README.MD
+SRC
+TEST
+TESTS
+dlei004%hammer.cs.ucr.edu$cat new2
+BIN
+CASE
+LICENSE
+MAKEFILE
+README.MD
+SRC
+TEST
+TESTS
+dlei004%hammer.cs.ucr.edu$rm -rf new new1 new2
+dlei004%hammer.cs.ucr.edu$ls
+bin  case  LICENSE  Makefile  README.md  src  test  tests
+dlei004%hammer.cs.ucr.edu$ls | grep --
+Usage: grep [OPTION]... PATTERN [FILE]...
+Try `grep --help' for more information.
+dlei004%hammer.cs.ucr.edu$ls |ls -a |grep --
+Usage: grep [OPTION]... PATTERN [FILE]...
+Try `grep --help' for more information.
+dlei004%hammer.cs.ucr.edu$ls | grep -- | ls -a
+Usage: grep [OPTION]... PATTERN [FILE]...
+Try `grep --help' for more information.
+.  ..  bin  case  .git	LICENSE  Makefile  README.md  src  test  tests
+dlei004%hammer.cs.ucr.edu$sdas |ls |grep a
+ERROR: exec failed
+: No such file or directory
+case
+Makefile
+dlei004%hammer.cs.ucr.edu$#combination of redirection and pipe
+dlei004%hammer.cs.ucr.edu$cat < test | tr               < test
+bin
+case
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+dlei004%hammer.cs.ucr.edu$cat < tets  st |tr a-z A-Z |tee new |tr A-Z a-z new1    > new1
+dlei004%hammer.cs.ucr.edu$ls
+bin  case  LICENSE  Makefile  new  new1  README.md  src  test  tests
+dlei004%hammer.cs.ucr.edu$cat new
+BIN
+CASE
+LICENSE
+MAKEFILE
+README.MD
+SRC
+TEST
+TESTS
+dlei004%hammer.cs.ucr.edu$cat new1
+bin
+case
+license
+makefile
+readme.md
+src
+test
+tests
+dlei004%hammer.cs.ucr.edu$cat < test |tr a-z A-Z |tee new |tr A-Z a-z > new1                 asdadsd 2>error
+dlei004%hammer.cs.ucr.edu$ls
+bin  case  error  LICENSE  Makefile  new  new1	README.md  src	test  tests
+dlei004%hammer.cs.ucr.edu$cat error
+ERROR: exec failed
+: No such file or directory
+dlei004%hammer.cs.ucr.edu$cat new1
+bin
+case
+license
+makefile
+readme.md
+src
+test
+tests
+dlei004%hammer.cs.ucr.edu$rm -rf error 
+dlei004%hammer.cs.ucr.edu$rm -rf new new1
+dlei004%hammer.cs.ucr.edu$ls
+bin  case  LICENSE  Makefile  README.md  src  test  tests
+dlei004%hammer.cs.ucr.edu$cat "hello" | cat >a>>b 2 |ls -a 2    sa  -- > 2> c | grepp       ls |te  grep test|tr a-z A-Z |sort - >>d|cat d
+ERROR: fork(). : Resource temporarily unavailable
+ERROR: forking child process failed
+: Resource temporarily unavailable
+cat: hello: No such file or directory
+[s%%%%%%%%%%[u[0;32mdlei004[0;36m@[0;32mcs100[0;36m:[0;32m~/rshell[0;95m (master) [0;36m$[0m cat "hello" | cat >a>>b |ls -- 2> c | ls |grep test| tr a-z A-Z |sort >>d|cat d
+cat: hello: No such file or directory
+TEST
+TESTS
+[s%%%%%%%%%%[u[0;32mdlei004[0;36m@[0;32mcs100[0;36m:[0;32m~/rshell[0;95m (master) [0;36m$[0m bin/rshell
+dlei004%hammer.cs.ucr.edu$cat "hello" | cat >a>>b |ls -- 2> c | ls |grep test|tr a-z A-Z |sort >>d|cat d
+ERROR: forking child process failed
+: Resource temporarily unavailable
+ERROR: forking child process failed
+: Resource temporarily unavailable
+ERROR: forking child process failed
+: Resource temporarily unavailable
+ERROR: forking child process failed
+: Resource temporarily unavailable
+cat: hello: No such file or directory
+[s%%%%%%%%%%[u[0;32mdlei004[0;36m@[0;32mcs100[0;36m:[0;32m~/rshell[0;95m (master) [0;36m$[0m bin/rshell
+dlei004%hammer.cs.ucr.edu$cat < ""  test |cat >a >> b|ls -- 2>c |ls |grep test|tr a-z A-Z |sort >> d|cat d
+ERROR: forking child process failed
+: Resource temporarily unavailable
+ERROR: forking child process failed
+: Resource temporarily unavailable
+ERROR: forking child process failed
+: Resource temporarily unavailable
+ERROR: forking child process failed
+: Resource temporarily unavailable
+[s%%%%%%%%%%[u[0;32mdlei004[0;36m@[0;32mcs100[0;36m:[0;32m~/rshell[0;95m (master) [0;36m$[0m bin/rshell
+dlei004%hammer.cs.ucr.edu$cat test
+bin
+case
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+dlei004%hammer.cs.ucr.edu$cat test|cat >a >>b| ls  asd 2>c
+dlei004%hammer.cs.ucr.edu$ls
+a  b  bin  c  case  d  LICENSE	Makefile  README.md  src  test	tests
+dlei004%hammer.cs.ucr.edu$cat a 
+dlei004%hammer.cs.ucr.edu$cat b
+bin
+case
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+bin
+case
+LICENSE
+Makefile
+README.md
+src
+test
+tests
+dlei004%hammer.cs.ucr.edu$cat c
+ERROR: exec failed
+: No such file or directory
+dlei004%hammer.cs.ucr.edu$cat d
+TEST
+TESTS
+dlei004%hammer.cs.ucr.edu$#problems above is caused by server
+dlei004%hammer.cs.ucr.edu$#now test with large file
+dlei004%hammer.cs.ucr.edu$ls
+a  b  bin  c  case  d  LICENSE	Makefile  README.md  src  test	tests
+dlei004%hammer.cs.ucr.edu$rm -rf a b c d
+dlei004%hammer.cs.ucr.edu$cat case/input_10e6.txt | grep 123
+-461.123 -33.842
+123.322 -266.569
+4.988 -123.792
+123.969 -277.967
+791.123 577.109
+-661.398 -123.669
+-991.487 -123.858
+811.715 123.025
+982.343 779.123
+-236.394 123.96
+239.149 662.123
+123.821 -792.801
+-288.776 367.123
+-626.123 779.7
+490.123 -501.654
+-262.123 -661.098
+886.123 -469.634
+249.123 -311.224
+-607.998 -679.123
+123.455 -118.804
+861.123 444.494
+509.51 123.287
+922.123 -149.766
+-428.087 394.123
+263.123 -521.26
+-941.123 223.875
+40.318 123.976
+123.426 228.855
+648.182 -156.123
+-61.123 -186.97
+-123.202 -678.656
+123.119 579.422
+123.709 -777.305
+790.704 123.735
+333.963 -99.123
+-123.423 948.155
+-123.992 -550.972
+510.493 -123.256
+-514.123 -671.123
+818.587 -445.123
+123.865 -652.435
+809.907 864.123
+-123.348 -706.813
+69.123 -898.155
+932.123 -803.234
+779.267 -920.123
+13.104 520.123
+-484.123 -754.406
+-123.372 905.372
+-863.123 315.412
+599.774 -33.123
+123.581 642.369
+-123.249 545.298
+214.123 382.637
+-918.651 -123.744
+-811.617 -642.123
+-3.752 -431.123
+-767.608 -596.123
+-281.698 313.123
+191.839 49.123
+385.123 -351.291
+488.357 -123.885
+844.521 -317.123
+-123.565 -657.028
+89.114 163.123
+123.059 -726.444
+-962.166 593.123
+857.123 961.016
+-802.359 -123.264
+598.648 -123.117
+-766.123 -56.915
+-145.847 502.123
+-584.123 -745.611
+332.863 -123.205
+18.123 -854.731
+-990.123 796.109
+-123.413 496.63
+60.321 123.245
+-252.898 127.123
+-838.123 -707.53
+-151.123 487.949
+-123.41 -21.28
+-123.248 668.039
+-522.123 152.573
+-820.404 -653.123
+-123.556 511.708
+-656.339 -123.997
+30.72 123.87
+123.117 -260.559
+65.123 -630.815
+-499.883 123.778
+123.32 -434.085
+-84.166 -123.507
+958.367 -818.123
+-493.478 123.417
+-123.132 -504.885
+-798.484 699.123
+-656.797 -648.123
+733.751 339.123
+-17.214 -83.123
+368.123 -677.911
+123.557 -940.415
+710.123 295.513
+-642.433 -123.852
+832.123 97.055
+258.955 -483.123
+304.123 -536.665
+18.562 -123.427
+-123.487 736.727
+123.583 23.601
+-364.568 501.123
+472.607 951.123
+-123.507 254.537
+477.256 -612.123
+-446.556 -123.114
+-597.247 123.765
+868.11 123.311
+414.123 -479.953
+68.123 -318.11
+-375.707 -760.123
+44.551 123.968
+709.123 131.631
+967.123 624.432
+605.099 -123.205
+-123.868 256.214
+-555.777 646.123
+123.625 -870.317
+123.989 435.323
+123.783 -344.887
+68.277 -155.123
+-898.665 -123.089
+-364.021 123.252
+251.182 123.591
+737.123 -678.43
+225.82 153.123
+-123.963 582.414
+-772.661 123.784
+571.123 -578.106
+-594.123 536.139
+-123.675 162.734
+416.749 -123.201
+376.981 123.145
+300.94 -123.593
+652.123 -157.622
+691.495 -597.123
+-701.333 695.123
+726.823 -191.123
+-30.527 698.123
+750.123 511.016
+957.201 -172.123
+186.114 -466.123
+-931.864 235.123
+516.982 547.123
+600.292 -123.274
+-123.614 -41.199
+108.73 123.224
+-280.123 876.712
+-121.451 123.519
+360.613 -123.262
+-426.807 123.017
+123.908 -102.537
+-152.532 -184.123
+139.123 -492.262
+43.416 -123.942
+545.095 123.137
+-741.544 913.123
+874.151 415.123
+123.223 942.458
+-306.102 -359.123
+-36.763 123.813
+-123.218 -778.901
+-8.675 123.748
+-779.123 721.108
+-123.828 56.83
+123.431 586.619
+917.239 123.019
+-969.796 -123.754
+67.106 -123.311
+28.123 431.115
+973.451 -123.93
+-120.357 -123.509
+800.42 400.123
+-282.123 840.759
+177.123 886.601
+-397.057 123.659
+-123.58 154.988
+-300.304 -846.123
+518.123 -546.514
+-431.123 -441.23
+-431.468 39.123
+979.649 -123.547
+943.123 352.479
+128.123 887.745
+123.941 949.447
+564.148 -341.123
+-62.219 516.123
+622.144 -123.749
+681.123 -320.609
+309.123 -712.127
+-991.106 123.725
+-769.123 -866.385
+-123.135 835.857
+995.203 123.762
+-304.843 278.123
+-28.16 15.123
+-640.868 674.123
+-51.56 -123.352
+-573.537 123.261
+123.358 489.806
+-691.385 -123.49
+-574.398 354.123
+123.543 448.592
+415.123 -72.161
+-123.828 836.805
+543.952 -123.057
+-615.387 -310.123
+-961.193 -428.123
+-462.805 -123.644
+-123.885 249.322
+-725.123 684.857
+123.93 -147.655
+-576.397 -123.778
+-123.324 170.892
+-123.774 -101.904
+-82.123 750.77
+123.137 627.595
+-271.123 200.02
+-139.123 -256.918
+109.182 103.123
+326.347 -123.387
+-123.356 -656.913
+404.997 -7.123
+605.842 -548.123
+805.894 123.914
+-921.123 644.862
+907.373 295.123
+-776.228 330.123
+-83.123 720.422
+-123.896 -399.461
+-778.467 -481.123
+-347.123 445.122
+-448.123 761.588
+123.33 -961.125
+827.668 123.958
+552.543 -123.921
+709.123 -62.718
+-783.123 -552.842
+-122.554 123.806
+123.71 271.494
+-979.275 -123.654
+256.584 144.123
+-739.459 123.765
+-123.161 -948.551
+79.123 260.861
+-112.937 -536.123
+123.102 491.15
+801.706 -717.123
+-872.123 207.493
+-205.799 -497.123
+-855.605 -438.123
+308.123 113.314
+-846.377 477.123
+176.123 191.737
+123.768 -656.404
+-32.123 -734.261
+815.741 636.123
+719.456 -168.123
+441.374 210.123
+-123.166 321.901
+123.601 -981.683
+456.123 440.665
+123.5 -447.795
+456.405 123.078
+-503.123 395.911
+2.555 -936.123
+-740.034 536.123
+95.783 -337.123
+465.123 620.188
+-912.575 123.109
+-24.433 123.161
+100.123 -301.69
+-333.931 123.258
+220.92 -123.689
+129.572 -123.281
+-609.734 550.123
+123.981 -217.993
+-123.554 873.436
+803.123 -495.828
+-680.158 756.123
+-299.038 123.764
+-123.855 753.994
+617.123 900.554
+-123.014 349.564
+751.229 -123.263
+-931.556 123.787
+-123.465 -441.434
+-296.123 958.887
+463.587 123.095
+-549.693 123.606
+-153.123 820.26
+859.217 -800.123
+152.731 -316.123
+623.693 -460.123
+123.181 337.135
+-123.685 485.02
+123.644 -73.797
+329.123 797.186
+936.123 -498.865
+-123.379 -67.509
+-218.146 -123.95
+974.66 -123.298
+-123.89 75.369
+-811.354 123.654
+717.827 -974.123
+665.7 123.479
+-123.211 435.831
+-123.112 -448.273
+442.516 -54.123
+-266.123 346.77
+-313.573 -123.487
+97.738 -790.123
+-969.229 -523.123
+-423.302 123.754
+739.123 32.922
+-597.895 76.123
+807.028 -844.123
+-123.744 939.365
+123.442 -131.782
+-477.036 -500.123
+-123.401 -230.709
+-110.123 -862.531
+29.02 123.556
+-157.123 -818.434
+-786.641 123.627
+744.123 916.329
+-939.129 -123.352
+-399.123 73.592
+771.751 482.123
+432.123 489.407
+702.123 -613.987
+-123.545 783.793
+786.123 -102.305
+-784.702 829.123
+-123.781 -157.664
+-123.714 216.262
+425.305 123.755
+-123.788 -967.607
+953.123 444.566
+560.087 -137.123
+-663.123 -167.825
+-227.123 341.056
+123.698 207.72
+-568.698 123.573
+123.196 -608.794
+-767.999 -343.123
+367.924 123.367
+-543.297 -123.703
+317.127 -63.123
+537.123 -217.675
+123.467 887.21
+-962.941 892.123
+-534.961 683.123
+88.123 -818.467
+-123.22 -286.175
+-123.956 -886.445
+266.847 126.123
+-123.141 -170.909
+246.123 -896.922
+586.871 123.831
+-542.419 123.186
+-506.13 -123.444
+-123.354 -999.612
+-123.582 -441.432
+-726.433 -833.123
+339.972 530.123
+-911.123 -406.467
+799.041 484.123
+1.723 913.123
+482.503 775.123
+-932.123 -576.7
+-123.206 279.6
+-28.27 -123.78
+396.277 -123.4
+594.498 123.771
+696.101 -123.971
+-616.123 -462.754
+-930.585 123.032
+-55.123 -84.37
+-554.123 -146.973
+-435.123 436.183
+515.123 777.277
+275.89 -123.925
+414.541 123.797
+-123.302 -716.567
+-471.229 824.123
+580.05 766.123
+-713.123 239.954
+649.123 989.89
+-246.77 -298.123
+123.342 77.207
+313.619 85.123
+-123.951 311.641
+596.123 -52.633
+-339.123 794.789
+264.824 123.205
+364.338 822.123
+800.887 490.123
+-821.038 -716.123
+dlei004%hammer.cs.ucr.edu$cat case    <case/input_10e6.txt | grep 123\\     777|greo   p asda
+dlei004%hammer.cs.ucr.edu$cat < case/input_10e6.txt|grep 12  777
+377.777 961.19
+604.841 -777.124
+-777.67 688.776
+777.661 -145.321
+-963.777 340.979
+594.444 -427.777
+-24.601 -614.777
+478.777 -570.472
+156.777 -381.508
+-758.134 777.75
+-777.862 647.167
+777.756 101.207
+42.766 777.719
+-219.173 -194.777
+-905.429 609.777
+-508.777 91.248
+777.924 914.936
+-810.922 -929.777
+419.777 -357.333
+421.777 883.457
+-338.867 -777.827
+444.14 -296.777
+777.495 32.755
+-468.062 777.533
+-641.777 650.731
+968.599 544.777
+777.804 115.709
+278.529 -59.777
+28.206 -777.02
+111.322 -777.672
+154.727 232.777
+-777.097 994.469
+-326.564 420.777
+-540.775 -777.835
+123.709 -777.305
+-40.777 -863.137
+304.859 -930.777
+-592.338 -976.777
+777.149 -766.936
+991.106 -777.723
+-777.833 -468.515
+777.016 -324.646
+-833.777 785.668
+994.968 -777.43
+-301.205 -980.777
+-972.631 777.342
+-777.875 -318.701
+-777.368 -1.327
+-384.194 777.219
+-279.777 -969.391
+278.148 777.272
+198.653 -290.777
+-777.676 726.435
+59.103 863.777
+-87.777 -453.544
+706.456 -132.777
+547.777 156.52
+777.807 166.312
+-15.573 857.777
+875.777 949.9
+971.701 887.777
+-777.388 -646.171
+-578.777 902.832
+-382.819 196.777
+-862.434 777.202
+-600.227 -460.777
+-777.246 -747.103
+-777.071 406.772
+742.226 -997.777
+777.623 -567.659
+547.777 -955.032
+777.064 484.126
+777.422 -266.519
+-306.81 678.777
+-777.05 -89.831
+-777.308 149.272
+-777.446 598.209
+777.572 -604.15
+197.611 -317.777
+-616.003 777.695
+-696.039 -944.777
+993.777 -328.814
+903.777 -502.602
+-725.777 330.218
+664.706 777.442
+-777.147 897.375
+-17.398 -970.777
+-14.386 640.777
+-966.646 -777.763
+-547.454 -777.602
+-706.014 -777.351
+-301.345 777.357
+-209.733 -777.749
+777.698 38.287
+4.532 -777.03
+-356.642 777.41
+-777.093 515.463
+-658.569 546.777
+28.777 58.893
+195.245 -777.508
+-642.38 -188.777
+777.442 305.43
+235.43 -59.777
+-777.108 -484.778
+-443.777 640.977
+808.15 777.106
+543.125 802.777
+-777.592 -309.139
+-777.101 209.914
+-581.777 698.227
+803.777 916.849
+-436.927 777.865
+-859.777 -771.382
+-999.099 777.426
+-172.332 -316.777
+-653.777 -96.332
+-630.074 530.777
+-76.66 777.946
+401.777 120.248
+-371.777 653.872
+396.554 777.58
+-218.645 973.777
+-183.777 -448.162
+-555.777 646.123
+507.787 777.098
+-777.663 472.065
+-413.316 37.777
+31.174 777.459
+631.433 777.731
+777.672 515.427
+666.938 777.501
+-777.428 142.386
+-973.665 777.866
+-495.777 -697.406
+934.515 -861.777
+107.062 -777.046
+777.17 -737.69
+777.578 -130.733
+777.828 256.633
+-77.926 -777.516
+933.511 777.555
+-777.305 -955.531
+915.777 -910.105
+-777.34 -366.536
+-777.285 348.159
+-288.452 -271.777
+-897.777 -84.864
+117.297 777.719
+-302.351 777.494
+412.825 -585.777
+781.9 -777.998
+777.72 -318.359
+777.502 138.726
+377.777 849.799
+-777.588 786.158
+777.405 397.406
+-779.777 89.912
+650.068 -777.486
+-777.785 16.128
+772.777 358.952
+868.929 -968.777
+-589.368 777.255
+-950.777 -434.944
+777.696 -395.695
+-321.777 -513.016
+-777.189 -541.879
+442.777 74.852
+877.007 -861.777
+-646.467 777.348
+777.273 -686.066
+902.284 -777.097
+309.777 -466.559
+-777.018 912.094
+993.777 -687.4
+-777.971 404.49
+316.777 -563.948
+97.74 -974.777
+501.777 -231.798
+-916.159 -777.37
+908.777 -915.672
+101.777 -95.379
+722.777 119.781
+777.904 -605.172
+-777.688 381.332
+496.011 -298.777
+-708.767 -755.777
+-840.313 -372.777
+-927.248 777.982
+99.335 -777.2
+874.777 987.948
+-777.993 74.897
+938.777 341.628
+69.519 834.777
+235.654 777.789
+-719.357 -823.777
+-82.777 -892.628
+402.205 777.624
+-367.444 777.223
+-777.072 451.504
+-777.001 630.555
+-329.46 588.777
+-805.261 -598.777
+18.777 602.245
+-153.613 -777.319
+777.938 605.564
+777.767 -785.584
+715.777 740.93
+-777.135 -793.378
+-777.046 435.116
+306.003 -777.314
+-693.77 217.777
+596.819 636.777
+-27.506 777.2
+-527.777 -293.71
+-777.392 -81.786
+-656.777 519.884
+791.777 820.067
+23.264 -777.903
+192.767 777.586
+909.777 -519.483
+707.156 286.777
+720.777 188.993
+260.777 -93.824
+115.441 509.777
+-216.777 606.174
+-35.596 -203.777
+-479.97 -218.777
+607.777 229.824
+777.177 -864.692
+-777.897 274.044
+-777.884 -593.687
+425.24 -777.609
+-777.457 936.875
+477.173 777.515
+-777.969 952.182
+514.608 -499.777
+657.777 649.326
+408.744 -777.675
+656.94 777.89
+-469.777 560.393
+777.216 -478.134
+52.989 777.537
+-996.719 -777.166
+507.479 777.219
+-777.581 238.243
+-777.672 -826.661
+626.777 544.283
+-708.777 815.04
+-689.777 -913.9
+777.343 -340.027
+532.917 -749.777
+576.033 -777.465
+-778.372 505.777
+777.617 -531.489
+777.77 119.621
+524.777 -292.168
+-712.666 -777.317
+-875.777 143.13
+-522.571 315.777
+157.921 -931.777
+-459.498 -438.777
+286.862 -777.462
+777.822 224.672
+-777.356 -396.903
+510.998 -777.844
+-705.777 212.52
+-2.777 618.32
+588.221 -519.777
+-777.325 -193.515
+576.81 -781.777
+311.29 -810.777
+-777.342 -934.968
+777.025 -747.126
+777.481 -175.938
+777.111 -572.283
+783.415 -135.777
+-49.777 -418.232
+820.777 886.215
+107.902 777.606
+701.903 423.777
+889.777 -344.428
+522.51 638.777
+-184.561 777.605
+63.777 199.179
+-780.777 -948.264
+-705.457 885.777
+190.777 -688.724
+-486.146 630.777
+-32.056 321.777
+-290.345 -813.777
+-777.737 -261.402
+224.777 -870.358
+223.777 95.921
+915.193 653.777
+-136.345 -517.777
+-393.777 -642.52
+448.05 -61.777
+-459.581 554.777
+-554.76 413.777
+-302.489 -777.819
+-297.56 598.777
+-777.853 469.895
+719.777 -17.379
+-874.951 -777.895
+35.935 -256.777
+64.21 -663.777
+-777.788 -899.23
+-777.372 -307.248
+777.249 899.459
+-117.831 -777.266
+472.967 -777.474
+777.135 -714.322
+777.76 451.682
+-777.993 721.698
+-759.852 -761.777
+-926.118 881.777
+777.905 -99.336
+-777.091 -431.191
+107.064 933.777
+217.777 -673.522
+62.382 -560.777
+247.116 777.552
+-622.498 -25.777
+-552.777 -644.139
+-720.777 -575.544
+-777.957 645.067
+-856.848 22.777
+291.609 929.777
+-302.241 -777.465
+935.777 -957.189
+-781.232 777.214
+69.777 146.389
+236.777 -404.437
+777.265 -738.071
+-783.593 777.218
+911.777 -465.916
+-398.797 -879.777
+27.686 82.777
+-542.585 -362.777
+-654.777 -432.933
+-390.281 67.777
+-541.777 225.443
+-754.777 884.838
+237.365 -777.611
+-190.777 726.542
+552.777 479.249
+-936.134 733.777
+-762.232 902.777
+-143.906 59.777
+-280.777 -749.514
+422.549 -777.371
+49.87 -863.777
+189.223 769.777
+-777.105 -871.516
+213.623 777.537
+228.897 -777.849
+-777.168 633.654
+-888.142 986.777
+-777.42 552.052
+-777.207 -968.443
+723.919 -777.873
+-777.719 336.93
+714.412 777.281
+-777.649 110.41
+-777.424 735.224
+-777.911 306.329
+-171.321 630.777
+163.777 675.728
+-389.643 892.777
+-278.658 -777.284
+-232.777 935.719
+777.645 -207.84
+99.777 -875.444
+-673.923 -777.31
+966.184 777.104
+-737.433 777.049
+-126.777 -465.491
+-508.777 -304.92
+-635.497 777.91
+-735.643 -777.868
+997.369 -317.777
+-943.969 -865.777
+984.777 918.296
+515.123 777.277
+-339.284 -777.971
+-926.972 777.875
+915.463 -661.777
+-996.162 -588.777
+85.628 196.777
+264.35 -777.153
+-679.171 -863.777
+777.272 -675.976
+-777.974 700.677
+808.999 96.777
+-777.636 -374.682
+-264.777 -931.697
+-811.643 610.777
+-192.777 427.153
+0.176 179.777
+-883.139 -825.777
+dlei004%hammer.cs.ucr.edu$at < case/input_10e6.txt|grep 777^[[D                                     cat < case/input_10e6.txt|grep 777|grep --
+Usage: grep [OPTION]... PATTERN [FILE]...
+Try `grep --help' for more information.
+dlei004%hammer.cs.ucr.edu$ls   .    exit
+Process ended.
+[s%%%%%%%%%%[u[0;32mdlei004[0;36m@[0;32mcs100[0;36m:[0;32m~/rshell[0;95m (master) [0;36m$[0m exit
+exit
+~
+dlei004@hammer $ exit
+exit
+
+Script done on Sun 17 May 2015 05:15:58 AM PDT
