@@ -24,9 +24,13 @@ $ bin/rshell
 They are in rshell/tests
 
 ## Issues
-This program would ignore any quotes " or ' in the input line.
+1. This program would ignore any quotes " or ' in the input line.
+2. connectors function has been deleted, so two consecutive '|' whould be considered as syntax error.
+3. for extra credits <<<: file descriptor whould not work for '<<<'.
+4. any numbers before redirection whould be considered as file descriptor.
 
 ## Bugs have been solved
 1. new cmd and files with old parts, then we need to set them to NULL after each while loop;
 2. pipe: the save_stdin should be only restored in the first command.
 3. we should close PIPE_READ after each fork, otherwise the child process cannot exit normally when the file is really large.
+4. syntax error detected: consecutive pipe and redirection symbols whould be considered as an error.
