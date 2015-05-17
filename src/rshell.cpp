@@ -39,7 +39,7 @@ struct redir
 // get input
 void getInput(char str[]);
 // format the input by adding spaces beside symbols
-void format (char command[]);
+void format (char command[], int &flagP);
 // execute the single command, 
 // when there is pipe symbols, recursively execute the commands
 void execute (char command[], int save_stdin = -1);
@@ -135,8 +135,9 @@ void len4(char command[], int &len, int &i)
 }
 
 // delete the extra spaces
-void format (char command[])
+void format (char command[], int &flagP)
 {
+	flagP = 0;
 	//char newcmd[MAXSIZE];
 	string temp;
 	int len = strlen(command);
@@ -193,7 +194,7 @@ void format (char command[])
 				len1(command, len, i);
 			else if (command[i] == '>'&&command[i+1] == '>')
 				len2(command, len, i);
-			else if (command[i] == '|'&&command[i+1] != '|')
+			else if (command[i] == '|')
 				len1(command, len, i);
 	//		else if (command[i] == '\"' || command[i] == '\'')
 	//			len1(command, len, i);
@@ -219,7 +220,7 @@ void format (char command[])
 				len1(command, len, i);
 			else if (command[i] == '>'&&command[i+1] == '>')
 				len2(command, len, i);
-			else if (command[i] == '|'&&command[i+1] != '|')
+			else if (command[i] == '|')
 				len1(command, len, i);
 	//		else if (command[i] == '\"' || command[i] == '\'')
 	//			len1(command, len, i);
@@ -258,6 +259,16 @@ void format (char command[])
 		command[len-1] = '\0';
 		-- len;
 	}
+
+	for (int i = 0; command[i+2] != '\0'; ++i)
+	{
+		if(command[i] == '|' && command[i+2] == '|')
+		{
+			flagP = 1;
+		}
+	}
+
+
 }
 
 void execute (char command[], int save_stdin)
@@ -450,7 +461,7 @@ void parse (char *cmd[], char command[], vector<struct redir*> &files, int &flag
 	int type;
 	for (unsigned i = 0; i < str.size()-1; ++i)
 	{
-		if((str.at(i)=="<"||str.at(i)=="<<<"||str.at(i)==">"||str.at(i)==">>"||digitCmd(str.at(i), type)) 
+		if((str.at(i)=="<"||str.at(i)=="<<<"||str.at(i)==">"||str.at(i)==">>"||digitCmd(str.at(i), type))
 				&& (str.at(i+1)=="<"||str.at(i+1)=="<<<"||str.at(i+1)==">"||str.at(i+1)==">>"||digitCmd(str.at(i+1), type)))
 		{
 		//	cerr << "syntax error. " << endl;
@@ -601,6 +612,7 @@ int main (int argc, char **argv)
 {
 	//char *cmd[MAXSIZE];
 	vector<struct redir*> files;
+	int flagP = 0;
 	while (1)
 	{
 		prompt();
@@ -608,7 +620,13 @@ int main (int argc, char **argv)
 		memset(command, '\0', MAXSIZE);
 
 		getInput(command);
-		format(command);
+		format(command, flagP);
+		
+		if(flagP == 1)
+		{
+			cerr << "ERROR: syntax error." << endl;
+			continue;
+		}
 
 		if (command[strlen(command)-1] == '>' || command[strlen(command)-1] == '<')
 		{
