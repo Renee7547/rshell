@@ -13,7 +13,16 @@ using namespace std;
 bool file_exist(char *name)
 {
 	struct stat buf;
-	return (stat(name, &buf) == 0);
+	if (-1 == stat(name, &buf))
+	{
+		perror("stat. ");
+		exit(1);
+	}
+	else
+	{
+		return true;
+	}
+//	return (stat(name, &buf) == 0);
 }
 
 void method1(char *in, char *out)

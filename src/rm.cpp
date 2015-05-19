@@ -20,19 +20,29 @@ void removeDir (const char *curr)
 		perror("Error with opendir");
 		exit(1);
 	}
+	errno = 0;
 	while(NULL != (filespecs = readdir(dirp))) {
 		if(strcmp(filespecs->d_name, ".") == 0 || strcmp(filespecs->d_name, "..") == 0)
 			continue;
 		strcpy(temp, curr);
 		strcat(temp, "/");
 		strcat(temp, filespecs->d_name);
-		stat(temp, &buf);
+		if (-1 == stat(temp, &buf))
+		{
+			perror ("stat. ");
+			exit(1);
+		}
 		if(S_ISREG(buf.st_mode))
 		{
 			unlink(temp);
 		}
 		else if(S_ISDIR(buf.st_mode))
 			removeDir(temp);
+	}
+	if (errno != 0)
+	{
+		perror("readdir. ");
+		exit(1);
 	}
 
 	rmdir(curr);
@@ -69,7 +79,11 @@ int main(int argc, char *argv[]) {
 	}
 	for (int i = 0; i < count; ++i)
 	{
-		stat(path[i], &buf);
+		if (-1 == stat(path[i], &buf))
+		{
+			perror("stat. ");
+			exit(1);
+		}
 		if(S_ISREG(buf.st_mode))
 		{
 			unlink(path[i]);
