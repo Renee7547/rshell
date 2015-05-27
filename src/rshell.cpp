@@ -269,12 +269,62 @@ void format (char command[], int &flagP)
 	}
 }
 
+void cd (char *cmd[], int &flagCD)
+{
+	flagCD = 0;
+	if (strcmp(cmd[0], "cd") == 0)
+	{
+		flagCD = 1;
+		//char *currDir;
+		char *newDir;
+		//currDir = getenv("PWD");
+		// HOME
+		if (cmd[1] == NULL || strcmp(cmd[1], "~") == 0)
+		{
+			if (NULL == (newDir = getenv("HOME")))
+			{
+				perror("ERROR: getenv(). ");
+				exit(1);
+			}
+		}
+		// OLDPWD
+		else if (strcmp(cmd[1], "-") == 0)
+		{
+			if (NULL == (newDir = getenv("OLDPWD")))
+			{
+				perror("ERROR: getenv(). ");
+				exit(1);
+			}
+		}
+		// PATH
+		else
+		{
+			strcpy(newDir, cmd[1]);
+		}
+		if (-1 == chdir(newDir))
+		{
+			perror("ERROR: chdir(). ");
+			//exit(1);
+		}
+		/*
+		int errno;
+		setenv("PWD", currDir, 1);
+		if (-1 == errno)
+		{
+			perror("setenv(). ");
+			exit(1);
+		}
+		*/
+	}
+}
+
 void execute (char command[], int save_stdin)
 {
 	char *cmd[MAXSIZE] = {0};
 	char *lhs, *rhs;
 	unsigned i = 0;
 	int flag = 0;
+	int flagCD = 0;
 
 	for (i = 0; i < strlen(command); ++i)
 	{
@@ -360,6 +410,9 @@ void execute (char command[], int save_stdin)
 	}
 	vector<struct redir*> files;
 	parse(cmd, command, files, flag);
+	cd(cmd, flagCD);
+	if (flagCD == 1)
+		return;
 	if(flag == 1)
 	{
 		cerr << "Syntax error." << endl;
@@ -607,11 +660,13 @@ void redirCmd (const vector<struct redir*> &files)
 	}
 }
 
+
 int main (int argc, char **argv)
 {
 	//char *cmd[MAXSIZE];
 	vector<struct redir*> files;
 	int flagP = 0;
+	//int flag;
 	while (1)
 	{
 		prompt();
@@ -642,6 +697,8 @@ int main (int argc, char **argv)
 				exit(0);
 			}
 		}
+		
+
 		execute(command);
 
 		/***** test ******
