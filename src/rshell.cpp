@@ -300,6 +300,7 @@ void cd (char *cmd[], int &flagCD)
 		//	if (NULL == (oldDir = getenv("OLDPWD")))
 		//		cerr << "ERROR: getenv(). " << endl;
 			strcpy(newDir, getenv("OLDPWD"));
+			cout  << newDir << endl;
 		}
 		// PATH
 		else
@@ -307,7 +308,6 @@ void cd (char *cmd[], int &flagCD)
 			strcpy(newDir, currDir);
 			strcat(newDir, "/");
 			strcat(newDir, cmd[1]);
-		//	strcpy(newDir, cmd[1]);
 		}
 		if (-1 == chdir(newDir))
 		{
@@ -315,8 +315,7 @@ void cd (char *cmd[], int &flagCD)
 			return;
 		}
 
-		if (0 != strcmp(currDir, newDir))
-			setenv("OLDPWD", currDir, 1);
+		setenv("OLDPWD", currDir, 1);
 		setenv("PWD", newDir, 1);
 
 	}
