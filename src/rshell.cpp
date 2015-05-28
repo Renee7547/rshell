@@ -276,7 +276,6 @@ void cd (char *cmd[], int &flagCD)
 	{
 		flagCD = 1;
 		char *home;
-		char *oldDir;
 		char newDir[MAXSIZE];
 		char *currDir;
 
@@ -299,15 +298,21 @@ void cd (char *cmd[], int &flagCD)
 		// PATH
 		else
 		{
-			strcpy(newDir, cmd[1]);
+			strcpy(newDir, currDir);
+			strcat(newDir, "/");
+			strcat(newDir, cmd[1]);
+		//	strcpy(newDir, cmd[1]);
 		}
 		if (-1 == chdir(newDir))
 		{
 			perror("ERROR: chdir(). ");
+			return;
 		}
+
 		if (0 != strcmp(currDir, newDir))
 			setenv("OLDPWD", currDir, 1);
 		setenv("PWD", newDir, 1);
+
 	}
 }
 
