@@ -54,6 +54,7 @@ void prompt ()
 {
 	char hostname[MAXSIZE];
 	char *username;
+	char path[MAXSIZE];
 
 	bzero(hostname, MAXSIZE);
 
@@ -67,7 +68,12 @@ void prompt ()
 		perror("ERROR: get hostname failure!");
 		exit(-1);
 	}
-	cout << username << "%" << hostname << "$";
+	if (NULL == getcwd(path, 1024))
+	{
+		cerr << "ERROR: getcwd(). " << endl;
+		exit(1);
+	}
+	cout << username << "%" << hostname << ":" << path << "$";
 }
 
 void getInput (char str[])
