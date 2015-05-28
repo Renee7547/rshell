@@ -275,26 +275,26 @@ void cd (char *cmd[], int &flagCD)
 	if (strcmp(cmd[0], "cd") == 0)
 	{
 		flagCD = 1;
-		//char *currDir;
-		char *newDir;
-		//currDir = getenv("PWD");
+		char *home;
+		char *oldDir;
+		char newDir[MAXSIZE];
+		char *currDir;
+
+		if (NULL == (currDir = getenv("PWD")))
+			cerr << "ERROR: getenv(). " << endl;
 		// HOME
 		if (cmd[1] == NULL || strcmp(cmd[1], "~") == 0)
 		{
-			if (NULL == (newDir = getenv("HOME")))
-			{
-				perror("ERROR: getenv(). ");
-				exit(1);
-			}
+			if (NULL == (home = getenv("HOME")))
+				cerr << "ERROR: getenv." << endl;
+			strcpy(newDir, home);
 		}
 		// OLDPWD
 		else if (strcmp(cmd[1], "-") == 0)
 		{
-			if (NULL == (newDir = getenv("OLDPWD")))
-			{
-				perror("ERROR: getenv(). ");
-				exit(1);
-			}
+		//	if (NULL == (oldDir = getenv("OLDPWD")))
+		//		cerr << "ERROR: getenv(). " << endl;
+			strcpy(newDir, getenv("OLDPWD"));
 		}
 		// PATH
 		else
@@ -304,17 +304,10 @@ void cd (char *cmd[], int &flagCD)
 		if (-1 == chdir(newDir))
 		{
 			perror("ERROR: chdir(). ");
-			//exit(1);
 		}
-		/*
-		int errno;
-		setenv("PWD", currDir, 1);
-		if (-1 == errno)
-		{
-			perror("setenv(). ");
-			exit(1);
-		}
-		*/
+		if (0 != strcmp(currDir, newDir))
+			setenv("OLDPWD", currDir, 1);
+		setenv("PWD", newDir, 1);
 	}
 }
 
