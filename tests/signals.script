@@ -1,0 +1,148 @@
+Script started on Fri 29 May 2015 10:48:03 PM PDT
+~
+dlei004@hammer $ cs100
+[0;91m
+===============================================================================
+|                                                                             |
+| You have enabled settings specific for cs100.  Everything you do is being   |
+| recorded to measure your progress in the class.                             |
+|                                                                             |
+| Important commands for the class:                                           |
+|   * calcgrade.sh          displays a detailed breakdown of your grade       |
+|   * checksyscalls.sh      is your cpp file doing proper error checking?     |
+|   * typespeed             practice typing unix commands                     |
+|                                                                             |
+| Important commands for general C++ programming:                             |
+|   * make                  don't call g++ manually; let make do the work!    |
+|   * gdb                   the GNU debugger                                  |
+|   * valgrind              get rid of your memory leaks                      |
+|   * cppcheck              static analysis tool                              |
+|   * man                   find help about any syscall / terminal command    |
+|                                                                             |
+===============================================================================
+[0m
+[s%%%%%%%%%%[u[0;32mdlei004[0;36m@[0;32mcs100[0;36m:[0;32m~[0;95m [0;36m$[0m cd s[Krshell
+[s%%%%%%%%%%[u[0;32mdlei004[0;36m@[0;32mcs100[0;36m:[0;32m~/rshell[0;95m (master) [0;36m$[0m bin/rshell
+dlei004%hammer.cs.ucr.edu:~/rshell$#cd to home
+dlei004%hammer.cs.ucr.edu:~/rshell$cd
+dlei004%hammer.cs.ucr.edu:~$cd -
+/home/csmajs/dlei004/rshell
+dlei004%hammer.cs.ucr.edu:~/rshell$cd ~
+dlei004%hammer.cs.ucr.edu:~$cd -
+/home/csmajs/dlei004/rshell
+dlei004%hammer.cs.ucr.edu:~/rshell$# cd /
+dlei004%hammer.cs.ucr.edu:~/rshell$cd /
+dlei004%hammer.cs.ucr.edu:/$cd -
+/home/csmajs/dlei004/rshell
+dlei004%hammer.cs.ucr.edu:~/rshell$#cd to path
+dlei004%hammer.cs.ucr.edu:~/rshell$cd ../rshell///  src///
+dlei004%hammer.cs.ucr.edu:~/rshell/src$cd -
+/home/csmajs/dlei004/rshell
+dlei004%hammer.cs.ucr.edu:~/rshell$cd ../rhse   shell/../rshell/src/../tests
+dlei004%hammer.cs.ucr.edu:~/rshell/tests$cd -
+/home/csmajs/dlei004/rshell
+dlei004%hammer.cs.ucr.edu:~/rshell$cd ../... /../../../../../../
+dlei004%hammer.cs.ucr.edu:/$cd -
+/home/csmajs/dlei004/rshell
+dlei004%hammer.cs.ucr.edu:~/rshell$cd .////////..//////////./////
+dlei004%hammer.cs.ucr.edu:~$cd -
+/home/csmajs/dlei004/rshell
+dlei004%hammer.cs.ucr.edu:~/rshell$cd dasdas
+ERROR: chdir(). : No such file or directory
+dlei004%hammer.cs.ucr.edu:~/rshell$#6 ^C
+dlei004%hammer.cs.ucr.edu:~/rshell$^C
+dlei004%hammer.cs.ucr.edu:~/rshell$^C
+dlei004%hammer.cs.ucr.edu:~/rshell$cat
+^C
+dlei004%hammer.cs.ucr.edu:~/rshell$ps
+  PID TTY          TIME CMD
+43576 pts/5    00:00:00 bash
+43589 pts/5    00:00:00 rshell
+44179 pts/5    00:00:00 ps
+dlei004%hammer.cs.ucr.edu:~/rshell$./test
+hello world
+hello world
+^C
+dlei004%hammer.cs.ucr.edu:~/rshell$ps
+  PID TTY          TIME CMD
+43576 pts/5    00:00:00 bash
+43589 pts/5    00:00:00 rshell
+44231 pts/5    00:00:00 ps
+dlei004%hammer.cs.ucr.edu:~/rshell$#^Z
+dlei004%hammer.cs.ucr.edu:~/rshell$cat
+hello
+hello
+^Z
+dlei004%hammer.cs.ucr.edu:~/rshell$ps
+  PID TTY          TIME CMD
+43576 pts/5    00:00:00 bash
+43589 pts/5    00:00:00 rshell
+44372 pts/5    00:00:00 cat
+44391 pts/5    00:00:00 ps
+dlei004%hammer.cs.ucr.edu:~/rshell$#the processes contain cat
+dlei004%hammer.cs.ucr.edu:~/rshell$fg
+hello
+hello
+^C
+dlei004%hammer.cs.ucr.edu:~/rshell$#fg workd ed
+dlei004%hammer.cs.ucr.edu:~/rshell$ps
+  PID TTY          TIME CMD
+43576 pts/5    00:00:00 bash
+43589 pts/5    00:00:00 rshell
+44734 pts/5    00:00:00 ps
+dlei004%hammer.cs.ucr.edu:~/rshell$./test
+hello world
+hello world
+^Z
+dlei004%hammer.cs.ucr.edu:~/rshell$fg
+hello world
+hello world
+hello world
+hello world
+^C
+dlei004%hammer.cs.ucr.edu:~/rshell$ps
+  PID TTY          TIME CMD
+43576 pts/5    00:00:00 bash
+43589 pts/5    00:00:00 rshell
+44898 pts/5    00:00:00 ps
+dlei004%hammer.cs.ucr.edu:~/rshell$#bg won   process won't be influend ce  d by ^C and 6z  ^Z
+dlei004%hammer.cs.ucr.edu:~/rshell$./test
+hello world
+^Z
+dlei004%hammer.cs.ucr.edu:~/rshell$bg
+hello world
+dlei004%hammer.cs.ucr.edu:~/rshell$hello world
+hello world
+hello world
+fhello world
+g
+hello world
+hello world
+^C
+dlei004%hammer.cs.ucr.edu:~/rshell$# ./test
+hello world
+hello world
+^Z
+dlei004%hammer.cs.ucr.edu:~/rshell$bg
+hello world
+dlei004%hammer.cs.ucr.edu:~/rshell$hello world
+^Z
+dlei004%hammer.cs.ucr.edu:~/rshell$hello world
+hello world
+^C
+dlei004%hammer.cs.ucr.edu:~/rshell$hello world
+hello world
+fg
+hello world
+^C
+dlei004%hammer.cs.ucr.edu:~/rshell$#when we type fg first, the bg ps was sent to the front
+dlei004%hammer.cs.ucr.edu:~/rshell$#so this process can be killed now
+dlei004%hammer.cs.ucr.edu:~/rshell$exit
+Process ended.
+[s%%%%%%%%%%[u[0;32mdlei004[0;36m@[0;32mcs100[0;36m:[0;32m~/rshell[0;95m (master) [0;36m$[0m exit
+exit
+~
+dlei004@hammer $ exit
+exit
+
+Script done on Fri 29 May 2015 10:55:30 PM PDT
