@@ -497,7 +497,7 @@ void execute (char command[], int save_stdin)
 				perror("ERROR: kill(). ");
 				exit(1);
 			}
-			pid_stp.pop_back();
+			//pid_stp.pop_back();
 		}
 		else
 			cerr << "No suspended jobs." << endl;
