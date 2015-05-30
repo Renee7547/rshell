@@ -8,6 +8,8 @@
 #include <sys/wait.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <signal.h>
+
 using namespace std;
 
 #define MAXSIZE 1000
@@ -15,6 +17,12 @@ using namespace std;
 bool result = false;
 const int PIPE_READ = 0;
 const int PIPE_WRITE = 1;
+
+//pid_t lastChild = 0;
+vector<pid_t> pid;
+vector<pid_t> pid_stp;
+//bool childExists = false;
+struct sigaction act;
 
 // use the structure to record the filename, the type of the redirection before it,
 // and the file descriptor
@@ -283,10 +291,22 @@ void cd (char *cmd[], int &flagCD)
 		flagCD = 1;
 		char *home;
 		char newDir[MAXSIZE];
-		char *currDir;
+		char currDir[MAXSIZE];
 
+		if (NULL == getcwd(currDir, 1024))
+		{
+			perror("ERROR: getcwd(). ");
+			exit(1);
+		}
+		if (-1 == setenv("PWD", currDir, 1))
+		{
+			perror("ERROR: setenv(). ");
+			exit(1);
+		}
+		/*
 		if (NULL == (currDir = getenv("PWD")))
 			cerr << "ERROR: getenv(). " << endl;
+			*/
 		// HOME
 		if (cmd[1] == NULL || strcmp(cmd[1], "~") == 0)
 		{
@@ -305,19 +325,26 @@ void cd (char *cmd[], int &flagCD)
 		// PATH
 		else
 		{
-			strcpy(newDir, currDir);
-			strcat(newDir, "/");
-			strcat(newDir, cmd[1]);
+			//strcpy(newDir, currDir);
+			//strcat(newDir, "/");
+			//strcat(newDir, cmd[1]);
+			strcpy(newDir, cmd[1]);
 		}
 		if (-1 == chdir(newDir))
 		{
 			perror("ERROR: chdir(). ");
 			return;
 		}
-
-		setenv("OLDPWD", currDir, 1);
-		setenv("PWD", newDir, 1);
-
+		if(-1 == setenv("OLDPWD", currDir, 1))
+		{
+			cerr << "ERROR: setenv(). " << endl;
+			exit(1);
+		}
+		if (-1 == setenv("PWD", newDir, 1))
+		{
+			cerr << "ERROR: setenv(). " << endl;
+			exit(1);
+		}
 	}
 }
 
@@ -328,6 +355,7 @@ void execute (char command[], int save_stdin)
 	unsigned i = 0;
 	int flag = 0;
 	int flagCD = 0;
+	int flagFG = 0;
 
 	for (i = 0; i < strlen(command); ++i)
 	{
@@ -413,26 +441,91 @@ void execute (char command[], int save_stdin)
 	}
 	vector<struct redir*> files;
 	parse(cmd, command, files, flag);
+	// cd
 	cd(cmd, flagCD);
 	if (flagCD == 1)
 		return;
+
+	// fg
+	if (0 == strcmp(cmd[0], "fg"))
+	{
+		int status;
+		int wreturn;
+		if (!pid_stp.empty())
+		{
+			if (-1 == kill(pid_stp.back(), SIGCONT))
+			{
+				perror("ERROR: kill(). ");
+				exit(1);
+			}
+			// !!!IMPORTANT!!!
+			pid.push_back(pid_stp.back());
+			do
+			{
+				wreturn = waitpid(pid_stp.back(), &status, WUNTRACED);
+			} while(-1 == wreturn && errno == EINTR);
+			if (-1 == wreturn)
+			{
+				perror("ERROR: wait(). ");
+				exit(1);
+			}
+			pid.pop_back();
+			pid_stp.pop_back();
+		}
+		else 
+			cerr << "No suspended jobs." << endl;
+		return;
+	}
+
+	// bg
+	if (0 == strcmp(cmd[0], "bg"))
+	{	
+		if (!pid_stp.empty())
+		{
+			if (-1 == kill(pid_stp.back(), SIGCONT))
+			{
+				perror("ERROR: kill(). ");
+				exit(1);
+			}
+			pid_stp.pop_back();
+		}
+		else
+			cerr << "No suspended jobs." << endl;
+		return;
+	}
+
 	if(flag == 1)
 	{
 		cerr << "Syntax error." << endl;
 		return;
 	}
-	pid_t pid;
+
+//	childExists = true;	
+	pid_t wpid;
 	int status;
-	if ((pid = fork()) < 0)
+	if ((wpid = fork()) < 0)
 	{
 		perror("ERROR: forking child process failed\n");
 		result = false;
 		exit(1);
 	}
-	else if (pid == 0)
+	else if (wpid == 0)
 	{
-		redirCmd(files);
+		// ignore: don't kill the suspended process
+		act.sa_handler = SIG_IGN;
+		if (-1 == sigaction(SIGINT, &act, NULL))
+		{
+			perror("ERROR: sigaction(). ");
+			exit(1);
+		}
+	//	act.sa_handler = SIG_IGN;
 		
+		if (-1 == sigaction(SIGTSTP, &act, NULL))
+		{
+			perror("ERROR: sigaction(). ");
+			exit(1);
+		}
+		redirCmd(files);
 		if (execvp(*cmd, cmd) < 0)
 		{
 			perror ("ERROR: exec failed\n");
@@ -442,12 +535,20 @@ void execute (char command[], int save_stdin)
 	}
 	else
 	{
-		if (-1 == waitpid(pid, &status, 0))
+		pid.push_back(wpid);
+		int wreturn;
+		int status;
+		do 
 		{
-			perror("ERROR: wait error\n");
-			result = false;
+			//wait(&status);
+			wreturn = waitpid(pid.back(), &status, WUNTRACED);
+		} while (wreturn == -1 && errno == EINTR);
+		if (wreturn == -1)
+		{
+			perror("ERROR: wait(). ");
 			exit(1);
 		}
+		pid.pop_back();
 		if (WEXITSTATUS(status) == 0)
 		{
 			result = true;
@@ -457,6 +558,7 @@ void execute (char command[], int save_stdin)
 			result = false;
 		}
 	}
+	//lastChild = pid;
 	return;
 }
 
@@ -525,48 +627,47 @@ void parse (char *cmd[], char command[], vector<struct redir*> &files, int &flag
 	}
 
 	for(unsigned i = 0; i < str.size(); ++i)
-	{	
-			if(str.at(i) == ">") 
-			{
-				// fd = STDOUT_FILENO;
-				temp1 = new struct redir(get[i+1], 0, 1);
-				files.push_back(temp1);
-				++i;
-			}
-			else if(str.at(i) == ">>") 
-			{
-				// fd = STDOUT_FILENO;
-				temp1 = new struct redir(get[i+1], 1, 1);
-				files.push_back(temp1);
-				++i;
-			}
-			else if(str.at(i) == "<") 
-			{
-				// fd = STDIN_FILENO;
-				temp1 = new struct redir(get[i+1], 2, 0);
-				files.push_back(temp1);
-				++i;
-			}
-			else if(str.at(i) == "<<<") 
-			{
-				//	fd = STDIN_FILENO;
-				temp1 = new struct redir(get[i+1], 3, 0);
-				files.push_back(temp1);
-				++i;
-			}
-			else if(digitCmd(str.at(i), type))
-			{
-				fd = str.at(i)[0] - '0';
-				temp1 = new struct redir(get[i+1], type, fd);
-				files.push_back(temp1);
-				++i;
-			}
-			else
-			{
-				cmd[j] = get[i];
-				++j;
-			}
-
+	{
+		if(str.at(i) == ">") 
+		{
+			// fd = STDOUT_FILENO;
+			temp1 = new struct redir(get[i+1], 0, 1);
+			files.push_back(temp1);
+			++i;
+		}
+		else if(str.at(i) == ">>") 
+		{
+			// fd = STDOUT_FILENO;
+			temp1 = new struct redir(get[i+1], 1, 1);
+			files.push_back(temp1);
+			++i;
+		}
+		else if(str.at(i) == "<") 
+		{
+			// fd = STDIN_FILENO;
+			temp1 = new struct redir(get[i+1], 2, 0);
+			files.push_back(temp1);
+			++i;
+		}
+		else if(str.at(i) == "<<<") 
+		{
+			//	fd = STDIN_FILENO;
+			temp1 = new struct redir(get[i+1], 3, 0);
+			files.push_back(temp1);
+			++i;
+		}
+		else if(digitCmd(str.at(i), type))
+		{
+			fd = str.at(i)[0] - '0';
+			temp1 = new struct redir(get[i+1], type, fd);
+			files.push_back(temp1);
+			++i;
+		}
+		else
+		{
+			cmd[j] = get[i];
+			++j;
+		}
 	}
 	/***** test ******
 		for (int i = 0; cmd[i] != '\0'; ++i)
@@ -663,12 +764,65 @@ void redirCmd (const vector<struct redir*> &files)
 	}
 }
 
+static void hdl(int sig, siginfo_t *siginfo, void *context)
+{
+	if (sig == SIGINT)
+	{
+		if (!pid.empty())
+		{
+			if (-1 == kill(pid.back(), SIGKILL))
+			{
+				perror("ERROR: kill(). ");
+				exit(1);
+			}
+		}
+		cout << endl;
+	}
+	else if (sig == SIGTSTP)
+	{
+		if (!pid.empty())
+		{
+			if (-1 == kill(pid.back(), SIGSTOP))
+			{
+				perror("ERROR: kill(). ");
+				exit(1);
+			}
+			pid_stp.push_back(pid.back());
+			/*
+			int status;
+			wait(&status);
+			if (-1 == status)
+			{
+				perror("ERROR: wait(). ");
+				exit(1);
+			}
+			*/
+		}
+		cout << endl;
+	}
+}
 
 int main (int argc, char **argv)
 {
+
 	//char *cmd[MAXSIZE];
 	vector<struct redir*> files;
 	int flagP = 0;
+	memset(&act, '\0', sizeof(act));
+	act.sa_sigaction = &hdl;
+	act.sa_flags = SA_SIGINFO;
+
+	if (sigaction(SIGINT, &act, NULL) < 0)
+	{
+		perror("ERROR: sigaction(). ");
+		exit(1);
+	}
+	if (sigaction(SIGTSTP, &act, NULL) < 0)
+	{
+		perror("ERROR: sigaction(). ");
+		exit(1);
+	}
+
 	//int flag;
 	while (1)
 	{
@@ -701,9 +855,8 @@ int main (int argc, char **argv)
 			}
 		}
 		
-
 		execute(command);
-
+		//childExists = false;
 		/***** test ******
 		for (int i = 0; cmd[i] != '\0'; ++i)
 		{
