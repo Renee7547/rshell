@@ -355,7 +355,7 @@ void execute (char command[], int save_stdin)
 	unsigned i = 0;
 	int flag = 0;
 	int flagCD = 0;
-	int flagFG = 0;
+	//int flagFG = 0;
 
 	for (i = 0; i < strlen(command); ++i)
 	{
@@ -502,7 +502,7 @@ void execute (char command[], int save_stdin)
 
 //	childExists = true;	
 	pid_t wpid;
-	int status;
+	//int status;
 	if ((wpid = fork()) < 0)
 	{
 		perror("ERROR: forking child process failed\n");
