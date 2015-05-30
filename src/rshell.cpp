@@ -81,7 +81,17 @@ void prompt ()
 		cerr << "ERROR: getcwd(). " << endl;
 		exit(1);
 	}
-	cout << username << "%" << hostname << ":" << path << "$";
+	char *home;
+	if (NULL == (home = getenv("HOME")))
+	{
+		cerr << "ERROR: getenv(). " << endl;
+		exit(1);
+	}
+	string pathS = path;
+	// avoid the case : cd /
+	if (0 == pathS.find(home))
+		pathS.replace(pathS.find(home), strlen(home), "~");
+	cout << username << "%" << hostname << ":" << pathS << "$";
 }
 
 void getInput (char str[])
